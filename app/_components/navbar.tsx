@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   HomeIcon,
@@ -9,6 +10,7 @@ import {
 import InputGroup from "@/app/_components/inputGroup";
 import Image from "next/image";
 import Search from "@/app/_components/search";
+import { useSelector } from "react-redux";
 export default function Navbar() {
   const Links = [
     {
@@ -27,6 +29,7 @@ export default function Navbar() {
       icon: ArrowTopRightOnSquareIcon,
     },
   ];
+  const cart=useSelector(state=>state.cart.itemsList);
   return (
     <div className="flex justify-between  bg-indigo-600 m-0.5 rounded-md text-white">
       <div className={"flex gap-2 m-2"}>
@@ -51,9 +54,10 @@ export default function Navbar() {
             </Link>
           </li>
         ))}
-        <Link href={"/cart"} className={"flex p-3"}>
+        <Link href={"/cart"} className={"flex p-3 gap-1"}>
           <ShoppingBagIcon className={"w-[3vh] h-[3vh]"} />
           <span className={"font-medium"}>Cart</span>
+            <span className=" bg-red-500 px-2 py-0.5 h-7 rounded-md">{cart.length}</span>
         </Link>
       </ul>
     </div>

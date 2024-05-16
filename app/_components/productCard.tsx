@@ -1,9 +1,25 @@
+"use client"
 import Image from "next/image";
 import Button from "@/app/_components/button";
 import { Product } from "@/app/_lib/definition";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon,XCircleIcon } from "@heroicons/react/24/solid";
+import { useDispatch, useSelector } from "react-redux";
+import { cartAction } from "../_store/cartSlice";
+
 
 export default function ProductCard({ product }) {
+  const cart=useSelector(state=>state.cart.itemsList);
+  const dispatch=useDispatch();
+  const handleAddToCart=()=>{
+     dispatch(cartAction.addToCart(product));
+  }
+  const handleRemoveFromCart=()=>{
+    dispatch(cartAction.removeFromCart(product.id))
+  }
+  const isAdded=()=>{
+    if(cart.some(item =>item.id===product.id) )return true
+    return false;
+  }
   return (
     <div className="block gap-2 p-3 border border-gray-200 rounded-md w-64 ">
       <div>
@@ -26,9 +42,10 @@ export default function ProductCard({ product }) {
           Price:{product.price}
         </span>
         <Button
-          name={"Add to Cart"}
+        onClick={isAdded()? handleRemoveFromCart:handleAddToCart}
+          name={isAdded()?"Remove":"Add to cart"}
           type={"button"}
-          icon={<CheckCircleIcon width={"25"} height={"25"} />}
+          icon={isAdded()? <XCircleIcon width={"25"} height={"25"} />:<CheckCircleIcon width={"25"} height={"25"} />}
         />
       </div>
     </div>

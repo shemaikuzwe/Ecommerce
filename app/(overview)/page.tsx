@@ -5,7 +5,9 @@ import { getProducts, getSearchProduct } from "@/app/_lib/action";
 import { Product } from "@/app/_lib/definition";
 import Button from "@/app/_components/button";
 import ButtonLink from "@/app/_components/Link";
+import { Suspense } from "react";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
+import { CardSkelton } from "../_components/skeltons";
 
 export default async function Page({
   searchParams,
@@ -26,8 +28,10 @@ export default async function Page({
         </span>
       </center>
       <div className={"flex flex-wrap gap-2 mt-10"}>
-        {products&&products.length >0? products.map((product) => (
-          <ProductCard product={product} key={product.id} />
+         
+       { products&&products.length >0? products.map((product) => (
+        <Suspense  key={product.id}fallback={<CardSkelton/>}> <ProductCard product={product} key={product.id} /></Suspense>
+         
         )):<center className=" text-xl text-center">No products found</center>}
       </div>
       <center>

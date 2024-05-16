@@ -1,14 +1,20 @@
 "use client";
 import { MinusIcon, PlusIcon, BackspaceIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
+import { cartAction, Items } from "../_store/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Cart() {
-  const [count, setCount] = useState(1);
+export default function Cart({ item }) {
+  const dispatch = useDispatch();
+
   const increment = () => {
-    setCount(count + 1);
+    dispatch(cartAction.incrementQuantity(item.id));
   };
   const decrement = () => {
-    setCount(count - 1);
+    dispatch(cartAction.decrementQuantity(item.id))
+  };
+  const handleRemoveFromCart = () => {
+    dispatch(cartAction.removeFromCart(item.id));
   };
   return (
     <div
@@ -17,23 +23,20 @@ export default function Cart() {
       <div className={"block"}>
         <div>
           {" "}
-          <span className={"text-lg font-bold"}>White t-shirt</span>
+          <span className={"text-lg font-bold"}>{item.name}</span>
         </div>
         <div className={"text-sm"}>
           {" "}
-          <span>Price:2000Rwf</span>
+          <span>Price:{item.price * item.quantity} Rwf</span>
         </div>
       </div>
       <div className={"flex gap-2"}>
-        <button
-          className={"text-white px-2 py-0.5 bg-indigo-600 rounded-md"}
-          disabled={count == 1 ? true : false}
-        >
+        <button disabled={item.quantity<=1} className={"text-white px-2 py-0.5 bg-indigo-600 rounded-md disabled:cursor-not-allowed disabled:bg-indigo-400"}>
           <MinusIcon width={"20"} height={"20"} onClick={decrement} />
         </button>
         <input
           type={"number"}
-          defaultValue={count}
+          value={item.quantity}
           className={
             "mx-auto border border-gray-300 focus:border-gray-400 w-[10vh] px-5 rounded-md"
           }
@@ -42,7 +45,7 @@ export default function Cart() {
           <PlusIcon width={"20"} height={"20"} onClick={increment} />
         </button>
       </div>
-      <button>
+      <button onClick={handleRemoveFromCart}>
         <BackspaceIcon width={"40"} height={"40"} />
       </button>
     </div>
