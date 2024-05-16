@@ -1,47 +1,69 @@
+"use client";
 import { paginate } from "@/app/_lib/action";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+  useParams,
+} from "next/navigation";
+import { useEffect, useState } from "react";
+export default function Pagination({ pages }: { pages: number[] }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const searchparams = useSearchParams();
+  const handlePage = (page: number) => {
+    const params = new URLSearchParams(searchparams);
+    params.set("page", page);
+   
+    replace(`${pathname}?${params.toString()}`);
+  };
+  const handleNext = () => {
+    setCurrentPage(currentPage + 1);
+  };
+  const handlePrevious = () => {
+    setCurrentPage(currentPage - 1);
+  };
 
-export default function Pagination() {
+  useEffect(() => {
+    handlePage(currentPage);
+  }, [currentPage]);
   return (
     <div
       className={
         "inline-flex -space-x-px rounded-md shadow-sm gap-2 text-white mx-auto"
       }
     >
-      <div
+      <button
+        onClick={handlePrevious}
+        disabled={currentPage <= 1}
         className={
-          "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md"
+          "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md disabled:cursor-not-allowed disabled:bg-indigo-400"
         }
       >
         Previous
-      </div>
-      <div
+      </button>
+      {pages.map((page, index) => (
+        <button
+          key={index}
+          onClick={() => setCurrentPage(page)}
+          className={
+            "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md"
+          }
+        >
+          {page}
+        </button>
+      ))}
+
+      <button
+        disabled={currentPage == pages.length}
+        onClick={handleNext}
         className={
-          "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md"
-        }
-      >
-        1
-      </div>
-      <div
-        className={
-          "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md"
-        }
-      >
-        1
-      </div>
-      <div
-        className={
-          "relative rounded-md inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium"
-        }
-      >
-        1
-      </div>
-      <div
-        className={
-          "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md"
+          "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md disabled:cursor-not-allowed disabled:bg-indigo-400"
         }
       >
         Next
-      </div>
+      </button>
     </div>
   );
 }

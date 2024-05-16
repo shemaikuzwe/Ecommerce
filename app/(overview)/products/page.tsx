@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/app/_components/productCard";
-import { getProducts, getSearchProduct, paginate } from "@/app/_lib/action";
+import {
+  getAllProducts,
+  getProducts,
+  getSearchProduct,
+  paginate,
+} from "@/app/_lib/action";
 import { Product } from "@/app/_lib/definition";
 import Button from "@/app/_components/button";
 import Select from "@/app/_components/select";
@@ -11,16 +16,28 @@ import { Metadata } from "next";
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: { query?: string,search?:string };
+  searchParams?: { query?: string; search?: string;page?:number };
 }) {
   const query: string = searchParams?.query;
-  const search:string=searchParams?.search;
-  let products = await getProducts(query);
-  if(search){
-    products=await getSearchProduct(search);
+  const search: string = searchParams?.search;
+  const page:number=searchParams?.page;
+  let products = await getAllProducts(query);
+  if(page){
+    const index=page-1;
+    const skip=index*4;
+    products=await getAllProducts(skip);
+
   }
-  const no_of_pages = await paginate();
-  console.log(no_of_pages);
+  if (search) {
+    products = await getSearchProduct(search);
+  }
+  const no_of_products = await paginate();
+  const no_of_pages = Math.ceil(no_of_products / 4);
+  
+  const pages = [];
+  for (let i = 1; i <=no_of_pages; i++) {
+    pages.push(i);
+  }
   return (
     <div className="p-14">
       <center>
@@ -31,13 +48,17 @@ export default async function Page({
         <Select options={["New", "Best", "old"]} />
       </div>
       <div className={"flex flex-wrap gap-2 mt-10"}>
-        {products&&products.length>0? products.map((product) => (
-          <ProductCard product={product} key={product.id} />
-        )):<center className=" text-xl text-center">No products found</center>}
+        {products && products.length > 0 ? (
+          products.map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))
+        ) : (
+          <center className=" text-xl text-center">No products found</center>
+        )}
       </div>
       <center className={"mt-4"}>
         {" "}
-        <Pagination />
+        <Pagination pages={pages} />
       </center>
     </div>
   );

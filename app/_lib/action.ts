@@ -49,11 +49,10 @@ export async function addProduct(prevState: State, formData: FormData) {
   redirect("/admin/products");
 }
 
-export async function getProducts(query: string | null) {
+export async function getProducts(query?: string | null) {
   let products = await db.product.findMany();
-
   if (query == "All") {
-    products = await db.product.findMany();
+    products = await db.product.findMany({});
   } else {
     products = await db.product.findMany({
       where: {
@@ -64,6 +63,7 @@ export async function getProducts(query: string | null) {
       },
     });
   }
+
   return products;
 }
 export async function productsCount() {
@@ -130,14 +130,14 @@ export async function editProduct(formData: FormData, id: number) {
 //   const options: [] = await db.$queryRaw`SELECT DISTINCT type FROM product`;
 //   return options;
 // }
-export async function getProductByType(type: string) {
-  const products = await db.product.findMany({
-    where: {
-      type: type,
-    },
-  });
-  if (products) return products;
-}
+// export async function getProductByType(type: string) {
+//   const products = await db.product.findMany({
+//     where: {
+//       type: type,
+//     },
+//   });
+//   if (products) return products;
+// }
 
 export async function paginate() {
   const no_of_pages = await db.product.count();
@@ -155,16 +155,25 @@ export async function getSearchProduct(search: string) {
         },
         {
           name: {
-            contains:search
+            contains: search,
           },
         },
         {
-          description:{
-            contains:search
+          description: {
+            contains: search,
           },
         },
       ],
     },
   });
   return product;
+}
+export async function getAllProducts(skip: number = 0) {
+  const take = 4;
+  let products = await db.product.findMany({
+    skip: skip,
+    take: take,
+  });
+
+  return products;
 }
