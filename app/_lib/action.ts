@@ -5,8 +5,12 @@ import { State } from "@/app/_lib/definition";
 import fs from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-const db = new PrismaClient();
+import { signIn } from "../auth";
+import { CredentialsSignin } from "next-auth";
+import { unstable_noStore as no_store } from "next/cache";
+import { auth } from "../auth";
 
+const db = new PrismaClient();
 const fileSchema = z.instanceof(File, { message: "please upload image" });
 const ProductSchema = z.object({
   id: z.number(),
@@ -50,6 +54,7 @@ export async function addProduct(prevState: State, formData: FormData) {
 }
 
 export async function getProducts(query?: string | null) {
+  no_store();
   let products = await db.product.findMany();
   if (query == "All") {
     products = await db.product.findMany({});
@@ -67,29 +72,29 @@ export async function getProducts(query?: string | null) {
   return products;
 }
 export async function productsCount() {
+  no_store();
   const noOfProducts = await db.product.count();
   return noOfProducts;
 }
 export async function customerCount() {
+  no_store();
   const noOfCustomers = await db.user.count();
   return noOfCustomers;
 }
-export async function deleteProduct(id: number) {
-  const productId = parseInt(id);
+export async function deleteProduct(id: string) {
   await db.product.delete({
     where: {
-      id: productId,
+      id: id,
     },
   });
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
 
-export async function getProduct(id: number) {
-  const prodId = parseInt(id);
+export async function getProduct(id: string) {
   const product = await db.product.findMany({
     where: {
-      id: prodId,
+      id: id,
     },
   });
   if (product) return product;
@@ -126,10 +131,10 @@ export async function editProduct(formData: FormData, id: number) {
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
-// export async function getOptions() {
-//   const options: [] = await db.$queryRaw`SELECT DISTINCT type FROM product`;
-//   return options;
-// }
+export async function getOptions() {
+  const options: any = await db.$queryRaw`SELECT DISTINCT type FROM product`;
+  return options;
+}
 // export async function getProductByType(type: string) {
 //   const products = await db.product.findMany({
 //     where: {
@@ -140,11 +145,13 @@ export async function editProduct(formData: FormData, id: number) {
 // }
 
 export async function paginate() {
+  no_store();
   const no_of_pages = await db.product.count();
   return no_of_pages;
 }
 
 export async function getSearchProduct(search: string) {
+  no_store();
   const product = await db.product.findMany({
     where: {
       OR: [
@@ -169,6 +176,7 @@ export async function getSearchProduct(search: string) {
   return product;
 }
 export async function getAllProducts(skip: number = 0) {
+  no_store();
   const take = 4;
   let products = await db.product.findMany({
     skip: skip,
@@ -176,4 +184,68 @@ export async function getAllProducts(skip: number = 0) {
   });
 
   return products;
+}
+
+export async function getUser(email: string, password: string) {
+  const user = await db.user.findFirst({
+    where: {
+      AND: [
+        {
+          email: email,
+        },
+        {
+          password: password,
+        },
+      ],
+    },
+  });
+  if (!user) return null;
+  return user;
+}
+
+type State = {
+  errors?: {
+    email: string[];
+    password: string[];
+  };
+  message?: string | null;
+};
+// const userSchema=z.object({
+//   email:z.string().email({
+//     message:"This field is required"
+//   }),
+//   password:z.string().max(6,{
+//     message: "This field is required"
+//   })
+// })
+export async function authenticate(prevState: State, formData: FormData) {
+  try {
+    await signIn("credentials", formData);
+  } catch (error) {
+    if (error instanceof CredentialsSignin) {
+      return "Invalid credentials";
+    } else {
+      return "some thing went wrong";
+    }
+  }
+}
+export async function getAllUsers() {
+  no_store();
+  const users = await db.user.findMany();
+  return users;
+}
+export async function addOrder(formData: FormData) {
+  const cart = formData.get("cart");
+  const totalPrice = formData.get("totalPrice");
+  const userId =formData.get("userId")
+  await db.order.create({
+    data: {
+      user_id: userId,
+      products: JSON.parse(cart),
+      total_price: parseInt(totalPrice),
+    },
+  });
+
+  revalidatePath("/");
+  redirect("/");
 }

@@ -15,7 +15,9 @@ export default function Pagination({ pages }: { pages: number[] }) {
   const handlePage = (page: number) => {
     const params = new URLSearchParams(searchparams);
     params.set("page", page);
-   
+    if (page == 1) {
+      params.delete("page");
+    }
     replace(`${pathname}?${params.toString()}`);
   };
   const handleNext = () => {
@@ -28,6 +30,7 @@ export default function Pagination({ pages }: { pages: number[] }) {
   useEffect(() => {
     handlePage(currentPage);
   }, [currentPage]);
+
   return (
     <div
       className={

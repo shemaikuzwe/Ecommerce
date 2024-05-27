@@ -1,19 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
 import ProductCard from "@/app/_components/productCard";
 import { getProducts, getSearchProduct } from "@/app/_lib/action";
-import { Product } from "@/app/_lib/definition";
-import Button from "@/app/_components/button";
 import ButtonLink from "@/app/_components/Link";
 import { Suspense } from "react";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { CardSkelton } from "../_components/skeltons";
+import { auth } from "../auth";
 
 export default async function Page({
   searchParams,
 }: {
   searchParams?: { search: string };
 }) {
+   const session=await auth()
+   console.log(session?.user)
   let products = await getProducts();
   const search = searchParams.search;
   if (search) {

@@ -9,6 +9,8 @@ import {
   UserIcon,
   ArrowRightEndOnRectangleIcon,
 } from "@heroicons/react/16/solid";
+import { signOut } from "next-auth/react";
+import { ShoppingBagIcon } from "@heroicons/react/24/solid";
 
 export default function SideNav() {
   const pathname = usePathname();
@@ -24,8 +26,13 @@ export default function SideNav() {
       icon: ShoppingCartIcon,
     },
     {
+      name:"Orders",
+      to:"/admin/orders",
+      icon:ShoppingBagIcon
+    },
+    {
       name: "Users",
-      to: "/dashboard/users",
+      to: "/admin/users",
       icon: UserIcon,
     },
   ];
@@ -43,7 +50,7 @@ export default function SideNav() {
               "p-2 m-2 flex  gap-3 text-white text-xl font-medium w-full hover:bg-blue-900 rounded-md",
               {
                 "bg-blue-900": pathname == link.to,
-              },
+              }
             )}
           >
             <link.icon className="w-6" />
@@ -52,8 +59,10 @@ export default function SideNav() {
         ))}
 
         <li className=" mt-32 p-2 m-2 flex  gap-3 text-white text-xl font-medium w-full hover:bg-blue-900 rounded-md">
-          <ArrowRightEndOnRectangleIcon className="w-6 text-white" />
-          Logout
+          <button className=" flex" onClick={()=> signOut()}>
+            <ArrowRightEndOnRectangleIcon className="w-6 text-white" />
+            Logout
+          </button>
         </li>
       </ul>
     </div>

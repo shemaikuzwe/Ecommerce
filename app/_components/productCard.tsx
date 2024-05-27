@@ -45,6 +45,7 @@ export default function ProductCard({ product }) {
         onClick={isAdded()? handleRemoveFromCart:handleAddToCart}
           name={isAdded()?"Remove":"Add to cart"}
           type={"button"}
+           
           icon={isAdded()? <XCircleIcon width={"25"} height={"25"} />:<CheckCircleIcon width={"25"} height={"25"} />}
         />
       </div>

@@ -1,25 +1,28 @@
 "use client";
 import { ReactNode } from "react";
-import { TrashIcon } from "@heroicons/react/24/solid";
-import { deleteProduct } from "@/app/_lib/action";
+import { deleteProduct, deleteUser } from "@/app/_lib/action";
 
 export default function Button({
   name,
   type,
   icon,
-  onClick
+  onClick,
+  status,
 }: {
   name: string;
   type: "submit" | "button";
   icon?: ReactNode;
-  onClick?():void;
+  status?: boolean;
+  onClick?(): void;
 }) {
   return (
     <>
       <button
-      onClick={onClick}
+        onClick={onClick}
         type={type}
-        className="flex mt-5 gap-2 px-1 bg-indigo-500 max-w-[20vh] py-2 text-white rounded-md"
+     
+        className="flex mt-5 gap-2 px-1  bg-indigo-600 disabled:bg-indigo-400
+         disabled:cursor-pointer max-w-[20vh] py-2 text-white rounded-md"
       >
         {icon}
         {name}
@@ -43,3 +46,4 @@ export function Remove({ id }: { id: number }) {
     </button>
   );
 }
+
