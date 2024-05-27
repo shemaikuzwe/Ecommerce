@@ -237,7 +237,7 @@ export async function getAllUsers() {
 export async function addOrder(formData: FormData) {
   const cart = formData.get("cart");
   const totalPrice = formData.get("totalPrice");
-  const userId =formData.get("userId")
+  const userId = formData.get("userId");
   await db.order.create({
     data: {
       user_id: userId,
@@ -248,4 +248,12 @@ export async function addOrder(formData: FormData) {
 
   revalidatePath("/");
   redirect("/");
+}
+export async function getOrders(id: string) {
+  const orders = await db.order.findMany({
+    where: {
+      user_id: id,
+    },
+  });
+  return orders
 }

@@ -11,13 +11,12 @@ export default async function Page({
 }: {
   searchParams?: { search: string };
 }) {
-   const session=await auth()
-   console.log(session?.user)
+  const session = await auth();
+  console.log(session?.user);
   let products = await getProducts();
   const search = searchParams.search;
   if (search) {
     products = await getSearchProduct(search);
-    
   }
   return (
     <div className="p-14">
@@ -27,11 +26,16 @@ export default async function Page({
         </span>
       </center>
       <div className={"flex flex-wrap gap-2 mt-10"}>
-         
-       { products&&products.length >0? products.map((product) => (
-        <Suspense  key={product.id}fallback={<CardSkelton/>}> <ProductCard product={product} key={product.id} /></Suspense>
-         
-        )):<center className=" text-xl text-center">No products found</center>}
+        {products && products.length > 0 ? (
+          products.map((product) => (
+            <Suspense key={product.id} fallback={<CardSkelton />}>
+              {" "}
+              <ProductCard product={product} key={product.id} />
+            </Suspense>
+          ))
+        ) : (
+          <center className=" text-xl text-center">No products found</center>
+        )}
       </div>
       <center>
         {" "}

@@ -21,7 +21,7 @@ export default function ProductCard({ product }) {
     return false;
   }
   return (
-    <div className="block gap-2 p-3 border border-gray-200 rounded-md w-64 ">
+    <div className="block gap-2 p-3 border border-gray-200 rounded-md w-64 mt-3 ">
       <div>
         <Image
           src={`/${product.image}`}

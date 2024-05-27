@@ -17,3 +17,11 @@ export type Product = {
   type: string;
   image: string;
 };
+export type Order={
+  id:string
+  user_id:string
+  products:[]
+  total_price:number
+  status:boolean
+  date:Date
+}

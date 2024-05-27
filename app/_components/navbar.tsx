@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { HomeIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
@@ -39,7 +40,7 @@ export default function Navbar() {
           <Link href="/cart" className="flex p-3 gap-1">
             <ShoppingBagIcon className="w-6 h-6" />
             <span className="font-medium">Cart</span>
-            <span className="bg-red-500 px-2 py-0.5 h-7 rounded-md">
+            <span className="bg-red-500 px-2 py-0.5 h-7 rounded">
               {cart.length}
             </span>
           </Link>

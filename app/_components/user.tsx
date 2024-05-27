@@ -47,7 +47,7 @@ export default function User() {
                     href="/orders"
                     className="block px-4 py-2 cursor-pointer text-white text-sm "
                   >
-                    My orders
+                    My orders <span className="bg-red-500 px-1.5 py-0.5 h-7 rounded">0</span>
                   </Link>
                 </Disclosure.Button>
                 <Disclosure.Button as="li">
