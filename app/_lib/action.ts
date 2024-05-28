@@ -254,6 +254,9 @@ export async function getOrders(id: string) {
     where: {
       user_id: id,
     },
+    orderBy:{
+      date:"desc"
+    }
   });
   return orders
 }
