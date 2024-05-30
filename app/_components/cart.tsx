@@ -18,7 +18,7 @@ export default function Cart({ item }) {
   };
   return (
     <div
-      className={"flex justify-between border border-gray-200 p-3 rounded-md"}
+      className={"flex justify-between border border-gray-200 p-3 rounded-md mt-2"}
     >
       <div className={"block"}>
         <div>

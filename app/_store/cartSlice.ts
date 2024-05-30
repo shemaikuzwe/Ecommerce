@@ -2,9 +2,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 export type Items = [id: number, price: number, quantity: number, name: string];
 function storage() {
-  const cart = localStorage.getItem("cart");
-  if (cart == null || undefined) return [];
-  return JSON.parse(cart);
+  if (typeof window !== "undefined") {
+    const cart = localStorage.getItem("cart");
+    if (cart == null) return [];
+    return JSON.parse(cart);
+  }
+  return [];
 }
 const initialData = storage();
 const cartSlice = createSlice({
@@ -50,9 +53,9 @@ const cartSlice = createSlice({
         return item;
       });
     },
-    removeAll(state){
-      state.itemsList=[];
-    }
+    removeAll(state) {
+      state.itemsList = [];
+    },
   },
 });
 export const cartAction = cartSlice.actions;

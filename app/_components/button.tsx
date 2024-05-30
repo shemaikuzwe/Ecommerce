@@ -13,16 +13,19 @@ export default function Button({
   type: "submit" | "button";
   icon?: ReactNode;
   status?: boolean;
+
   onClick?(): void;
 }) {
+  
+  
   return (
     <>
       <button
         onClick={onClick}
         type={type}
-     
-        className="flex mt-5 gap-2 px-1  bg-indigo-600 disabled:bg-indigo-400
-         disabled:cursor-pointer max-w-[20vh] py-2 text-white rounded-md"
+        disabled={status}
+        className="flex mt-5 gap-2 px-2  bg-indigo-600 disabled:bg-indigo-300
+         disabled:cursor-not-allowed max-w-[20vh] py-1.5 text-white rounded-md"
       >
         {icon}
         {name}
@@ -46,4 +49,3 @@ export function Remove({ id }: { id: number }) {
     </button>
   );
 }
-

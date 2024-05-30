@@ -12,7 +12,6 @@ export default async function Page({
   searchParams?: { search: string };
 }) {
   const session = await auth();
-  console.log(session?.user);
   let products = await getProducts();
   const search = searchParams.search;
   if (search) {

@@ -33,14 +33,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isOnLogin = nextUrl.pathname.startsWith("/login");
-      if (isOnLogin && isLoggedIn) {
-        return Response.redirect(new URL("/", nextUrl));
-      }
-      return true;
-    },
+    // async authorized({ auth, request: { nextUrl } }) {
+    //   const isLoggedIn = !!auth?.user;
+    //   const isOnLogin = nextUrl.pathname.startsWith("/login");
+    //   if (isOnLogin && isLoggedIn) {
+    //     return Response.redirect(new URL("/", nextUrl));
+    //   }
+    //   return true;
+    // },
+    
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -50,6 +51,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       session.user.id = token.id;
       return session;
+    },
+    async redirect({url,baseUrl}) {
+        return url.startsWith(baseUrl)? baseUrl:url
     },
   },
 });

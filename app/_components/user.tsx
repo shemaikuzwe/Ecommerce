@@ -8,6 +8,7 @@ import { signOut } from "next-auth/react";
 export default function User() {
   const session = useSession();
   const name = session.data?.user?.name;
+  const image=session?.data?.user?.image
   return (
     <Disclosure as="nav">
       {({ open }) => (
@@ -18,7 +19,7 @@ export default function User() {
               height={55}
               width={55}
               className=" rounded-full"
-              src="/user.png"
+              src={image}
               alt="User"
             />
             <span>{name}</span>
@@ -36,7 +37,7 @@ export default function User() {
               <ul>
                 <Disclosure.Button as="li">
                   <Link
-                    href="#"
+                    href="/profile"
                     className="block px-4 py-2 cursor-pointer text-white text-sm "
                   >
                     Profile

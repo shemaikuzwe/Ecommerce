@@ -55,11 +55,16 @@ export async function addProduct(prevState: State, formData: FormData) {
 
 export async function getProducts(query?: string | null) {
   no_store();
-  let products = await db.product.findMany();
+  let products = await db.product.findMany({
+    take: 4,
+  });
   if (query == "All") {
-    products = await db.product.findMany({});
+    products = await db.product.findMany({
+      take: 4,
+    });
   } else {
     products = await db.product.findMany({
+      take: 4,
       where: {
         type: query,
       },
@@ -132,8 +137,8 @@ export async function editProduct(formData: FormData, id: number) {
   redirect("/admin/products");
 }
 export async function getOptions() {
-  const options: any = await db.$queryRaw`SELECT DISTINCT type FROM product`;
-  return options;
+  // const options: any = await db.$queryRaw`SELECT DISTINCT type FROM product`;
+  return [];
 }
 // export async function getProductByType(type: string) {
 //   const products = await db.product.findMany({
@@ -234,29 +239,130 @@ export async function getAllUsers() {
   const users = await db.user.findMany();
   return users;
 }
-export async function addOrder(formData: FormData) {
-  const cart = formData.get("cart");
-  const totalPrice = formData.get("totalPrice");
-  const userId = formData.get("userId");
-  await db.order.create({
-    data: {
-      user_id: userId,
-      products: JSON.parse(cart),
-      total_price: parseInt(totalPrice),
-    },
-  });
-
-  revalidatePath("/");
-  redirect("/");
+export async function addOrder(
+  PrevState: { staus: string; messsage: string },
+  formData: FormData
+) {
+  try {
+    const cart = formData.get("cart");
+    const totalPrice = formData.get("totalPrice");
+    const userId = formData.get("userId");
+    await db.order.create({
+      data: {
+        user_id: userId,
+        products: JSON.parse(cart),
+        total_price: parseInt(totalPrice),
+      },
+    });
+    return { status: "success", message: "Order created successfully" };
+  } catch (e) {
+    return { status: "error", message: "Something went wrong try again" };
+  }
 }
 export async function getOrders(id: string) {
   const orders = await db.order.findMany({
     where: {
       user_id: id,
     },
-    orderBy:{
-      date:"desc"
-    }
+    orderBy: {
+      date: "desc",
+    },
   });
-  return orders
+  return orders;
 }
+// export async function hasPassword(id: string): Promise<boolean> {
+//   const user = await db.user.findFirst({
+//     where: {
+//       AND: [
+//         {
+//           password: {
+//             not: null,
+//           },
+//         },
+//         {
+//           id: id,
+//         },
+//       ],
+//     },
+//   });
+//   if (user) return true;
+//   return false;
+// }
+
+export async function createPassword(prevState: null, formData: FormData) {
+  const password = formData.get("password");
+  const cpassword = formData.get("cpassword");
+  const id = formData.get("id");
+  if (cpassword === password) {
+    await db.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        password: password,
+      },
+    });
+    revalidatePath("/");
+    redirect("/");
+  }
+  return "Password mis match";
+}
+export async function changePassword(
+  prevState: { type: null; message: null },
+  formData: FormData
+) {
+  const password = formData.get("password");
+  const newPassword = formData.get("newPassword");
+  const cpassword = formData.get("cpassword");
+  const userId = formData.get("userId");
+  console.log(password, newPassword, cpassword, userId);
+
+  if (newPassword == cpassword) {
+    if (await find_password(userId, password)) {
+      try {
+        await db.user.update({
+          where: {
+            id: userId,
+          },
+          data: {
+            password: newPassword,
+          },
+        });
+        {
+          return { type: "success", message: "password changed" };
+        }
+      } catch (e) {
+        return {
+          type: "error",
+          message: "password not changed",
+        };
+      }
+    }
+    return {
+      type: "error",
+      message: "invalid current password",
+    };
+  }
+  return {
+    type: "error",
+    message: "invalid current password",
+  };
+}
+const find_password = async (id: string, pass: string) => {
+  const psw = await db.user.findFirst({
+    where: {
+      AND: [
+        {
+          id: id,
+        },
+        {
+          password: pass,
+        },
+      ],
+    },
+  });
+  if (psw) {
+    return true;
+  }
+  return false;
+};

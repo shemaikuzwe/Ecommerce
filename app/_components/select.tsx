@@ -14,8 +14,6 @@ export default function Select({ options }: { options: any }) {
     }
     replace(`${pathname}?${params.toString()}`);
   };
-   const newArray=Array.from(options[0]);
-   
 
   return (
     <select
@@ -24,11 +22,11 @@ export default function Select({ options }: { options: any }) {
       }
       onChange={(event) => handleTye(event.target.value)}
     >
-      {newArray &&
-        newArray.length &&
-        newArray.map((option) => (
-          <option className={"block w-40 rounded-md border-0 "} key={option.type}>
-            {option.type}
+      {options &&
+        options.length &&
+        options.map((option: string) => (
+          <option className={"block w-40 rounded-md border-0 "} key={option}>
+            {option}
           </option>
         ))}
     </select>

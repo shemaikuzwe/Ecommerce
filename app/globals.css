@@ -15,7 +15,7 @@
     @apply p-1 border
 }
 .btn{
-    @apply flex mt-5 gap-2 px-1  max-w-[20vh] py-2 text-white rounded-md
+    @apply flex mt-5 gap-2 px-1  max-w-[25vh] py-1.5 text-white rounded-md
 }
 .btn-primary{
     @apply  bg-indigo-600

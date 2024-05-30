@@ -4,12 +4,14 @@ export default function InputGroup({
   label,
   aria,
   Inputvalue,
+  readonly,
 }: {
   type: string;
   placeholder?: string;
   label: string;
   aria?: string;
   Inputvalue?: string | number;
+  readonly?: boolean;
 }) {
   return (
     <>
@@ -17,6 +19,7 @@ export default function InputGroup({
         {label}
       </label>
       <input
+        readOnly={readonly}
         type={type}
         placeholder={placeholder}
         name={label}

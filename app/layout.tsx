@@ -7,7 +7,7 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400"] });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s |Ecommerce",
+    template:"%s",
     default: "Ecommerce",
   },
   description: "Ecommerce website",

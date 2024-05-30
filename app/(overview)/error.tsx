@@ -14,15 +14,15 @@ export default function Error({
     console.log(error);
   }, [error]);
 
-  return(
-     <div className="flex mx-auto justify-center mt-40">
-       <div>
-       <InformationCircleIcon width={"100"} height={"100"}/>
-       <span className=" text-center">Something went wrong</span>
-       <Button onClick={()=> reset()}  name="Try again" type="button"/>
-       </div>
-
-       
-     </div>
+  return (
+    <div className="flex mx-auto justify-center mt-40">
+      <div>
+        <InformationCircleIcon width={"100"} height={"100"} />
+        <span className=" text-center">Something went wrong</span>
+        <center>
+          <Button onClick={() => reset()} name="Retry" type="button" />
+        </center>
+      </div>
+    </div>
   );
 }

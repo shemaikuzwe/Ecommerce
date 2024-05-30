@@ -8,7 +8,6 @@ export type State = {
   };
   message?: string | null;
 };
-
 export type Product = {
   id: number;
   name: string;
