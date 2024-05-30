@@ -16,7 +16,7 @@ export default function Page() {
   const session = useSession();
   const status = session.status;
   const userId = session.data?.user?.id;
-  const cart = useSelector((state) => state.cart.itemsList);
+  const cart = useSelector((state:any) => state.cart.itemsList);
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {

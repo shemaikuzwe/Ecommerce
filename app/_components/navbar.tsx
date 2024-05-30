@@ -14,7 +14,7 @@ export default function Navbar() {
     { name: "Products", href: "/products", icon: ShoppingCartIcon },
   ];
 
-  const cart = useSelector((state) => state.cart.itemsList);
+  const cart = useSelector((state:any) => state.cart.itemsList);
   const session = useSession();
   const status = session.status;
   return (
