@@ -21,7 +21,7 @@ export default function Page() {
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     setTotalPrice(
-      cart.reduce((acc, curr) => (acc += curr.price * curr.quantity), 0)
+      cart.reduce((acc:number, curr:{price:number,quantity:number}) => (acc += curr.price * curr.quantity), 0)
     );
   }, [cart]);
   const handleRemoveAll = () => {
