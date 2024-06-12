@@ -12,16 +12,22 @@ import { useFormState, useFormStatus } from "react-dom";
 import { useSession } from "next-auth/react";
 import LoginLink from "@/app/_components/login-link";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/app/_store/hook";
+import { RootState } from "@/app/_store/store";
 export default function Page() {
   const session = useSession();
   const status = session.status;
   const userId = session.data?.user?.id;
-  const cart = useSelector((state:any) => state.cart.itemsList);
-  const dispatch = useDispatch();
+  const cart = useAppSelector((state: RootState) => state.cart.itemsList);
+  const dispatch = useAppDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     setTotalPrice(
-      cart.reduce((acc:number, curr:{price:number,quantity:number}) => (acc += curr.price * curr.quantity), 0)
+      cart.reduce(
+        (acc: number, curr: { price: number; quantity: number }) =>
+          (acc += curr.price * curr.quantity),
+        0
+      )
     );
   }, [cart]);
   const handleRemoveAll = () => {
@@ -37,7 +43,16 @@ export default function Page() {
 
   return (
     <div className="flex flex-col p-14 w-6/12 mx-auto border border-gray-300 rounded-md gap-2">
-      {state && <Alert severity={state.status}>{state.message} {state.status =="success" && <Link href="/orders" className=" underline">View Orders</Link>} </Alert>}
+      {state && (
+        <Alert severity={state.status}>
+          {state.message}{" "}
+          {state.status == "success" && (
+            <Link href="/orders" className=" underline">
+              View Orders
+            </Link>
+          )}{" "}
+        </Alert>
+      )}
       {cart && cart.length ? (
         <div>
           <div className=" flex justify-end items-end mb-2 ">
@@ -70,7 +85,7 @@ export default function Page() {
                   readOnly={true}
                 />
               </span>
-              {status == "unauthenticated" ? <LoginLink/> : <LoginBtn />}
+              {status == "unauthenticated" ? <LoginLink /> : <LoginBtn />}
             </form>
           </div>
         </div>

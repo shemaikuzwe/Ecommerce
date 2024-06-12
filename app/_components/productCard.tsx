@@ -17,7 +17,7 @@ export default function ProductCard({ product }) {
     dispatch(cartAction.removeFromCart(product.id))
   }
   const isAdded=()=>{
-    if(cart.some(item =>item.id===product.id) )return true
+    if(cart?.some(item =>item.id===product.id) )return true
     return false;
   }
   return (

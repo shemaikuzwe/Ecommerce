@@ -4,17 +4,27 @@ import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { HomeIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Search from "@/app/_components/search";
-import { useSelector } from "react-redux";
+import { useAppSelector,useAppStore,useAppDispatch } from "../_store/hook";
 import User from "./user";
 import { useSession } from "next-auth/react";
 import LoginLink from "./login-link";
+import { useState } from "react";
+import { useRef } from "react";
+import { RootState } from "../_store/store";
+
 export default function Navbar() {
+ 
+  
   const Links = [
     { name: "Home", href: "/", icon: HomeIcon },
     { name: "Products", href: "/products", icon: ShoppingCartIcon },
   ];
-
-  const cart = useSelector((state:any) => state.cart.itemsList);
+  // const store=useAppStore();
+  // const initial=useRef(false);
+  // if(!initial.current){
+  //   store.dispatch()
+  // }
+  const cart = useAppSelector((state: RootState) => state.cart.itemsList);
   const session = useSession();
   const status = session.status;
   return (
@@ -41,7 +51,7 @@ export default function Navbar() {
             <ShoppingBagIcon className="w-6 h-6" />
             <span className="font-medium">Cart</span>
             <span className="bg-red-500 px-2 py-0.5 h-7 rounded">
-              {cart.length}
+              {cart?.length}
             </span>
           </Link>
         </li>

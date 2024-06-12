@@ -1,11 +1,13 @@
 "use client";
 import { configureStore } from "@reduxjs/toolkit";
 import cartSlice from "./cartSlice";
-
-export const store = configureStore({
-  reducer: {
-    cart: cartSlice.reducer,
-  },
-});
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = ReturnType<typeof store.dispatch>;
+export const makeStore = () => {
+  return configureStore({
+    reducer: {
+      cart: cartSlice.reducer,
+    },
+  });
+};
+export type AppStore=ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];

@@ -10,10 +10,6 @@ export default function Error({
   error: Error & { digest?: string };
   reset(): void;
 }) {
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
-
   return (
     <div className="flex mx-auto justify-center mt-40">
       <div>

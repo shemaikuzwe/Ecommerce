@@ -1,10 +1,11 @@
 "use client";
 import { ReactNode, useEffect } from "react";
 import Navbar from "@/app/_components/navbar";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../_store/hook";
+import { RootState } from "../_store/store";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const cart = useSelector((state) => state.cart.itemsList);
+  const cart = useAppSelector((state: RootState) => state.cart.itemsList);
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);

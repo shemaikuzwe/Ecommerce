@@ -3,7 +3,6 @@ import Link from "next/link";
 import ProductCard from "@/app/_components/productCard";
 import {
   getAllProducts,
-  getOptions,
   getProducts,
   getSearchProduct,
   paginate,
@@ -40,7 +39,7 @@ export default async function Page({
   for (let i = 1; i <= no_of_pages; i++) {
     pages.push(i);
   }
-  const options = ["All","t-shirt", "pants", "shoes"];
+  const options = ["All", "t-shirt", "pants", "shoes"];
 
   return (
     <div className="p-14">

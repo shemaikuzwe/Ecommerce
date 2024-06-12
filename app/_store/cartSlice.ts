@@ -2,12 +2,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 export type Items = [id: number, price: number, quantity: number, name: string];
 function storage() {
-  if (typeof window !== "undefined") {
+
     const cart = localStorage.getItem("cart");
     if (cart == null) return [];
     return JSON.parse(cart);
-  }
-  return [];
+ 
 }
 const initialData = storage();
 const cartSlice = createSlice({

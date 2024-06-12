@@ -239,14 +239,17 @@ export async function getAllUsers() {
   const users = await db.user.findMany();
   return users;
 }
+const initial = { status: "", message: "" };
+
+
 export async function addOrder(
-  PrevState: { staus: string; messsage: string },
   formData: FormData
-) {
+): Promise<{ status: string; message: string }> {
   try {
     const cart = formData.get("cart");
     const totalPrice = formData.get("totalPrice");
     const userId = formData.get("userId");
+
     await db.order.create({
       data: {
         user_id: userId,
@@ -254,6 +257,7 @@ export async function addOrder(
         total_price: parseInt(totalPrice),
       },
     });
+
     return { status: "success", message: "Order created successfully" };
   } catch (e) {
     return { status: "error", message: "Something went wrong try again" };
