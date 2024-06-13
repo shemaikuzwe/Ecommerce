@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import ProductCard from "@/app/_components/productCard";
 import {
   getAllProducts,
@@ -10,6 +8,9 @@ import {
 import Select from "@/app/_components/select";
 import Pagination from "@/app/_components/pagination";
 import { Metadata } from "next";
+import { Suspense } from "react";
+import { ProductsSkeleton } from "@/app/_components/skeltons";
+import Products from "./products";
 
 export default async function Page({
   searchParams,
@@ -19,19 +20,7 @@ export default async function Page({
   const query: string|undefined = searchParams?.query;
   const search: string|undefined = searchParams?.search;
   const page: number|undefined = searchParams?.page;
-  // const options=await getOptions();
-  let products = await getAllProducts();
-  if (query) {
-    products = await getProducts(query);
-  }
-  if (page) {
-    const index = page - 1;
-    const skip = index * 4;
-    products = await getAllProducts(skip);
-  }
-  if (search) {
-    products = await getSearchProduct(search);
-  }
+  // const options=await getOptions(); 
   const no_of_products = await paginate();
   const no_of_pages = Math.ceil(no_of_products / 4);
 
@@ -50,13 +39,9 @@ export default async function Page({
         <Select options={options} />
       </div>
       <div className={"flex flex-wrap gap-2 mt-10"}>
-        {products && products.length > 0 ? (
-          products.map((product) => (
-            <ProductCard product={product} key={product.id} />
-          ))
-        ) : (
-          <center className=" text-xl text-center">No products found</center>
-        )}
+        {<Suspense fallback={<ProductsSkeleton/>}>
+           <Products search={search} query={query} page={page}/>
+        </Suspense>}
       </div>
       <center className={"mt-4"}>
         {" "}
