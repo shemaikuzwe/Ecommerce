@@ -13,7 +13,7 @@ export default async function Page({
 }) {
   const session = await auth();
   let products = await getProducts();
-  const search = searchParams.search;
+  const search = searchParams?.search;
   if (search) {
     products = await getSearchProduct(search);
   }

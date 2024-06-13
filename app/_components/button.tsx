@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import { deleteProduct, deleteUser } from "@/app/_lib/action";
+import { deleteProduct } from "@/app/_lib/action";
 
 export default function Button({
   name,
@@ -33,7 +33,7 @@ export default function Button({
     </>
   );
 }
-export function Remove({ id }: { id: number }) {
+export function Remove({ id }: { id: string }) {
   const handleDelete = () => {
     deleteProduct(id);
   };

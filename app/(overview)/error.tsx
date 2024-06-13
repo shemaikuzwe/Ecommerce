@@ -1,6 +1,4 @@
 "use client";
-
-import { useEffect } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import Button from "../_components/button";
 export default function Error({

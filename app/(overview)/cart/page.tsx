@@ -3,9 +3,8 @@ import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { BookmarkIcon } from "@heroicons/react/16/solid";
 import Cart from "@/app/_components/cart";
 import Button from "@/app/_components/button";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { cartAction } from "@/app/_store/cartSlice";
+import { cartAction, Items } from "@/app/_store/cartSlice";
 import Alert from "@mui/material/Alert";
 import { addOrder } from "@/app/_lib/action";
 import { useFormState, useFormStatus } from "react-dom";
@@ -14,6 +13,7 @@ import LoginLink from "@/app/_components/login-link";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/app/_store/hook";
 import { RootState } from "@/app/_store/store";
+import { OrderState } from "@/app/_lib/definition";
 export default function Page() {
   const session = useSession();
   const status = session.status;
@@ -33,8 +33,8 @@ export default function Page() {
   const handleRemoveAll = () => {
     dispatch(cartAction.removeAll());
   };
-  const initial = { status: "", message: "" };
-  const [state, newOrder] = useFormState(addOrder, initial);
+  const initial:OrderState ={status:"",message:""};
+  const[state,newOrder]=useFormState(addOrder,initial);
   useEffect(() => {
     if (state.status == "success") {
       handleRemoveAll();
@@ -44,7 +44,7 @@ export default function Page() {
   return (
     <div className="flex flex-col p-14 w-6/12 mx-auto border border-gray-300 rounded-md gap-2">
       {state && (
-        <Alert severity={state.status}>
+        <Alert severity={state.status=="success"?"success":"error"}>
           {state.message}{" "}
           {state.status == "success" && (
             <Link href="/orders" className=" underline">
@@ -64,7 +64,7 @@ export default function Page() {
               Remove All
             </button>
           </div>
-          {cart.map((item) => (
+          {cart.map((item:Items) => (
             <Cart item={item} key={item.id} />
           ))}
           <div className={" mt-4"}>
@@ -85,7 +85,7 @@ export default function Page() {
                   readOnly={true}
                 />
               </span>
-              {status == "unauthenticated" ? <LoginLink /> : <LoginBtn />}
+              {status =="authenticated" ? <LoginLink /> : <LoginBtn />}
             </form>
           </div>
         </div>

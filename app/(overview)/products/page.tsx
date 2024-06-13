@@ -16,9 +16,9 @@ export default async function Page({
 }: {
   searchParams?: { query?: string; search?: string; page?: number };
 }) {
-  const query: string = searchParams?.query;
-  const search: string = searchParams?.search;
-  const page: number = searchParams?.page;
+  const query: string|undefined = searchParams?.query;
+  const search: string|undefined = searchParams?.search;
+  const page: number|undefined = searchParams?.page;
   // const options=await getOptions();
   let products = await getAllProducts();
   if (query) {

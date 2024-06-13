@@ -1,18 +1,21 @@
 "use client";
 import { createSlice } from "@reduxjs/toolkit";
-export type Items = [id: number, price: number, quantity: number, name: string];
-function storage() {
-
-    const cart = localStorage.getItem("cart");
-    if (cart == null) return [];
-    return JSON.parse(cart);
- 
-}
-const initialData = storage();
+export type Items = {
+  id: number;
+  price: number;
+  quantity: number;
+  name: string;
+};
+// function storage() {
+//   const cart = localStorage.getItem("cart");
+//   if (cart == null) return [];
+//   return JSON.parse(cart);
+// }
+// const initialData = storage();
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    itemsList: initialData,
+    itemsList: [{}],
   },
   reducers: {
     addToCart(state, action) {

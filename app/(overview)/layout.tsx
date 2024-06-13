@@ -5,10 +5,10 @@ import { useAppSelector } from "../_store/hook";
 import { RootState } from "../_store/store";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const cart = useAppSelector((state: RootState) => state.cart.itemsList);
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  // const cart = useAppSelector((state: RootState) => state.cart.itemsList);
+  // useEffect(() => {
+  //   localStorage.setItem("cart", JSON.stringify(cart));
+  // }, [cart]);
   return (
     <div>
       <div>

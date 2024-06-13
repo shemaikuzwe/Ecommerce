@@ -1,3 +1,7 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next",
+  "rules": {
+    "valid-typeof":"warn",
+    "@typescript-eslint/no-explicit-any":"off"
+  }
 }

@@ -16,11 +16,19 @@ export type Product = {
   type: string;
   image: string;
 };
-export type Order={
+export type Order ={
   id:string
   user_id:string
   products:[]
   total_price:number
   status:boolean
   date:Date
+}
+export type OrderState={
+  status:string,
+  message:string
+
+}
+export type LoginError={
+  message:string
 }

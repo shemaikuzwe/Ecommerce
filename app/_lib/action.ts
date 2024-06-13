@@ -1,7 +1,7 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
-import { State } from "@/app/_lib/definition";
+import { LoginError, Order, State } from "@/app/_lib/definition";
 import fs from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -9,6 +9,7 @@ import { signIn } from "../auth";
 import { CredentialsSignin } from "next-auth";
 import { unstable_noStore as no_store } from "next/cache";
 import { auth } from "../auth";
+import { OrderState } from "./definition";
 
 const db = new PrismaClient();
 const fileSchema = z.instanceof(File, { message: "please upload image" });
@@ -223,14 +224,14 @@ type State = {
 //     message: "This field is required"
 //   })
 // })
-export async function authenticate(prevState: State, formData: FormData) {
+export async function authenticate(prevState: LoginError, formData: FormData) {
   try {
     await signIn("credentials", formData);
   } catch (error) {
     if (error instanceof CredentialsSignin) {
-      return "Invalid credentials";
+      return { message: "Invalid credentials" };
     } else {
-      return "some thing went wrong";
+      return { message: "some thing went wrong" };
     }
   }
 }
@@ -241,10 +242,7 @@ export async function getAllUsers() {
 }
 const initial = { status: "", message: "" };
 
-
-export async function addOrder(
-  formData: FormData
-): Promise<{ status: string; message: string }> {
+export async function addOrder(prevState: OrderState, formData: FormData) {
   try {
     const cart = formData.get("cart");
     const totalPrice = formData.get("totalPrice");
@@ -263,7 +261,7 @@ export async function addOrder(
     return { status: "error", message: "Something went wrong try again" };
   }
 }
-export async function getOrders(id: string) {
+export async function getOrders(id: string | undefined) {
   const orders = await db.order.findMany({
     where: {
       user_id: id,

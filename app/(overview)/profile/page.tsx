@@ -6,6 +6,7 @@ import { LockClosedIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { Metadata } from "next";
 import { auth } from "@/app/auth";
+
 const Page = async () => {
   const session = await auth();
   const email = session?.user?.email;

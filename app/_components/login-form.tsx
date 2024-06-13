@@ -4,9 +4,10 @@ import InputGroup from "./inputGroup";
 import { authenticate } from "../_lib/action";
 import { useFormState } from "react-dom";
 import { Label } from "@headlessui/react";
+import { LoginError } from "../_lib/definition";
 export default function LoginForm() {
-
-  const [state, dispatch] = useFormState(authenticate, null);
+  const initial:LoginError={message:""}
+  const [state, dispatch] = useFormState(authenticate, initial);
   return (
     <div className={"p-6 border rounded-md"}>
       <form action={dispatch}>
