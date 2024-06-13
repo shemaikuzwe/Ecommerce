@@ -3,7 +3,7 @@ import { getProducts, getSearchProduct } from "@/app/_lib/action";
 import ButtonLink from "@/app/_components/Link";
 import { Suspense } from "react";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
-import { CardSkelton } from "../_components/skeltons";
+import {CardSkelton} from "../_components/skeltons";
 import { auth } from "../auth";
 
 export default async function Page({
@@ -18,6 +18,7 @@ export default async function Page({
     products = await getSearchProduct(search);
   }
   return (
+     
     <div className="p-14">
       <center>
         <span className="text-center font-bold text-2xl">

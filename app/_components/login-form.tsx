@@ -3,7 +3,6 @@ import { useFormStatus } from "react-dom";
 import InputGroup from "./inputGroup";
 import { authenticate } from "../_lib/action";
 import { useFormState } from "react-dom";
-import { Label } from "@headlessui/react";
 import { LoginError } from "../_lib/definition";
 export default function LoginForm() {
   const initial:LoginError={message:""}
@@ -23,7 +22,7 @@ export default function LoginForm() {
           label={"password"}
           placeholder={"Enter your password"}
         />
-        {state && <label className=" text-red-500"> {state}</label>}
+        {state && <label className=" text-red-500"> {state.message}</label>}
         <center>
           <LoginButton />
         </center>

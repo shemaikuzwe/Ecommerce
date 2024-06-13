@@ -44,7 +44,7 @@ export default function Page() {
   return (
     <div className="flex flex-col p-14 w-6/12 mx-auto border border-gray-300 rounded-md gap-2">
       {state && (
-        <Alert severity={state.status=="success"?"success":"error"}>
+        <Alert severity={state.status}>
           {state.message}{" "}
           {state.status == "success" && (
             <Link href="/orders" className=" underline">
@@ -85,7 +85,7 @@ export default function Page() {
                   readOnly={true}
                 />
               </span>
-              {status =="authenticated" ? <LoginLink /> : <LoginBtn />}
+              {status =="authenticated" ? <OrderBtn /> : <LoginLink />}
             </form>
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function Page() {
     </div>
   );
 }
-function LoginBtn() {
+function OrderBtn() {
   const { pending } = useFormStatus();
   return (
     <Button

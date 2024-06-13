@@ -1,5 +1,5 @@
-import DashboardSkeleton from "../_components/skeltons";
+import RootSkelton from "../_components/skeltons";
 
 export default function Loading() {
-  return <DashboardSkeleton />;
+  return <RootSkelton/>
 }

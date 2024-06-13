@@ -55,7 +55,7 @@ export default function Navbar() {
             </span>
           </Link>
         </li>
-        <li>{status == "unauthenticated" ? <LoginLink /> : <User />}</li>
+        <li>{status == "authenticated" ? <User /> : <LoginLink />}</li>
       </ul>
     </div>
   );
