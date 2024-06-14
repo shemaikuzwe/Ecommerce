@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { ProductsSkeleton } from "../_components/skeltons";
 import { auth } from "../auth";
-import Products from "./_components/products";
+import Products from "./products";
 
 export default async function Page({
   searchParams,
@@ -23,9 +23,9 @@ export default async function Page({
         </span>
       </center>
       {
-        <Suspense fallback={<ProductsSkeleton />}>
+        
           <Products search={search} />
-        </Suspense>
+       
       }
 
       <center>

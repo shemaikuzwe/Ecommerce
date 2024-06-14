@@ -1,9 +1,7 @@
-import Search from "@/app/_components/search";
 import { getProducts, getSearchProduct } from "@/app/_lib/action";
-import { Suspense } from "react";
 import ProductCard from "@/app/_components/productCard";
 import { getAllProducts } from "@/app/_lib/action";
-import { CardSkelton } from "@/app/_components/skeltons";
+import Pagination from "@/app/_components/pagination";
 export default async function Products({
   search,
   page,
@@ -13,32 +11,59 @@ export default async function Products({
   page: number;
   query: string;
 }) {
-  let products = await getProducts();
-  if (query) {
-    products = await getProducts(query);
+  let products = await getAllProducts();
+  if(query){
+    if(query=="All"){
+      products=products;
+    }
+    else{
+      products=products.filter(product =>product.type==query);
+    }
+    
   }
-  if (page) {
-    const index = page - 1;
-    const skip = index * 4;
-    products = await getAllProducts(skip);
-  }
+  // if (query) {
+  //   products = await getProducts(query);
+  // }
+  // if (page) {
+  //   const index = page - 1;
+  //   const skip = index * 4;
+  //   products = await getAllProducts(skip);
+  // }
   if (search) {
     products = await getSearchProduct(search);
   }
-  const no_of_products = products.length;
-  console.log(no_of_products);
 
+  const no_of_products = products.length;
+  const no_of_pages = Math.ceil(no_of_products / 4);
+  const pages = [];
+  for (let i = 1; i <= no_of_pages; i++) {
+    pages.push(i);
+  }
+  const itemsPerPage = 4;
+  let start=0;
+  let end=4;
+  if (page) {
+     start = (page-1) * itemsPerPage;
+     end = start + itemsPerPage;
+  }
+ const prod=products.slice(start,end);
   return (
-    <div className={"flex flex-wrap gap-2 mt-10"}>
-      {products && products.length > 0 ? (
-        products.map((product) => (
+   <div>
+      <div className={"flex flex-wrap  gap-2 mt-10"}>
+      {prod && prod.length > 0 ? (
+        prod.map((product) => (
           <ProductCard product={product} key={product.id} />
         ))
       ) : (
         <center className=" text-xl text-center mt-24">
           No products found
         </center>
-      )}
+      )}  
     </div>
+    <center className={"mt-4 ml-80 flex justify-center items-center"}>
+       {no_of_pages >2 && <Pagination pages={pages} />}
+      
+      </center>
+   </div>
   );
 }

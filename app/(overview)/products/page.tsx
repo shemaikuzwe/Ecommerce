@@ -21,13 +21,9 @@ export default async function Page({
   const search: string|undefined = searchParams?.search;
   const page: number|undefined = searchParams?.page;
   // const options=await getOptions(); 
-  const no_of_products = await paginate();
-  const no_of_pages = Math.ceil(no_of_products / 4);
+  
 
-  const pages = [];
-  for (let i = 1; i <= no_of_pages; i++) {
-    pages.push(i);
-  }
+  
   const options = ["All", "t-shirt", "pants", "shoes"];
 
   return (
@@ -43,10 +39,7 @@ export default async function Page({
            <Products search={search} query={query} page={page}/>
         </Suspense>}
       </div>
-      <center className={"mt-4"}>
-        {" "}
-        <Pagination pages={pages} />
-      </center>
+     
     </div>
   );
 }

@@ -49,9 +49,10 @@ export default function Pagination({ pages }: { pages: number[] }) {
       {pages.map((page, index) => (
         <button
           key={index}
+          disabled={currentPage == index+1}
           onClick={() => setCurrentPage(page)}
           className={
-            "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md"
+            "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md disabled:cursor-not-allowed disabled:bg-indigo-400"
           }
         >
           {page}

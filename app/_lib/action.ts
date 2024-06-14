@@ -56,9 +56,7 @@ export async function addProduct(prevState: State, formData: FormData) {
 
 export async function getProducts(query?: string | null) {
   no_store();
-  let products = await db.product.findMany({
-    take: 4,
-  });
+  let products = await db.product.findMany();
   if (query == "All") {
     products = await db.product.findMany({
       take: 4,
@@ -183,11 +181,8 @@ export async function getSearchProduct(search: string) {
 }
 export async function getAllProducts(skip: number = 0) {
   no_store();
-  const take = 4;
-  let products = await db.product.findMany({
-    skip: skip,
-    take: take,
-  });
+  
+  let products = await db.product.findMany();
 
   return products;
 }
