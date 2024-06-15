@@ -6,15 +6,16 @@ import { LinearProgress } from "@mui/material";
 export function CardSkelton() {
   return (
     <Box >
-      <Skeleton variant="rectangular" width={230} height={230} />
+      <Skeleton variant="rectangular" width={250} height={250} />
       <Skeleton animation="wave" width={200} height={30} />
       <Skeleton animation="wave" width={200} height={30} />
+      <Skeleton animation="wave" width={100} height={30} />
     </Box>
   );
 }
 export function ProductsSkeleton() {
   return (
-    <div className={"flex flex-wrap gap-2 mt-10"}>
+    <div className={"flex flex-wrap gap-3 mt-10"}>
       <CardSkelton />
       <CardSkelton />
       <CardSkelton />

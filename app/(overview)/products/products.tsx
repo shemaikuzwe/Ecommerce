@@ -1,4 +1,3 @@
-import { getProducts, getSearchProduct } from "@/app/_lib/action";
 import ProductCard from "@/app/_components/productCard";
 import { getAllProducts } from "@/app/_lib/action";
 import Pagination from "@/app/_components/pagination";
@@ -21,18 +20,10 @@ export default async function Products({
     }
     
   }
-  // if (query) {
-  //   products = await getProducts(query);
-  // }
-  // if (page) {
-  //   const index = page - 1;
-  //   const skip = index * 4;
-  //   products = await getAllProducts(skip);
-  // }
-  if (search) {
-    products = await getSearchProduct(search);
-  }
-
+    if (search) {
+      
+      products = products.filter(product => product.type.toLocaleLowerCase().includes(search) || product.description.toLocaleLowerCase().includes(search) || product.name.toLocaleLowerCase().includes(search));
+    }
   const no_of_products = products.length;
   const no_of_pages = Math.ceil(no_of_products / 4);
   const pages = [];
@@ -61,7 +52,7 @@ export default async function Products({
       )}  
     </div>
     <center className={"mt-4 ml-80 flex justify-center items-center"}>
-       {no_of_pages >2 && <Pagination pages={pages} />}
+       {no_of_pages >1 && <Pagination pages={pages} />}
       
       </center>
    </div>
