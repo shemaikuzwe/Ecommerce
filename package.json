@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start"
-
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.1.0",
@@ -19,7 +18,6 @@
     "@prisma/client": "^5.14.0",
     "@reduxjs/toolkit": "^2.2.4",
     "clsx": "^2.1.1",
-    "eslint-plugin-disable": "^2.0.3",
     "heroicons": "^2.1.3",
     "next": "14.2.3",
     "next-auth": "^5.0.0-beta.18",

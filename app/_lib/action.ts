@@ -13,7 +13,7 @@ import { OrderState } from "./definition";
 const db = new PrismaClient();
 const fileSchema = z.instanceof(File, { message: "please upload image" });
 const ProductSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   product: z.string().min(1, { message: "Enter product name" }),
   description: z.string().min(1, { message: "Enter product description" }),
   type: z.string().min(1, { message: "Enter product type" }),
@@ -104,7 +104,7 @@ export async function getProduct(id: string) {
 }
 
 const EditProduct = ProductSchema.omit({ id: true, image: true });
-export async function editProduct(formData: FormData, id: number) {
+export async function editProduct(formData: FormData, id: string) {
   const validate = EditProduct.safeParse({
     product: formData.get("product"),
     price: formData.get("price"),
@@ -118,10 +118,9 @@ export async function editProduct(formData: FormData, id: number) {
     };
   }
   const { product, description, price, type } = validate.data;
-  const prodId = parseInt(id);
   await db.product.update({
     where: {
-      id: prodId,
+      id: id,
     },
 
     data: {

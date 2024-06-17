@@ -6,16 +6,13 @@ export type Items = {
   quantity: number;
   name: string;
 };
-// function storage() {
-//   const cart = localStorage.getItem("cart");
-//   if (cart == null) return [];
-//   return JSON.parse(cart);
-// }
-// const initialData = storage();
+// const storedCart = localStorage.getItem("cart");
+// const initialData = storedCart ? JSON.parse(storedCart) : [];
+
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    itemsList: [{}],
+    itemsList:[],
   },
   reducers: {
     addToCart(state, action) {
