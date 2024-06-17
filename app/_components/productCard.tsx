@@ -1,8 +1,7 @@
 "use client"
 import Image from "next/image";
 import Button from "@/app/_components/button";
-import { Product } from "@/app/_lib/definition";
-import { CheckCircleIcon,XCircleIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon,TrashIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "../_store/cartSlice";
 
@@ -45,8 +44,8 @@ export default function ProductCard({ product }) {
         onClick={isAdded()? handleRemoveFromCart:handleAddToCart}
           name={isAdded()?"Remove":"Add to cart"}
           type={"button"}
-           
-          icon={isAdded()? <XCircleIcon width={"25"} height={"25"} />:<CheckCircleIcon width={"25"} height={"25"} />}
+           danger={isAdded()}
+          icon={isAdded()? <TrashIcon width={"25"} height={"22"} />:<CheckCircleIcon width={"25"} height={"25"} />}
         />
       </div>
     </div>
