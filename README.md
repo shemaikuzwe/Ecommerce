@@ -44,4 +44,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ![Screenshot 2024-06-13 185445](https://github.com/shemaikuzwe/Ecommerce/assets/130182097/471a8599-e96d-4af6-ae06-303254728422)
 
-this is the link to my website https://ecommerce-seven-rho-87.vercel.app
+this is the link to my website https://ecommerce-seven-87.vercel.app/
