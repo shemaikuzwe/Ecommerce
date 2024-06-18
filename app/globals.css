@@ -2,21 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-.danger{
+.danger {
     @apply bg-red-600
 }
+
 .table {
     @apply border w-[100vh] text-center
 }
-.table  thead{
+
+.table thead {
     @apply bg-black text-white
 }
-.table  tr,td{
+
+.table tr, td {
     @apply p-1 border
 }
-.btn{
-    @apply flex mt-5 gap-2 px-1  max-w-[25vh] py-1.5 text-white rounded-md
+
+.btn {
+    @apply flex mt-5 gap-2 px-1 max-w-[25vh] py-1.5 text-white rounded-md
 }
-.btn-primary{
-    @apply  bg-indigo-600
+
+.btn-primary {
+    @apply bg-indigo-600 flex  gap-2 px-2 max-w-[15vh] py-1.5 text-white rounded-md
 }

@@ -25,7 +25,7 @@ export default function Button({
         onClick={onClick}
         type={type}
         disabled={status}
-        className={`flex mt-5 gap-2 px-1 ${danger?" bg-red-700":"bg-indigo-600"}  disabled:bg-indigo-300
+        className={`flex mt-5 gap-2 px-2.5 ${danger?" bg-red-700":"bg-indigo-600"}  disabled:bg-indigo-300
          disabled:cursor-not-allowed max-w-[25vh] py-1.5 text-white rounded-md`}
       >
         {icon}

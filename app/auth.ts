@@ -1,10 +1,9 @@
-import NextAuth, { Session } from "next-auth";
+import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import credentials from "next-auth/providers/credentials";
 import { getUser } from "./_lib/action";
-import Resend from "next-auth/providers/resend"
 const prisma = new PrismaClient();
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -14,7 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: {},
         password: {},
       },
-      authorize: async (credentials) => {
+     authorize: async (credentials: { email: string, password: string }) => {
         let user = null;
         user = await getUser(credentials.email, credentials.password);
         return user;
@@ -23,25 +22,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+      
     }),
   ],
   pages: {
     signIn: "/login",
+    error:"/login/error"
   },
   session: {
     strategy: "jwt",
   },
-
   callbacks: {
-    // async authorized({ auth, request: { nextUrl } }) {
-    //   const isLoggedIn = !!auth?.user;
-    //   const isOnLogin = nextUrl.pathname.startsWith("/login");
-    //   if (isOnLogin && isLoggedIn) {
-    //     return Response.redirect(new URL("/", nextUrl));
-    //   }
-    //   return true;
-    // },
-    
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -52,8 +43,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.id = token.id;
       return session;
     },
-    async redirect({url,baseUrl}) {
-        return url.startsWith(baseUrl)? baseUrl:url
+   async authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      const isOnLogin = nextUrl.pathname.startsWith("/login");
+      if (isOnLogin && isLoggedIn) {
+        return Response.redirect(new URL("/", nextUrl));
+      }
+      return true;
     },
   },
 });
