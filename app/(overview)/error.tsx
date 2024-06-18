@@ -16,7 +16,7 @@ export default function Error({
   </div>
  
   <center>
-  <span className=" text-center font-medium ">Something went wrong</span>
+  <span className=" text-center  text-xl font-medium ">Something went wrong</span>
   </center>
   <center>
           <Button icon={<ArrowPathIcon width={20} height={20} className=" text-white"/>} onClick={() => reset()} name="Retry" type="button" />

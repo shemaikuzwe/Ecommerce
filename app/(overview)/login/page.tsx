@@ -6,7 +6,7 @@ import { Metadata } from "next";
 export default function Page() {
   return (
     <>
-      <div className="flex-col  mx-auto justify-center items-center  h-screen m-14 w-[50vh]">
+      <div className="flex-col  mx-auto justify-center items-center  h-screen m-14 w-[55vh]">
         <LoginForm />
         <Google />
       </div>

@@ -14,7 +14,7 @@ export default function ButtonLink({
     <>
       <Link
         href={to}
-        className="flex mt-5  py-2  px-4 max-w-[20vh] bg-indigo-500  text-white rounded-md"
+        className="flex mt-5  py-2  px-4 max-w-[20vh] bg-indigo-600  text-white rounded-md"
       >
         {icon}
         {name}
