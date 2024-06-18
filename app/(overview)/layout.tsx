@@ -1,15 +1,17 @@
 "use client";
 import { ReactNode, useEffect } from "react";
 import Navbar from "@/app/_components/navbar";
-import { RootState } from "../_store/store";
-import { useAppSelector } from "../_store/hook";
+import { useAppDispatch} from "../_store/hook";
+import useStorage from "../_store/storage";
+import { cartAction } from "../_store/cartSlice";
+
 
 export  default   function Layout({ children }: { children: ReactNode }) {
-  const cart = useAppSelector((state: RootState) => state.cart.itemsList);
-  // useEffect(() => {
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  // }, [cart]);
-
+  const dispatch=useAppDispatch()
+const items=useStorage()
+useEffect(()=>{
+  dispatch(cartAction.setCart(items))
+},[])
   return (
     <div>
       <div>

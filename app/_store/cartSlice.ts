@@ -55,6 +55,9 @@ const cartSlice = createSlice({
     removeAll(state) {
       state.itemsList = [];
     },
+    setCart(state,action){
+      state.itemsList=action.payload
+    }
   },
 });
 export const cartAction = cartSlice.actions;
