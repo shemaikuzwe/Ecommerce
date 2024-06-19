@@ -1,2 +1,3 @@
 To run the app First do npm i
-  npm run dev
+ devlopment server npm run dev
+Build the app  npm run dev
