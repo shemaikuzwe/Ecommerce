@@ -226,8 +226,9 @@ export async function authenticate(prevState: LoginError, formData: FormData) {
     } else {
       return { message: "some thing went wrong" };
     }
+      throw error
   }
-  throw error
+
 }
 export async function getAllUsers() {
   no_store();
