@@ -12,18 +12,19 @@ import { Suspense } from "react";
 import { ProductsSkeleton } from "@/app/_components/skeltons";
 import Products from "./products";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: { query?: string; search?: string; page?: number };
-}) {
+export default async function Page(
+  props: {
+    searchParams?: Promise<{ query?: string; search?: string; page?: number }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const query: string|undefined = searchParams?.query;
   const search: string|undefined = searchParams?.search;
   const page: number|undefined = searchParams?.page;
   // const options=await getOptions(); 
-  
 
-  
+
+
   const options = ["All", "t-shirt", "pants", "shoes"];
 
   return (

@@ -2,7 +2,8 @@ import InputGroup from "@/app/_components/inputGroup";
 import Button from "@/app/_components/button";
 import { editProduct, getProduct } from "@/app/_lib/action";
 
-export default async function Page({ params }: { params: { id: number } }) {
+export default async function Page(props: { params: Promise<{ id: number }> }) {
+  const params = await props.params;
   const id = params.id;
   const data = await getProduct(id);
   const product = data[0];
