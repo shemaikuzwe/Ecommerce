@@ -1,5 +1,5 @@
 "use client";
-import { paginate } from "@/app/_lib/action";
+import { paginate } from "@/lib/action";
 import {
   usePathname,
   useRouter,

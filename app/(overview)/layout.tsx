@@ -1,9 +1,9 @@
 "use client";
 import { ReactNode, useEffect } from "react";
-import Navbar from "@/app/_components/navbar";
-import { useAppDispatch} from "../_store/hook";
-import useStorage from "../_store/storage";
-import { cartAction } from "../_store/cartSlice";
+import Navbar from "@/components/navbar";
+import { useAppDispatch} from "@/store/hook";
+import useStorage from "@/store/storage";
+import { cartAction } from "@/store/cartSlice";
 
 
 export  default   function Layout({ children }: { children: ReactNode }) {

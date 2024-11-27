@@ -1,10 +1,11 @@
 {
-  "name": "Ecommerce",
+  "name": "urban-deals-shop",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
     "start": "next start"
   },
   "dependencies": {

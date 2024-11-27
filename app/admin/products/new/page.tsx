@@ -1,7 +1,7 @@
 "use client";
-import InputGroup from "@/app/_components/inputGroup";
-import Button from "@/app/_components/button";
-import { addProduct } from "@/app/_lib/action";
+import InputGroup from "@/components/inputGroup";
+import Button from "@/components/button";
+import { addProduct } from "@/lib/action";
 import { useFormState } from "react-dom";
 
 export default function Page() {

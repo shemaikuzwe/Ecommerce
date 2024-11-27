@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
 import OrdersProducts from "./ordersProducts";
-import { Order } from "../_lib/definition";
+import { Order } from "@/lib/definition";
 
 const OrdersCard = ({ order }) => {
   const { id, user_id, products, total_price, date, status }: Order = order;

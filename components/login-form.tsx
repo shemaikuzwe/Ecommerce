@@ -1,9 +1,9 @@
 "use client";
 import { useFormStatus } from "react-dom";
 import InputGroup from "./inputGroup";
-import { authenticate } from "../_lib/action";
+import { authenticate } from "@/lib/action";
 import { useFormState } from "react-dom";
-import { LoginError } from "../_lib/definition";
+import { LoginError } from "@/lib/definition";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 export default function LoginForm() {
   const initial:LoginError={message:""}

@@ -1,7 +1,7 @@
 "use client";
 import { useFormStatus } from "react-dom";
 import InputGroup from "./inputGroup";
-import { createPassword } from "../_lib/action";
+import { createPassword } from "@/lib/action";
 import { useFormState } from "react-dom";
 import { useSession } from "next-auth/react";
 

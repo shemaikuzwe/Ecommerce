@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import Providers from "./_store/providers";
+import Providers from "@/store/providers";
 import { SessionProvider } from "next-auth/react";
 const poppins = Poppins({ subsets: ["latin"], weight: ["400"] });
 

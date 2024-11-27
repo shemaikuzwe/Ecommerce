@@ -1,7 +1,6 @@
-"use server";
-import ProductsTable from "@/app/_components/productsTable";
+import ProductsTable from "@/components/productsTable";
 import Link from "next/link";
-import { getProducts } from "@/app/_lib/action";
+import { getProducts } from "@/lib/action";
 
 export default async function Page() {
   const products = await getProducts();

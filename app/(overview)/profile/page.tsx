@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import InputGroup from "@/app/_components/inputGroup";
-import ButtonLink from "@/app/_components/Link";
+import InputGroup from "@/components/inputGroup";
+import ButtonLink from "@/components/Link";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { Metadata } from "next";

@@ -1,6 +1,6 @@
 "use server";
 import React, { Suspense } from "react";
-import { getProducts } from "../_lib/action";
+import { getProducts } from "@/lib/action";
 import ProductCard from "./productCard";
 
 const Products = async () => {

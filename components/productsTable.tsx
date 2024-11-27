@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Product } from "@/app/_lib/definition";
-import Button, { Remove } from "@/app/_components/button";
-import ButtonLink from "@/app/_components/Link";
+import { Product } from "@/lib/definition";
+import Button, { Remove } from "@/components/button";
+import ButtonLink from "@/components/Link";
 
 export default function ProductsTable(products: Product) {
   return (

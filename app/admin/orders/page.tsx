@@ -1,4 +1,4 @@
-import OrdersTable from "@/app/_components/OrdersTable";
+import OrdersTable from "@/components/OrdersTable";
 
 export default function Page(){
     return(

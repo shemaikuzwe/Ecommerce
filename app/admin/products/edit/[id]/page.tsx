@@ -1,11 +1,11 @@
-import InputGroup from "@/app/_components/inputGroup";
-import Button from "@/app/_components/button";
-import { editProduct, getProduct } from "@/app/_lib/action";
+import InputGroup from "@/components/inputGroup";
+import Button from "@/components/button";
+import { editProduct, getProduct } from "@/lib/action";
 
-export default async function Page(props: { params: Promise<{ id: number }> }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
-  const id = params.id;
-  const data = await getProduct(id);
+  const id = params.id ;
+  const data = await getProduct(id!);
   const product = data[0];
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 import { ArrowPathIcon, ExclamationTriangleIcon, } from "@heroicons/react/24/solid";
-import Button from "../_components/button";
+import Button from "@/components/button";
 export default function Error({
   error,
   reset,

@@ -1,7 +1,7 @@
 "use client";
-import OrdersCard from "@/app/_components/ordersCard";
+import OrdersCard from "@/components/ordersCard";
 import React, { useEffect, useState } from "react";
-import { Order } from "../_lib/definition";
+import { Order } from "@/lib/definition";
 
 const Orders = ({ order }) => {
   const [items, setItems] = useState("All");

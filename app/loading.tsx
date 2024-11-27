@@ -1,4 +1,4 @@
-import RootSkelton from "./_components/skeltons"
+import RootSkelton from "@/components/skeltons"
 
 export default function Loading() {
   return <RootSkelton/>

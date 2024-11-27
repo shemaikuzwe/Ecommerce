@@ -1,9 +1,9 @@
 "use client"
 import Image from "next/image";
-import Button from "@/app/_components/button";
+import Button from "@/components/button";
 import { CheckCircleIcon,TrashIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { cartAction } from "../_store/cartSlice";
+import { cartAction } from "@/store/cartSlice";
 
 
 export default function ProductCard({ product }) {

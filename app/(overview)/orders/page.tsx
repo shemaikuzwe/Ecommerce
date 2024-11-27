@@ -1,5 +1,5 @@
-import Orders from "@/app/_components/orders";
-import { getOrders } from "@/app/_lib/action";
+import Orders from "@/components/orders";
+import { getOrders } from "@/lib/action";
 import { auth } from "@/app/auth";
 
 export default async function Page() {

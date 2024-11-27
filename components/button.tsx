@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import { deleteProduct } from "@/app/_lib/action";
+import { deleteProduct } from "@/lib/action";
 
 export default function Button({
   name,

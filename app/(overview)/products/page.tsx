@@ -1,15 +1,15 @@
-import ProductCard from "@/app/_components/productCard";
+import ProductCard from "@/components/productCard";
 import {
   getAllProducts,
   getProducts,
   getSearchProduct,
   paginate,
-} from "@/app/_lib/action";
-import Select from "@/app/_components/select";
-import Pagination from "@/app/_components/pagination";
+} from "@/lib/action";
+import Select from "@/components/select";
+import Pagination from "@/components/pagination";
 import { Metadata } from "next";
 import { Suspense } from "react";
-import { ProductsSkeleton } from "@/app/_components/skeltons";
+import { ProductsSkeleton } from "@/components/skeltons";
 import Products from "./products";
 
 export default async function Page(

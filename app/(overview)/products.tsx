@@ -1,8 +1,8 @@
-import Search from "@/app/_components/search";
-import { getProducts, getSearchProduct } from "@/app/_lib/action";
+import Search from "@/components/search";
+import { getProducts, getSearchProduct } from "@/lib/action";
 import { Suspense } from "react";
-import ProductCard from "@/app/_components/productCard";
-import { CardSkelton } from "@/app/_components/skeltons";
+import ProductCard from "@/components/productCard";
+import { CardSkelton } from "@/components/skeltons";
 export default async function Products({
   search,
 }: {

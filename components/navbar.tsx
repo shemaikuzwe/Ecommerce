@@ -3,14 +3,12 @@ import Link from "next/link";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { HomeIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import Search from "@/app/_components/search";
-import { useAppSelector,useAppStore,useAppDispatch } from "../_store/hook";
+import Search from "@/components/search";
+import { useAppSelector } from "@/store/hook";
 import User from "./user";
 import { useSession } from "next-auth/react";
 import LoginLink from "./login-link";
-import { useState } from "react";
-import { useRef } from "react";
-import { RootState } from "../_store/store";
+import { RootState } from "@/store/store";
 
 export default function Navbar() {
  

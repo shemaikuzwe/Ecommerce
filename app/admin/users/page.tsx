@@ -1,5 +1,5 @@
 
-import { getAllUsers } from "@/app/_lib/action";
+import { getAllUsers } from "@/lib/action";
 import Image from "next/image";
 export default async function Page() {
   const users = await getAllUsers();
@@ -22,7 +22,7 @@ export default async function Page() {
           {users && users.length ? (
             users.map((user) => (
               <tr key={user.id}>
-                <td><Image src={user.image} alt={user.name} width={50} height={50}/></td>
+                <td><Image src={user.image!} alt={user.name!} width={50} height={50}/></td>
                 <td></td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>

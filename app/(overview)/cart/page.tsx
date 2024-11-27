@@ -1,19 +1,19 @@
 "use client";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { BookmarkIcon } from "@heroicons/react/16/solid";
-import Cart from "@/app/_components/cart";
-import Button from "@/app/_components/button";
+import Cart from "@/components/cart";
+import Button from "@/components/button";
 import { useEffect, useState } from "react";
-import { cartAction, Items } from "@/app/_store/cartSlice";
+import { cartAction, Items } from "@/store/cartSlice";
 import Alert from "@mui/material/Alert";
-import { addOrder } from "@/app/_lib/action";
+import { addOrder } from "@/lib/action";
 import { useFormState, useFormStatus } from "react-dom";
 import { useSession } from "next-auth/react";
-import LoginLink from "@/app/_components/login-link";
+import LoginLink from "@/components/login-link";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/app/_store/hook";
-import { RootState } from "@/app/_store/store";
-import { OrderState } from "@/app/_lib/definition";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { RootState } from "@/store/store";
+import { OrderState } from "@/lib/definition";
 export default function Page() {
   const session = useSession();
   const status = session.status;

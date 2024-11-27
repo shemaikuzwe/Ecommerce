@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { customerCount, productsCount } from "@/app/_lib/action";
+import { customerCount, productsCount } from "@/lib/action";
 
 export default async function Dashboard() {
   const noOfProducts = await productsCount();
