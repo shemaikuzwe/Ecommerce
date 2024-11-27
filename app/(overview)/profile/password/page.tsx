@@ -1,15 +1,16 @@
 "use client";
 import React from "react";
-import InputGroup from "@/app/_components/inputGroup";
+import InputGroup from "@/components/inputGroup";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
-import { useFormState, useFormStatus } from "react-dom";
-import { changePassword } from "@/app/_lib/action";
+import { useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { changePassword } from "@/lib/action";
 import { useSession } from "next-auth/react";
 import { Alert } from "@mui/material";
 import Link from "next/link";
 const Page = () => {
   const initial = { type: null, message: null };
-  const [state, dispatch] = useFormState(changePassword, initial);
+  const [state, dispatch] = useActionState(changePassword, initial);
   const session = useSession();
   const userId = session?.data?.user?.id;
  

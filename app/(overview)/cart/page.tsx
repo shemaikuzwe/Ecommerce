@@ -5,7 +5,7 @@ import Cart from "@/components/cart";
 import Button from "@/components/button";
 import { useEffect, useState } from "react";
 import { cartAction, Items } from "@/store/cartSlice";
-import Alert from "@mui/material/Alert";
+
 import { addOrder } from "@/lib/action";
 import { useFormState, useFormStatus } from "react-dom";
 import { useSession } from "next-auth/react";
@@ -43,7 +43,8 @@ export default function Page() {
 
   return (
     <div className="flex flex-col p-14 w-6/12 mx-auto border border-gray-300 rounded-md gap-2">
-      {state && (
+      {/*TODO: Using schadn alert */}
+      {/* {state && (
         <Alert severity={state.status}>
           {state.message}{" "}
           {state.status == "success" && (
@@ -52,7 +53,7 @@ export default function Page() {
             </Link>
           )}{" "}
         </Alert>
-      )}
+      )} */}
       {cart && cart.length ? (
         <div>
           <div className=" flex justify-end items-end mb-2 ">

@@ -1,12 +1,9 @@
-import Search from "@/components/search";
 import { getProducts, getSearchProduct } from "@/lib/action";
-import { Suspense } from "react";
 import ProductCard from "@/components/productCard";
-import { CardSkelton } from "@/components/skeltons";
 export default async function Products({
   search,
 }: {
-  search:string;
+  search:string|undefined;
 }) {
   let products = await getProducts();
   if (search) {

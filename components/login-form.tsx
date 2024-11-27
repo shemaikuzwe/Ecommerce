@@ -2,12 +2,10 @@
 import { useFormStatus } from "react-dom";
 import InputGroup from "./inputGroup";
 import { authenticate } from "@/lib/action";
-import { useFormState } from "react-dom";
-import { LoginError } from "@/lib/definition";
+import { useActionState } from "react";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 export default function LoginForm() {
-  const initial:LoginError={message:""}
-  const [state, dispatch] = useFormState(authenticate, initial);
+  const [state, dispatch,isPending] = useActionState(authenticate, undefined);
   return (
     <div className={"p-6 border rounded-md"}>
       <form action={dispatch} >

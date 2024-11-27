@@ -53,7 +53,7 @@ export async function addProduct(prevState: State, formData: FormData) {
   redirect("/admin/products");
 }
 
-export async function getProducts(query?: string | null) {
+export async function getProducts(query?: string) {
   no_store();
   let products = await db.product.findMany();
   if (query == "All") {
@@ -217,16 +217,15 @@ type State = {
 //     message: "This field is required"
 //   })
 // })
-export async function authenticate(prevState: LoginError, formData: FormData) {
+export async function authenticate(prevState: LoginError |undefined, formData: FormData):Promise<LoginError|undefined> {
   try {
     await signIn("credentials", formData);
   } catch (error) {
     if (error instanceof CredentialsSignin) {
       return { message: "Invalid credentials" };
     } else {
-      return { message: "some thing went wrong" };
+      return { message: "something went wrong" };
     }
-      throw error
   }
 
 }
@@ -239,9 +238,9 @@ const initial = { status: "", message: "" };
 
 export async function addOrder(prevState: OrderState, formData: FormData) {
   try {
-    const cart = formData.get("cart");
-    const totalPrice = formData.get("totalPrice");
-    const userId = formData.get("userId");
+    const cart = formData.get("cart") as string;
+    const totalPrice = formData.get("totalPrice") as string;
+    const userId = formData.get("userId") as string;
 
     await db.order.create({
       data: {
@@ -287,9 +286,9 @@ export async function getOrders(id: string | undefined) {
 // }
 
 export async function createPassword(prevState: null, formData: FormData) {
-  const password = formData.get("password");
-  const cpassword = formData.get("cpassword");
-  const id = formData.get("id");
+  const password = formData.get("password") as string;
+  const cpassword = formData.get("cpassword") as string;
+  const id = formData.get("id") as string;
   if (cpassword === password) {
     await db.user.update({
       where: {
@@ -308,10 +307,10 @@ export async function changePassword(
   prevState: { type: null; message: null },
   formData: FormData
 ) {
-  const password = formData.get("password");
-  const newPassword = formData.get("newPassword");
-  const cpassword = formData.get("cpassword");
-  const userId = formData.get("userId");
+  const password = formData.get("password") as string;
+  const newPassword = formData.get("newPassword") as string;
+  const cpassword = formData.get("cpassword") as string;
+  const userId = formData.get("userId") as string;
   console.log(password, newPassword, cpassword, userId);
 
   if (newPassword == cpassword) {

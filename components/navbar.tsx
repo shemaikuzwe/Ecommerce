@@ -1,60 +1,146 @@
-"use client";
-import Link from "next/link";
-import { ShoppingBagIcon } from "@heroicons/react/24/outline";
-import { HomeIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
-import Search from "@/components/search";
-import { useAppSelector } from "@/store/hook";
-import User from "./user";
-import { useSession } from "next-auth/react";
-import LoginLink from "./login-link";
-import { RootState } from "@/store/store";
+"use client"
 
-export default function Navbar() {
- 
+import * as React from "react"
+import Link from "next/link"
+import { Menu, ShoppingBag, User } from 'lucide-react'
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { ModeToggle } from "@/components/mode-toggle"
+import { Home } from "lucide-react";
+import { ShoppingCart } from "lucide-react"
+const Links = [
+  { name: "Home", href: "/",icon:<Home className="h-5 w-5"/> },
+  { name: "Products", href: "/products",icon:<ShoppingCart className="h-5 w-5"/> },
+]
+
+export function Navbar() {
   
-  const Links = [
-    { name: "Home", href: "/", icon: HomeIcon },
-    { name: "Products", href: "/products", icon: ShoppingCartIcon },
-  ];
-  // const store=useAppStore();
-  // const initial=useRef(false);
-  // if(!initial.current){
-  //   store.dispatch()
-  // }
-  const cart = useAppSelector((state: RootState) => state.cart.itemsList);
-  const session = useSession();
-  const status = session.status;
+  const [isOpen, setIsOpen] = React.useState(false)
+
   return (
-    <div className="flex justify-between bg-indigo-600 m-0.5 rounded-md text-white">
-      <div className="flex gap-2 m-2">
-        <Link href="/" className="text-xl font-bold">
-          <Image src="/logo.png" alt="logo" width={80} height={80} />
-        </Link>
-      </div>
-      <div className="m-2 flex gap-3 h-12 bg-white p-2 rounded-md text-black ring-1 ring-inset ring-gray-300 focus:ring-inset focus:ring-indigo-600">
-        <Search />
-      </div>
-      <ul className="flex justify-evenly p-3 list-none">
-        {Links.map((link) => (
-          <li key={link.name}>
-            <Link href={link.href} className="flex p-3 gap-2">
-              <link.icon className="w-6 h-6 cursor-pointer" />
-              {link.name}
+    <nav className="bg-background border-b h-20 py-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <Link href="/" className="flex-shrink-0">
+            <Image src={"/logo.png"} height={100} width={100} alt="logo"/>
             </Link>
-          </li>
-        ))}
-        <li>
-          <Link href="/cart" className="flex p-3 gap-1">
-            <ShoppingBagIcon className="w-6 h-6" />
-            <span className="font-medium">Cart</span>
-            <span className="bg-red-500 px-2 py-0.5 h-7 rounded">
-              {cart?.length}
-            </span>
-          </Link>
-        </li>
-        <li>{status == "authenticated" ? <User /> : <LoginLink />}</li>
-      </ul>
-    </div>
-  );
+          </div>
+          <div className="hidden md:block">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {Links.map((link) => (
+                  <NavigationMenuItem key={link.name}>
+                    <NavigationMenuLink href={link.href} className="px-3 flex gap-1 py-2 rounded-md text-sm font-medium">
+                      {link.icon}
+                      {link.name}
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+          <div className="hidden md:flex items-center space-x-4">
+            <Link href="/cart" className="flex items-center space-x-1">
+              <ShoppingBag className="h-5 w-5" />
+              <span className="text-sm font-medium">Cart</span>
+            </Link>
+            {status === "authenticated" ? (
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>
+                      <User className="h-6 w-6" />
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid gap-3 p-4 w-[200px]">
+                        <li>
+                          <NavigationMenuLink href="/profile">Profile</NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink href="/orders">Orders</NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink href="/api/auth/signout">Sign out</NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            ) : (
+              <Button asChild variant="ghost">
+                <Link href="/api/auth/signin">Sign in</Link>
+              </Button>
+            )}
+            <ModeToggle />
+          </div>
+          <div className="md:hidden flex items-center">
+            <ModeToggle />
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" className="ml-2">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <div className="flex flex-col space-y-4 mt-4">
+                  {Links.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className="px-3 py-2 rounded-md text-sm font-medium"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/cart"
+                    className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <ShoppingBag className="h-6 w-6" />
+                    <span>Cart</span>
+                  </Link>
+                  {status === "authenticated" ? (
+                    <>
+                      <Link href="/profile" className="px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                        Profile
+                      </Link>
+                      <Link href="/orders" className="px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                        Orders
+                      </Link>
+                      <Link href="/api/auth/signout" className="px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                        Sign out
+                      </Link>
+                    </>
+                  ) : (
+                    <Link href="/api/auth/signin" className="px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                      Sign in
+                    </Link>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </div>
+    </nav>
+  )
 }
+

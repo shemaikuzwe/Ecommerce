@@ -6,9 +6,9 @@ export default async function Products({
   page,
   query,
 }: {
-  search: string;
-  page: number;
-  query: string;
+  search: string |undefined;
+  page: number|undefined;
+  query: string |undefined;
 }) {
   let products = await getAllProducts();
   if(query){

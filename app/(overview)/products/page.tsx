@@ -1,16 +1,8 @@
-import ProductCard from "@/components/productCard";
-import {
-  getAllProducts,
-  getProducts,
-  getSearchProduct,
-  paginate,
-} from "@/lib/action";
-import Select from "@/components/select";
-import Pagination from "@/components/pagination";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { ProductsSkeleton } from "@/components/skeltons";
 import Products from "./products";
+import { Select } from "@mui/material";
 
 export default async function Page(
   props: {
@@ -33,7 +25,8 @@ export default async function Page(
         <span className="text-center font-bold text-2xl">All Products</span>
       </center>
       <div className={"flex justify-items-end gap-4"}>
-        <Select options={options} />
+        {/* using Shcadn select */}
+        {/* <Select options={options} /> */}
       </div>
       <div className={"flex flex-wrap gap-2 mt-10"}>
         {<Suspense fallback={<ProductsSkeleton/>}>

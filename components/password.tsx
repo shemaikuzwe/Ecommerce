@@ -2,14 +2,14 @@
 import { useFormStatus } from "react-dom";
 import InputGroup from "./inputGroup";
 import { createPassword } from "@/lib/action";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { useSession } from "next-auth/react";
 
 export default function Password() {
   const session = useSession();
   const uId = session?.data?.user?.id;
 
-  const [state, dispatch] = useFormState(createPassword, null);
+  const [state, dispatch] = useActionState(createPassword, null);
   return (
     <div className={"p-6 border rounded-md"}>
       <form action={dispatch}>
