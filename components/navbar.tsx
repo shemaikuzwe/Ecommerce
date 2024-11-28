@@ -18,6 +18,7 @@ import { Home } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
 import Cart from "./cart-sheet"
 import { useSession } from "next-auth/react";
+import Search from "./search";
 const Links = [
   { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
   {
@@ -29,7 +30,9 @@ const Links = [
 
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
+
   const { status } = useSession();
+
   return (
     <nav className="bg-background border-b h-20 py-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +42,10 @@ export function Navbar() {
               <Image src={"/logo.png"} height={100} width={100} alt="logo" />
             </Link>
           </div>
-          <div className="hidden md:block">
+       
+            <Search />
+      
+          <div className="hidden md:flex items-center space-x-4">
             <NavigationMenu>
               <NavigationMenuList>
                 {Links.map((link) => (
@@ -55,9 +61,7 @@ export function Navbar() {
                 ))}
               </NavigationMenuList>
             </NavigationMenu>
-          </div>
-          <div className="hidden md:flex items-center space-x-4">
-            <Cart/>
+            <Cart />
             {status === "authenticated" ? (
               <NavigationMenu>
                 <NavigationMenuList>
