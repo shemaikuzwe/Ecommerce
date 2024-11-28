@@ -1,4 +1,4 @@
-import ProductCard from "@/components/productCard";
+import { ProductCard } from "@/components/product-card";
 import { getAllProducts } from "@/lib/action";
 import Pagination from "@/components/pagination";
 export default async function Products({

@@ -38,7 +38,7 @@ export function ProductCard({ product}: Props) {
   const sizes = ["XS", "S", "M", "L", "XL"];
 
   return (
-    <Card className="w-full max-w-sm p-0 min-h-72">
+    <Card className="w-72 max-w-sm p-0 min-h-72 ">
       <CardContent>
         <div
           className="relative aspect-square cursor-pointer"
@@ -56,7 +56,7 @@ export function ProductCard({ product}: Props) {
         </div>
       </CardContent>
       <CardFooter className="flex flex-col items-start">
-        <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
+       <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
         {isExpanded && (
           <div className="w-full space-y-4">
             <div className="flex flex-wrap gap-2">
