@@ -13,21 +13,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: {},
         password: {},
       },
-     authorize: async (credentials: { email: string, password: string }) => {
-        let user = null;
-        user = await getUser(credentials.email, credentials.password);
+      authorize: async (credentials: { email: string; password: string }) => {
+        const user = await getUser(credentials.email, credentials.password);
         return user;
       },
     }),
     Google({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      
     }),
   ],
   pages: {
     signIn: "/login",
-    error:"/login/error"
+    error: "/login/error",
   },
   session: {
     strategy: "jwt",
@@ -43,7 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.id = token.id;
       return session;
     },
-   async authorized({ auth, request: { nextUrl } }) {
+    async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnLogin = nextUrl.pathname.startsWith("/login");
       if (isOnLogin && isLoggedIn) {

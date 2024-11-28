@@ -1,10 +1,9 @@
-import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@/lib/definition";
-import Button, { Remove } from "@/components/button";
+import { Remove } from "@/components/button";
 import ButtonLink from "@/components/Link";
 
-export default function ProductsTable(products: Product) {
+export default function ProductsTable({ products }: { products: Product[] }) {
   return (
     <div>
       <table className="border w-[100vh] text-center">
@@ -21,9 +20,9 @@ export default function ProductsTable(products: Product) {
           </tr>
         </thead>
         <tbody>
-          {products.products.length == 0
+          {products.length == 0
             ? "No products available"
-            : products.products.map((product: Product) => {
+            : products.map((product: Product) => {
                 return (
                   <tr key={product.id} className="border">
                     <td className="border">{product.id}</td>

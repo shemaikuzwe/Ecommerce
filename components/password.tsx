@@ -9,7 +9,7 @@ export default function Password() {
   const session = useSession();
   const uId = session?.data?.user?.id;
 
-  const [state, dispatch] = useActionState(createPassword, null);
+  const [state, dispatch] = useActionState(createPassword, undefined);
   return (
     <div className={"p-6 border rounded-md"}>
       <form action={dispatch}>

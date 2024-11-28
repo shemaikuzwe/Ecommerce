@@ -1,4 +1,4 @@
-import { getProducts, getSearchProduct } from "@/lib/action";
+import { getProducts } from "@/lib/action";
 import ButtonLink from "@/components/Link";
 import { Suspense } from "react";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
@@ -12,7 +12,7 @@ export default async function Page(props: {
   const searchParams = await props.searchParams;
   const session = await auth();
 
-  const search: string|undefined = searchParams?.search;
+  const search: string | undefined = searchParams?.search;
 
   return (
     <div className="p-14">

@@ -1,5 +1,5 @@
 "use server";
-import React, { Suspense } from "react";
+import React from "react";
 import { getProducts } from "@/lib/action";
 import ProductCard from "./productCard";
 

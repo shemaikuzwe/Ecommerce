@@ -8,7 +8,7 @@ import { signOut } from "next-auth/react";
 export default function User() {
   const session = useSession();
   const name = session.data?.user?.name;
-  const image=session?.data?.user?.image
+  const image = session?.data?.user?.image;
   return (
     <Disclosure as="nav">
       {({ open }) => (
@@ -19,7 +19,7 @@ export default function User() {
               height={55}
               width={55}
               className=" rounded-full"
-              src={image}
+              src={image || ""}
               alt="User"
             />
             <span>{name}</span>
@@ -48,7 +48,10 @@ export default function User() {
                     href="/orders"
                     className="block px-4 py-2 cursor-pointer text-white text-sm "
                   >
-                    My orders <span className="bg-red-500 px-1.5 py-0.5 h-7 rounded">0</span>
+                    My orders{" "}
+                    <span className="bg-red-500 px-1.5 py-0.5 h-7 rounded">
+                      0
+                    </span>
                   </Link>
                 </Disclosure.Button>
                 <Disclosure.Button as="li">
@@ -60,7 +63,10 @@ export default function User() {
                   </Link>
                 </Disclosure.Button>
                 <Disclosure.Button as="li">
-                  <button onClick={()=> signOut()} className="block px-4 py-2 text-sm  text-white cursor-pointer">
+                  <button
+                    onClick={() => signOut()}
+                    className="block px-4 py-2 text-sm  text-white cursor-pointer"
+                  >
                     Sign out
                   </button>
                 </Disclosure.Button>

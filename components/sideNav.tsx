@@ -26,9 +26,9 @@ export default function SideNav() {
       icon: ShoppingCartIcon,
     },
     {
-      name:"Orders",
-      to:"/admin/orders",
-      icon:ShoppingBagIcon
+      name: "Orders",
+      to: "/admin/orders",
+      icon: ShoppingBagIcon,
     },
     {
       name: "Users",
@@ -59,7 +59,7 @@ export default function SideNav() {
         ))}
 
         <li className=" mt-32 p-2 m-2 flex  gap-3 text-white text-xl font-medium w-full hover:bg-blue-900 rounded-md">
-          <button className=" flex" onClick={()=> signOut()}>
+          <button className=" flex" onClick={() => signOut()}>
             <ArrowRightEndOnRectangleIcon className="w-6 text-white" />
             Logout
           </button>

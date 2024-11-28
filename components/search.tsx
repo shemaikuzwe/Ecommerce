@@ -7,7 +7,7 @@ export default function Search() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const handleChange = (query) => {
+  const handleChange = (query: string) => {
     const params = new URLSearchParams(searchParams);
     if (query) {
       params.set("search", query);

@@ -1,10 +1,9 @@
-"use client"
-
-import * as React from "react"
-import Link from "next/link"
-import { Menu, ShoppingBag, User } from 'lucide-react'
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
+"use client";
+import * as React from "react";
+import Link from "next/link";
+import { Menu, ShoppingBag, User } from "lucide-react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,31 +11,31 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { ModeToggle } from "@/components/mode-toggle"
+} from "@/components/ui/navigation-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ModeToggle } from "@/components/mode-toggle";
 import { Home } from "lucide-react";
-import { ShoppingCart } from "lucide-react"
+import { ShoppingCart } from "lucide-react";
+import { useSession } from "next-auth/react";
 const Links = [
-  { name: "Home", href: "/",icon:<Home className="h-5 w-5"/> },
-  { name: "Products", href: "/products",icon:<ShoppingCart className="h-5 w-5"/> },
-]
+  { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
+  {
+    name: "Products",
+    href: "/products",
+    icon: <ShoppingCart className="h-5 w-5" />,
+  },
+];
 
 export function Navbar() {
-  
-  const [isOpen, setIsOpen] = React.useState(false)
-
+  const [isOpen, setIsOpen] = React.useState(false);
+  const { status } = useSession();
   return (
     <nav className="bg-background border-b h-20 py-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0">
-            <Image src={"/logo.png"} height={100} width={100} alt="logo"/>
+              <Image src={"/logo.png"} height={100} width={100} alt="logo" />
             </Link>
           </div>
           <div className="hidden md:block">
@@ -44,7 +43,10 @@ export function Navbar() {
               <NavigationMenuList>
                 {Links.map((link) => (
                   <NavigationMenuItem key={link.name}>
-                    <NavigationMenuLink href={link.href} className="px-3 flex gap-1 py-2 rounded-md text-sm font-medium">
+                    <NavigationMenuLink
+                      href={link.href}
+                      className="px-3 flex gap-1 py-2 rounded-md text-sm font-medium"
+                    >
                       {link.icon}
                       {link.name}
                     </NavigationMenuLink>
@@ -68,13 +70,19 @@ export function Navbar() {
                     <NavigationMenuContent>
                       <ul className="grid gap-3 p-4 w-[200px]">
                         <li>
-                          <NavigationMenuLink href="/profile">Profile</NavigationMenuLink>
+                          <NavigationMenuLink href="/profile">
+                            Profile
+                          </NavigationMenuLink>
                         </li>
                         <li>
-                          <NavigationMenuLink href="/orders">Orders</NavigationMenuLink>
+                          <NavigationMenuLink href="/orders">
+                            Orders
+                          </NavigationMenuLink>
                         </li>
                         <li>
-                          <NavigationMenuLink href="/api/auth/signout">Sign out</NavigationMenuLink>
+                          <NavigationMenuLink href="/api/auth/signout">
+                            Sign out
+                          </NavigationMenuLink>
                         </li>
                       </ul>
                     </NavigationMenuContent>
@@ -119,18 +127,34 @@ export function Navbar() {
                   </Link>
                   {status === "authenticated" ? (
                     <>
-                      <Link href="/profile" className="px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                      <Link
+                        href="/profile"
+                        className="px-3 py-2 rounded-md text-sm font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
                         Profile
                       </Link>
-                      <Link href="/orders" className="px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                      <Link
+                        href="/orders"
+                        className="px-3 py-2 rounded-md text-sm font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
                         Orders
                       </Link>
-                      <Link href="/api/auth/signout" className="px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                      <Link
+                        href="/api/auth/signout"
+                        className="px-3 py-2 rounded-md text-sm font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
                         Sign out
                       </Link>
                     </>
                   ) : (
-                    <Link href="/api/auth/signin" className="px-3 py-2 rounded-md text-sm font-medium" onClick={() => setIsOpen(false)}>
+                    <Link
+                      href="/api/auth/signin"
+                      className="px-3 py-2 rounded-md text-sm font-medium"
+                      onClick={() => setIsOpen(false)}
+                    >
                       Sign in
                     </Link>
                   )}
@@ -141,6 +165,5 @@ export function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
-

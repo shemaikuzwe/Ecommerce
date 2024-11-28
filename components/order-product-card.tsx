@@ -1,4 +1,9 @@
-export default function OrdersProductCard({ product }) {
+interface Props{
+  product:{name:string,price:number,quantity:number}
+}
+export default function OrdersProductCard({
+  product,
+}: Props) {
   const currencyFormater = new Intl.NumberFormat("en-rw", {
     style: "currency",
     currency: "RWF",

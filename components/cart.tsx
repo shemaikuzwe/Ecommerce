@@ -1,10 +1,15 @@
 "use client";
 import { MinusIcon, PlusIcon, BackspaceIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { cartAction, Items } from "@/store/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { cartAction } from "@/store/cartSlice";
+import { useDispatch } from "react-redux";
+import { Item } from "@/lib/definition";
 
-export default function Cart({ item }) {
+interface Props{
+  item:Item
+}
+
+export default function Cart({item}:Props) {
   const dispatch = useDispatch();
 
   const increment = () => {

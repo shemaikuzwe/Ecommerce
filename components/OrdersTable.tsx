@@ -17,14 +17,18 @@ export default function OrdersTable() {
             <td>real madird t-shirt</td>
             <td>1000Rwf</td>
             <td>2024/29/2024</td>
-            <td><button className="btn danger">In progress</button></td>
+            <td>
+              <button className="btn danger">In progress</button>
+            </td>
           </tr>
           <tr>
             <td>Shema</td>
             <td>real madird t-shirt</td>
             <td>1000Rwf</td>
             <td>2024/29/2024</td>
-            <td><button className=" btn btn-primary">Done</button></td>
+            <td>
+              <button className=" btn btn-primary">Done</button>
+            </td>
           </tr>
         </tbody>
       </table>

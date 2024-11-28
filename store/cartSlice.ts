@@ -1,22 +1,16 @@
-"use client";
+import { Cart } from "@/lib/definition";
 import { createSlice } from "@reduxjs/toolkit";
-export type Items = {
-  id: number;
-  price: number;
-  quantity: number;
-  name: string;
+
+const initialState: Cart = {
+  itemsList: [],
 };
-// const storedCart = localStorage.getItem("cart");
-// const initialData = storedCart ? JSON.parse(storedCart) : [];
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: {
-    itemsList:[],
-  },
+  initialState: initialState,
   reducers: {
     addToCart(state, action) {
-      const newItem: Items = action.payload;
+      const newItem = action.payload;
       state.itemsList.push({
         id: newItem.id,
         quantity: 1,
@@ -55,9 +49,9 @@ const cartSlice = createSlice({
     removeAll(state) {
       state.itemsList = [];
     },
-    setCart(state,action){
-      state.itemsList=action.payload
-    }
+    setCart(state, action) {
+      state.itemsList = action.payload;
+    },
   },
 });
 export const cartAction = cartSlice.actions;

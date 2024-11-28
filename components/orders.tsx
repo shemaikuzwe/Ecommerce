@@ -2,23 +2,19 @@
 import OrdersCard from "@/components/ordersCard";
 import React, { useEffect, useState } from "react";
 import { Order } from "@/lib/definition";
+import { Status } from "@prisma/client";
 
-const Orders = ({ order }) => {
-  const [items, setItems] = useState("All");
+const Orders = ({ order }: { order: Order[] }) => {
+  const [items, setItems] = useState<Status>(Status.PENDING);
   const [orders, setOrders] = useState(order);
 
-  const options = [
-    { name: "All", value: "All" },
-    { name: "Pending", value: false },
-    { name: "Done", value: true },
-  ];
-  const handleClick = (option: boolean | string) => {
+  const handleClick = (option: Status) => {
     setItems(option);
   };
   useEffect(() => {
     let filterd = order;
-    if (items !== "All") {
-      filterd = order.filter((order: Order) => order.status === items);
+    if (items !== Status.PENDING) {
+      filterd = order.filter((order) => order.status === items);
     }
     setOrders(filterd);
   }, [items, order]);
@@ -27,13 +23,15 @@ const Orders = ({ order }) => {
     <div className="flex justify-center  w-full sm:w-7/12 mx-auto">
       <div className="border mx-auto  w-full rounded-md p-4">
         <ul className="flex mx-auto gap-3  bg-indigo-500 rounded-md text-white p-4 cursor-pointer mb-4 justify-center">
-          {options.map((option) => (
+          {[Status.COMPLETED, Status.FAILED, Status.FAILED].map((option) => (
             <li
-              key={option.name}
-              className={`${option.value === items && "  border-b-2 "} cursor-pointer text-lg`}
-              onClick={() => handleClick(option.value)}
+              key={option}
+              className={`${
+                option === items && "  border-b-2 "
+              } cursor-pointer text-lg`}
+              onClick={() => handleClick(option)}
             >
-              {option.name}
+              {option.toLocaleLowerCase()}
             </li>
           ))}
         </ul>

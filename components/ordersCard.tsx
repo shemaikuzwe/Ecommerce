@@ -8,9 +8,11 @@ import {
 import React, { useState } from "react";
 import OrdersProducts from "./ordersProducts";
 import { Order } from "@/lib/definition";
-
-const OrdersCard = ({ order }) => {
-  const { id, user_id, products, total_price, date, status }: Order = order;
+interface Props{
+  order:Order
+}
+const OrdersCard = ({order}:Props) => {
+  const { id, userId, products, total_price, date, status } = order;
   const [showProds, setShowProds] = useState(false);
   const currencyFormater = new Intl.NumberFormat("en-rw", {
     style: "currency",
@@ -31,20 +33,20 @@ const OrdersCard = ({ order }) => {
           </span>
         </div>
         {status ? (
-         <div className=" bg-indigo-600 px-3 py-1.5 text-white rounded-md">
-         <span className="flex gap-1">
-           <CheckCircleIcon className="text-white" height={20} width={20} />
-           Done
-         </span>
-       </div>
+          <div className=" bg-indigo-600 px-3 py-1.5 text-white rounded-md">
+            <span className="flex gap-1">
+              <CheckCircleIcon className="text-white" height={20} width={20} />
+              Done
+            </span>
+          </div>
         ) : (
           <div className=" bg-slate-300 px-3 py-1.5 text-white rounded-md">
-          <span className="flex gap-1">
-            {" "}
-            <ClockIcon className="text-white" height={20} width={20} />
-            Pending
-          </span>
-        </div>
+            <span className="flex gap-1">
+              {" "}
+              <ClockIcon className="text-white" height={20} width={20} />
+              Pending
+            </span>
+          </div>
         )}
       </div>
       <div className="flex justify-between  mt-3">

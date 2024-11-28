@@ -1,5 +1,4 @@
 "use client";
-import { paginate } from "@/lib/action";
 import {
   usePathname,
   useRouter,
@@ -14,7 +13,7 @@ export default function Pagination({ pages }: { pages: number[] }) {
   const searchparams = useSearchParams();
   const handlePage = (page: number) => {
     const params = new URLSearchParams(searchparams);
-    params.set("page", page);
+    params.set("page", page.toString());
     if (page == 1) {
       params.delete("page");
     }
@@ -49,7 +48,7 @@ export default function Pagination({ pages }: { pages: number[] }) {
       {pages.map((page, index) => (
         <button
           key={index}
-          disabled={currentPage == index+1}
+          disabled={currentPage == index + 1}
           onClick={() => setCurrentPage(page)}
           className={
             "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md disabled:cursor-not-allowed disabled:bg-indigo-400"

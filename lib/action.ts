@@ -1,26 +1,15 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
-import { LoginError, Order } from "@/lib/definition";
-import fs from "fs/promises";
+import { LoginError } from "@/lib/definition";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signIn } from "@/app/auth";
 import { CredentialsSignin } from "next-auth";
 import { unstable_noStore as no_store } from "next/cache";
 import { OrderState } from "./definition";
-
-const db = new PrismaClient();
-const fileSchema = z.instanceof(File, { message: "please upload image" });
-const ProductSchema = z.object({
-  id: z.string(),
-  product: z.string().min(1, { message: "Enter product name" }),
-  description: z.string().min(1, { message: "Enter product description" }),
-  type: z.string().min(1, { message: "Enter product type" }),
-  price: z.coerce.number().gt(0, "Enter product price"),
-  image: fileSchema.refine((file) => file.size > 0, "Upload image"),
-});
-const AddProduct = ProductSchema.omit({ id: true });
+import { editProductSchema, productSchema } from "./schema";
+import { db } from "./db";
+const AddProduct = productSchema.omit({ id: true });
 export async function addProduct(prevState: State, formData: FormData) {
   const validate = AddProduct.safeParse({
     product: formData.get("product"),
@@ -35,18 +24,16 @@ export async function addProduct(prevState: State, formData: FormData) {
       message: "Missing fields",
     };
   }
-  await fs.mkdir("public", { recursive: true });
+
   const { product, price, description, type, image } = validate.data;
-  const filePath = `public/${crypto.randomUUID()}-${image.name}`;
-  await fs.writeFile(filePath, Buffer.from(await image.arrayBuffer()));
-  const imagePath = filePath.replace(/^public\//, "");
+  // TODO: Use stroge bucket
   await db.product.create({
     data: {
       name: product,
       price: price,
       description: description,
       type: type,
-      image: imagePath,
+      image: "",
     },
   });
   revalidatePath("/admin/products");
@@ -103,9 +90,9 @@ export async function getProduct(id: string) {
   if (product) return product;
 }
 
-const EditProduct = ProductSchema.omit({ id: true, image: true });
+
 export async function editProduct(formData: FormData, id: string) {
-  const validate = EditProduct.safeParse({
+  const validate = editProductSchema.safeParse({
     product: formData.get("product"),
     price: formData.get("price"),
     description: formData.get("description"),
@@ -133,18 +120,6 @@ export async function editProduct(formData: FormData, id: string) {
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
-export async function getOptions() {
-  // const options: any = await db.$queryRaw`SELECT DISTINCT type FROM product`;
-  return [];
-}
-// export async function getProductByType(type: string) {
-//   const products = await db.product.findMany({
-//     where: {
-//       type: type,
-//     },
-//   });
-//   if (products) return products;
-// }
 
 export async function paginate() {
   no_store();
@@ -179,7 +154,7 @@ export async function getSearchProduct(search: string) {
 }
 export async function getAllProducts(skip: number = 0) {
   no_store();
-  
+
   let products = await db.product.findMany();
 
   return products;
@@ -209,34 +184,30 @@ type State = {
   };
   message?: string | null;
 };
-// const userSchema=z.object({
-//   email:z.string().email({
-//     message:"This field is required"
-//   }),
-//   password:z.string().max(6,{
-//     message: "This field is required"
-//   })
-// })
-export async function authenticate(prevState: LoginError |undefined, formData: FormData):Promise<LoginError|undefined> {
+
+export async function authenticate(
+  prevState: LoginError | undefined,
+  formData: FormData
+): Promise<LoginError | undefined> {
   try {
     await signIn("credentials", formData);
   } catch (error) {
     if (error instanceof CredentialsSignin) {
       return { message: "Invalid credentials" };
-    } else {
-      return { message: "something went wrong" };
     }
+    throw error;
   }
-
 }
 export async function getAllUsers() {
   no_store();
   const users = await db.user.findMany();
   return users;
 }
-const initial = { status: "", message: "" };
 
-export async function addOrder(prevState: OrderState, formData: FormData) {
+export async function addOrder(
+  prevState: OrderState | undefined,
+  formData: FormData
+) {
   try {
     const cart = formData.get("cart") as string;
     const totalPrice = formData.get("totalPrice") as string;
@@ -244,7 +215,7 @@ export async function addOrder(prevState: OrderState, formData: FormData) {
 
     await db.order.create({
       data: {
-        user_id: userId,
+        userId: userId,
         products: JSON.parse(cart),
         total_price: parseInt(totalPrice),
       },
@@ -258,7 +229,7 @@ export async function addOrder(prevState: OrderState, formData: FormData) {
 export async function getOrders(id: string | undefined) {
   const orders = await db.order.findMany({
     where: {
-      user_id: id,
+      userId: id,
     },
     orderBy: {
       date: "desc",
@@ -266,26 +237,8 @@ export async function getOrders(id: string | undefined) {
   });
   return orders;
 }
-// export async function hasPassword(id: string): Promise<boolean> {
-//   const user = await db.user.findFirst({
-//     where: {
-//       AND: [
-//         {
-//           password: {
-//             not: null,
-//           },
-//         },
-//         {
-//           id: id,
-//         },
-//       ],
-//     },
-//   });
-//   if (user) return true;
-//   return false;
-// }
 
-export async function createPassword(prevState: null, formData: FormData) {
+export async function createPassword(prevState:string|undefined, formData: FormData) {
   const password = formData.get("password") as string;
   const cpassword = formData.get("cpassword") as string;
   const id = formData.get("id") as string;

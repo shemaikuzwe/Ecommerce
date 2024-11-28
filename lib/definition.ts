@@ -1,3 +1,5 @@
+import { Status } from "@prisma/client";
+
 export type State = {
   errors?: {
     product?: string[];
@@ -9,7 +11,7 @@ export type State = {
   message?: string | null;
 };
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   description: string;
@@ -18,10 +20,10 @@ export type Product = {
 };
 export type Order ={
   id:string
-  user_id:string
-  products:[]
+  userId:string
+  products:Item[]
   total_price:number
-  status:boolean
+  status:Status
   date:Date
 }
 export type OrderState={
@@ -31,4 +33,13 @@ export type OrderState={
 }
 export type LoginError={
   message:string
+}
+export type Item = {
+  id: string;
+  price: number;
+  quantity: number;
+  name: string;
+};
+export type Cart={
+  itemsList:Array<Item>
 }

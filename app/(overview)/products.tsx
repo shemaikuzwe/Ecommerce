@@ -3,7 +3,7 @@ import ProductCard from "@/components/productCard";
 export default async function Products({
   search,
 }: {
-  search:string|undefined;
+  search: string | undefined;
 }) {
   let products = await getProducts();
   if (search) {
@@ -16,7 +16,9 @@ export default async function Products({
           <ProductCard product={product} key={product.id} />
         ))
       ) : (
-        <center className=" text-xl text-center mt-24">No products found</center>
+        <center className=" text-xl text-center mt-24">
+          No products found
+        </center>
       )}
     </div>
   );
