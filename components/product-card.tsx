@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Product } from "@prisma/client";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "@/store/cartSlice";
+import { useAppSelector } from "@/store/hook";
 import { cn } from "@/lib/utils";
 
 interface Props{
@@ -20,21 +21,17 @@ export function ProductCard({ product}: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [cartItems, setCartItems] = useState<
-    Array<{ name: string; size: string; quantity: number }>
-  >([]);
-  const cart=useSelector(state=>state.cart.itemsList);
-  const dispatch=useDispatch();
-  const handleAddToCart=()=>{
-     dispatch(cartAction.addToCart(product));
-  }
-  const handleRemoveFromCart=()=>{
-    dispatch(cartAction.removeFromCart(product.id))
-  }
-  const isAdded=()=>{
-    if(cart?.some(item =>item.id===product.id) )return true
-    return false;
-  }
+  const cart = useAppSelector((state) => state.cart.itemsList);
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    dispatch(cartAction.addToCart(product));
+  };
+  const handleRemoveFromCart = () => {
+    dispatch(cartAction.removeFromCart(product.id));
+  };
+  const isAdded = () => {
+    return cart?.some((item) => item.id === product.id);
+  };
   const sizes = ["XS", "S", "M", "L", "XL"];
 
   return (
@@ -94,12 +91,14 @@ export function ProductCard({ product}: Props) {
               </Button>
             </div>
             <Button
-              className="w-full disabled:cursor-not-allowed"
+              className={cn("w-full disabled:cursor-not-allowed",{
+                "bg-destructive":isAdded()
+              })}
               onClick={handleAddToCart}
               disabled={!selectedSize}
             
             >
-              Add to Cart
+             {isAdded() ? "Remove":"Add To Cart"}
             </Button>
           </div>
         )}

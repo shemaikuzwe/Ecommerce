@@ -1,4 +1,4 @@
-import { Cart } from "@/lib/definition";
+import { Cart, Item } from "@/lib/definition";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: Cart = {
@@ -10,7 +10,7 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     addToCart(state, action) {
-      const newItem = action.payload;
+      const newItem = action.payload as Item;
       state.itemsList.push({
         id: newItem.id,
         quantity: 1,
