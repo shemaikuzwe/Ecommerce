@@ -1,11 +1,7 @@
 "use client";
+import { Item } from "@/lib/definition";
 import { createSlice } from "@reduxjs/toolkit";
-export type Items = {
-  id: number;
-  price: number;
-  quantity: number;
-  name: string;
-};
+
 // const storedCart = localStorage.getItem("cart");
 // const initialData = storedCart ? JSON.parse(storedCart) : [];
 

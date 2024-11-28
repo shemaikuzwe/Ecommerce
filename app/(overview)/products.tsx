@@ -1,5 +1,5 @@
 import { getProducts, getSearchProduct } from "@/lib/action";
-import ProductCard from "@/components/productCard";
+import { ProductCard } from "@/components/product-card";
 export default async function Products({
   search,
 }: {

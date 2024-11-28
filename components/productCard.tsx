@@ -4,9 +4,12 @@ import Button from "@/components/button";
 import { CheckCircleIcon,TrashIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "@/store/cartSlice";
+import { Product } from "@prisma/client";
 
-
-export default function ProductCard({ product }) {
+interface Props{
+  product:Product
+}
+export default function ProductCard({ product }:Props) {
   const cart=useSelector(state=>state.cart.itemsList);
   const dispatch=useDispatch();
   const handleAddToCart=()=>{

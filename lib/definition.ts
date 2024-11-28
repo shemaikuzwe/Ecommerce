@@ -32,3 +32,11 @@ export type OrderState={
 export type LoginError={
   message:string
 }
+export type Size="XS"|"S"|"M"|"L"|"XL";
+export type Item = {
+  id: number;
+  price: number;
+  quantity: number;
+  name: string;
+  size:Size
+};
