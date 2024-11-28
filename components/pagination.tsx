@@ -3,7 +3,7 @@ import {
   usePathname,
   useRouter,
   useSearchParams,
-  useParams,
+  
 } from "next/navigation";
 import { useEffect, useState } from "react";
 export default function Pagination({ pages }: { pages: number[] }) {

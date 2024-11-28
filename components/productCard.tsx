@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "@/store/cartSlice";
 import { Product } from "@prisma/client";
 import { useAppSelector } from "@/store/hook";
-
-export default function ProductCard({ product }: { product: Product }) {
+interface Props {
+  product: Product;
+}
+export default function ProductCard({ product }: Props) {
   const cart = useAppSelector((state) => state.cart.itemsList);
   const dispatch = useDispatch();
   const handleAddToCart = () => {

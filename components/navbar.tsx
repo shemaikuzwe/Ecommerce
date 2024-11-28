@@ -16,6 +16,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Home } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
+import Cart from "./cart-sheet"
 import { useSession } from "next-auth/react";
 const Links = [
   { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
@@ -56,10 +57,7 @@ export function Navbar() {
             </NavigationMenu>
           </div>
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/cart" className="flex items-center space-x-1">
-              <ShoppingBag className="h-5 w-5" />
-              <span className="text-sm font-medium">Cart</span>
-            </Link>
+            <Cart/>
             {status === "authenticated" ? (
               <NavigationMenu>
                 <NavigationMenuList>

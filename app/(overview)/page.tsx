@@ -2,7 +2,6 @@ import { getProducts } from "@/lib/action";
 import ButtonLink from "@/components/Link";
 import { Suspense } from "react";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
-import { ProductsSkeleton } from "@/components/skeltons";
 import { auth } from "../auth";
 import Products from "./products";
 

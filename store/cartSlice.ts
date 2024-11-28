@@ -16,6 +16,7 @@ const cartSlice = createSlice({
         quantity: 1,
         price: newItem.price,
         name: newItem.name,
+        size:"S"
       });
     },
     removeFromCart(state, action) {

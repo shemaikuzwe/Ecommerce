@@ -39,7 +39,10 @@ export type Item = {
   price: number;
   quantity: number;
   name: string;
+  size:Size
 };
 export type Cart={
   itemsList:Array<Item>
 }
+export type Size="XS"|"S"|"M"|"L"|"XL";
+
