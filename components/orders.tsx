@@ -1,51 +1,67 @@
-"use client";
-import OrdersCard from "@/components/ordersCard";
-import React, { useEffect, useState } from "react";
-import { Order } from "@/lib/definition";
-import { Status } from "@prisma/client";
+'use client'
 
-const Orders = ({ order }: { order: Order[] }) => {
-  const [items, setItems] = useState<Status>(Status.PENDING);
-  const [orders, setOrders] = useState(order);
+import { Order } from "@/lib/definition"
+import { Status } from "@prisma/client"
+import { useEffect, useState } from "react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card } from "@/components/ui/card"
+import OrdersCard from "@/components/ordersCard"
+import { Package } from 'lucide-react'
 
-  const handleClick = (option: Status) => {
-    setItems(option);
-  };
+export default function Orders({ order }: { order: Order[] }) {
+  const [items, setItems] = useState<Status>(Status.PENDING)
+  const [orders, setOrders] = useState(order)
+
+  const handleStatusChange = (status: Status) => {
+    setItems(status)
+  }
+
   useEffect(() => {
-    let filterd = order;
+    let filtered = order
     if (items !== Status.PENDING) {
-      filterd = order.filter((order) => order.status === items);
+      filtered = order.filter((order) => order.status === items)
     }
-    setOrders(filterd);
-  }, [items, order]);
+    setOrders(filtered)
+  }, [items, order])
 
   return (
-    <div className="flex justify-center  w-full sm:w-7/12 mx-auto">
-      <div className="border mx-auto  w-full rounded-md p-4">
-        <ul className="flex mx-auto gap-3  bg-indigo-500 rounded-md text-white p-4 cursor-pointer mb-4 justify-center">
-          {[Status.COMPLETED, Status.FAILED, Status.FAILED].map((option) => (
-            <li
-              key={option}
-              className={`${
-                option === items && "  border-b-2 "
-              } cursor-pointer text-lg`}
-              onClick={() => handleClick(option)}
-            >
-              {option.toLocaleLowerCase()}
-            </li>
+    <div className="container mx-auto px-4 py-6 max-w-4xl">
+      <Card className="p-6">
+        <Tabs
+          defaultValue={Status.PENDING}
+          className="w-full"
+          onValueChange={(value) => handleStatusChange(value as Status)}
+        >
+          <TabsList className="grid w-full grid-cols-3 lg:w-[400px] mx-auto mb-6">
+            {[Status.COMPLETED, Status.PENDING, Status.FAILED].map((status) => (
+              <TabsTrigger key={status} value={status} className="capitalize">
+                {status.toLowerCase()}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          {[Status.COMPLETED,Status.PENDING,  Status.FAILED].map((status) => (
+            <TabsContent key={status} value={status}>
+              {orders.length === 0 ? (
+                <div className="text-center py-12">
+                  <Package className="mx-auto h-12 w-12 text-muted-foreground/50" />
+                  <h3 className="mt-4 text-lg font-semibold">No {status.toLowerCase()} orders</h3>
+                  <p className="text-muted-foreground mt-2">
+                    When orders are {status.toLowerCase()}, they will appear here.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid gap-4">
+                  {orders.map((order: Order) => (
+                    <OrdersCard key={order.id} order={order} />
+                  ))}
+                </div>
+              )}
+            </TabsContent>
           ))}
-        </ul>
-
-        <div className=" flex flex-col gap-2 ">
-          {orders.length == 0
-            ? null
-            : orders.map((order: Order) => (
-                <OrdersCard order={order} key={order.id} />
-              ))}
-        </div>
-      </div>
+        </Tabs>
+      </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Orders;

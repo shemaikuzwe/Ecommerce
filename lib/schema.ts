@@ -10,4 +10,21 @@ const productSchema = z.object({
 });
 const editProductSchema = productSchema.omit({ id: true, image: true });
 
-export { productSchema, editProductSchema };
+const changePasswordShema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(3, { message: "This Passsword is not strong" }),
+    newPassword: z.string().min(3, { message: "This password is not strong" }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.confirmPassword !== data.currentPassword, {
+    message: "Password mismatch",
+    path: ["confirmPassword"],
+  });
+
+const UpdateUserProfileSchema = z.object({
+  email: z.string().email({ message: "Invalid email" }),
+  fullName: z.string().min(5, { message: "Enter your full names" }),
+});
+export { productSchema, editProductSchema, changePasswordShema,UpdateUserProfileSchema };

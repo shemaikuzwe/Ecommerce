@@ -13,10 +13,10 @@ const cartSlice = createSlice({
       const newItem = action.payload as Item;
       state.itemsList.push({
         id: newItem.id,
-        quantity: 1,
+        quantity: newItem.quantity,
         price: newItem.price,
         name: newItem.name,
-        size:"S"
+        size:newItem.size
       });
     },
     removeFromCart(state, action) {

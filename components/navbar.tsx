@@ -1,24 +1,24 @@
 "use client";
 import * as React from "react";
 import Link from "next/link";
-import { Menu, ShoppingBag, User } from "lucide-react";
+import { LogIn, Menu, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Home } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
-import Cart from "./cart-sheet"
-import { useSession } from "next-auth/react";
+import Cart from "./cart-sheet";
+import { signOut, useSession } from "next-auth/react";
 import Search from "./search";
+import User from "./user";
+
 const Links = [
   { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
   {
@@ -31,8 +31,8 @@ const Links = [
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const { status } = useSession();
-
+  const { status, data } = useSession();
+  const user = data?.user;
   return (
     <nav className="bg-background border-b h-20 py-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,9 +42,9 @@ export function Navbar() {
               <Image src={"/logo.png"} height={100} width={100} alt="logo" />
             </Link>
           </div>
-       
-            <Search />
-      
+
+          <Search />
+
           <div className="hidden md:flex items-center space-x-4">
             <NavigationMenu>
               <NavigationMenuList>
@@ -63,37 +63,13 @@ export function Navbar() {
             </NavigationMenu>
             <Cart />
             {status === "authenticated" ? (
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger>
-                      <User className="h-6 w-6" />
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid gap-3 p-4 w-[200px]">
-                        <li>
-                          <NavigationMenuLink href="/profile">
-                            Profile
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink href="/orders">
-                            Orders
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink href="/api/auth/signout">
-                            Sign out
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+             <User/>
             ) : (
               <Button asChild variant="ghost">
-                <Link href="/api/auth/signin">Sign in</Link>
+                <div>
+                  <LogIn />
+                  <Link href="/login">Login</Link>
+                </div>
               </Button>
             )}
             <ModeToggle />
@@ -125,7 +101,6 @@ export function Navbar() {
                     onClick={() => setIsOpen(false)}
                   >
                     <ShoppingBag className="h-6 w-6" />
-                    <span>Cart</span>
                   </Link>
                   {status === "authenticated" ? (
                     <>

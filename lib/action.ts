@@ -1,15 +1,26 @@
 "use server";
-import { PrismaClient } from "@prisma/client";
-import { LoginError } from "@/lib/definition";
+import { Prisma, PrismaClient } from "@prisma/client";
+import {
+  ChangePasswordState,
+  LoginError,
+  updateProfileState,
+} from "@/lib/definition";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { signIn } from "@/app/auth";
+import { auth, signIn } from "@/app/auth";
 import { CredentialsSignin } from "next-auth";
 import { unstable_noStore as no_store } from "next/cache";
 import { OrderState } from "./definition";
-import { editProductSchema, productSchema } from "./schema";
+import {
+  changePasswordShema,
+  editProductSchema,
+  productSchema,
+  UpdateUserProfileSchema,
+} from "./schema";
 import { db } from "./db";
+
 const AddProduct = productSchema.omit({ id: true });
+
 export async function addProduct(prevState: State, formData: FormData) {
   const validate = AddProduct.safeParse({
     product: formData.get("product"),
@@ -89,7 +100,6 @@ export async function getProduct(id: string) {
   });
   if (product) return product;
 }
-
 
 export async function editProduct(formData: FormData, id: string) {
   const validate = editProductSchema.safeParse({
@@ -207,7 +217,7 @@ export async function getAllUsers() {
 export async function addOrder(
   prevState: OrderState | undefined,
   formData: FormData
-) {
+): Promise<OrderState | undefined> {
   try {
     const cart = formData.get("cart") as string;
     const totalPrice = formData.get("totalPrice") as string;
@@ -238,7 +248,10 @@ export async function getOrders(id: string | undefined) {
   return orders;
 }
 
-export async function createPassword(prevState:string|undefined, formData: FormData) {
+export async function createPassword(
+  prevState: string | undefined,
+  formData: FormData
+) {
   const password = formData.get("password") as string;
   const cpassword = formData.get("cpassword") as string;
   const id = formData.get("id") as string;
@@ -256,16 +269,45 @@ export async function createPassword(prevState:string|undefined, formData: FormD
   }
   return "Password mis match";
 }
-export async function changePassword(
-  prevState: { type: null; message: null },
-  formData: FormData
-) {
-  const password = formData.get("password") as string;
-  const newPassword = formData.get("newPassword") as string;
-  const cpassword = formData.get("cpassword") as string;
-  const userId = formData.get("userId") as string;
-  console.log(password, newPassword, cpassword, userId);
+export async function getUserOrders() {
+  try {
+    const session = await auth();
+    const userId = session?.user?.id as string;
+    const userOrders = await db.order.count({
+      where: {
+        userId,
+      },
+    });
 
+    return userOrders;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function changePassword(
+  prevState: ChangePasswordState | undefined,
+  formData: FormData
+): Promise<ChangePasswordState | undefined> {
+  const session = await auth();
+  const userId = session?.user?.id as string;
+  const validate = changePasswordShema.safeParse({
+    currentPassword: formData.get("currentPassword"),
+    newPassword: formData.get("newPassword"),
+    confirmPassword: formData.get("confirmPassword"),
+  });
+  if (!validate.success) {
+    return {
+      status: "error",
+      message: "Please fill in all fields",
+      errors: validate.error.flatten().fieldErrors,
+    };
+  }
+  const {
+    newPassword,
+    confirmPassword: cpassword,
+    currentPassword: password,
+  } = validate.data;
   if (newPassword == cpassword) {
     if (await find_password(userId, password)) {
       try {
@@ -278,22 +320,22 @@ export async function changePassword(
           },
         });
         {
-          return { type: "success", message: "password changed" };
+          return { status: "success", message: "password changed" };
         }
       } catch (e) {
         return {
-          type: "error",
+          status: "error",
           message: "password not changed",
         };
       }
     }
     return {
-      type: "error",
+      status: "error",
       message: "invalid current password",
     };
   }
   return {
-    type: "error",
+    status: "error",
     message: "invalid current password",
   };
 }
@@ -315,3 +357,44 @@ const find_password = async (id: string, pass: string) => {
   }
   return false;
 };
+
+export async function updateProfile(
+  prevState: updateProfileState | undefined,
+  formData: FormData
+): Promise<updateProfileState | undefined> {
+  const session = await auth();
+  const userId = session?.user?.id as string;
+  const validate = UpdateUserProfileSchema.safeParse({
+    email: formData.get("email"),
+    fullName: formData.get("fullName"),
+  });
+  if (!validate.success) {
+    return {
+      status: "error",
+      message: "Please fill in all fields",
+      errors: validate.error.flatten().fieldErrors,
+    };
+  }
+  const { email, fullName } = validate.data;
+
+  try {
+    await db.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        email,
+        name: fullName,
+      },
+    });
+    return {
+      status: "success",
+      message: "Profile updated",
+    };
+  } catch (err) {
+    return {
+      status: "error",
+      message: "Something went wrong",
+    };
+  }
+}

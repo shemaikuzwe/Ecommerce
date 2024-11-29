@@ -27,9 +27,22 @@ export type Order ={
   date:Date
 }
 export type OrderState={
-  status:string,
+  status:"success" |"error",
   message:string
 
+}
+export type ChangePasswordState=OrderState &{
+  errors?:{
+    currentPassword?:string[]
+    newPassword?:string[]
+    confirmPassword?:string[]
+  }
+}
+export type updateProfileState=OrderState &{
+  errors?:{
+    email?:string[]
+    fullName?:string[]
+  }
 }
 export type LoginError={
   message:string
@@ -44,5 +57,7 @@ export type Item = {
 export type Cart={
   itemsList:Array<Item>
 }
+
+
 export type Size="XS"|"S"|"M"|"L"|"XL";
 

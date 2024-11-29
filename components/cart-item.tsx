@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Minus, Plus, X } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Item } from '@/lib/definition'
+import { useDispatch } from 'react-redux'
+import { cartAction } from '@/store/cartSlice'
 
 // interface CartItemProps {
 //   name: string
@@ -15,21 +17,18 @@ interface Props{
     item:Item
 }
 export function CartItem({ item}: Props) {
-//   const [quantity, setQuantity] = useState(initialQuantity)
+  const dispatch = useDispatch();
 
-//   const handleIncrement = () => {
-//     const newQuantity = quantity + 1
-//     setQuantity(newQuantity)
-//     onQuantityChange(newQuantity)
-//   }
+  const handleIncrement = () => {
+    dispatch(cartAction.incrementQuantity(item.id));
+  }
 
-//   const handleDecrement = () => {
-//     if (quantity > 1) {
-//       const newQuantity = quantity - 1
-//       setQuantity(newQuantity)
-//       onQuantityChange(newQuantity)
-//     }
-//   }
+  const handleDecrement = () => {
+    dispatch(cartAction.decrementQuantity(item.id));
+  }
+  const handleRemove=()=>{
+    dispatch(cartAction.removeFromCart(item.id))
+  }
 
   return (
     <div className="flex items-center justify-between p-4 border-b last:border-b-0">
@@ -40,15 +39,15 @@ export function CartItem({ item}: Props) {
       </div>
       <div className="flex items-center space-x-2">
         <div className="flex items-center border rounded-md">
-          <Button variant="ghost" size="icon" >
+          <Button variant="ghost" size="icon" onClick={handleDecrement} disabled={item.quantity<=1}>
             <Minus className="h-4 w-4" />
           </Button>
           <span className="w-8 text-center">{item.quantity}</span>
-          <Button variant="ghost" size="icon" >
+          <Button variant="ghost" size="icon" onClick={handleIncrement}>
             <Plus className="h-4 w-4" />
           </Button>
         </div>
-        <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-700">
+        <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-700" onClick={handleRemove}>
           <X className="h-5 w-5" />
         </Button>
       </div>
