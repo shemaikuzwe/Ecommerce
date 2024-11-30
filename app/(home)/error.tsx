@@ -1,4 +1,5 @@
 "use client"
+import { TriangleAlert } from "lucide-react";
 import {Button} from "@/components/ui/button";
 export default function Error({
   error,
@@ -24,7 +25,7 @@ export default function Error({
           type="button"
           asChild
         >
-            {/* <ArrowPathIcon width={20} height={20} className=" text-white" /> */}
+            <TriangleAlert width={20} height={20} className=" text-white" />
            <span className={" font-semibold"}>Retry</span>
         </Button>
       </center>

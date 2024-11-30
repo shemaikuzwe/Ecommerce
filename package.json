@@ -10,8 +10,6 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
-    "@emotion/styled": "^11.13.5",
-    "@mui/styled-engine-sc": "^6.1.8",
     "@prisma/client": "5.22.0",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-collapsible": "^1.1.1",
@@ -32,7 +30,6 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.12.0",
-    "heroicons": "^2.2.0",
     "lucide-react": "^0.462.0",
     "next": "15.0.3",
     "next-auth": "5.0.0-beta.25",
