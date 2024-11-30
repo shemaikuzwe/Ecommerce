@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ProductCard } from "./product-card";
+import { ProductCard } from "./products/product-card";
 import { ProductCardSkeleton } from "./product-card-skeleton";
 import { Product } from "@prisma/client";
 
