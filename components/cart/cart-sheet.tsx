@@ -6,20 +6,19 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet";
+} from "../ui/sheet";
 import { BadgeCheck, Delete, FileText, ShoppingCart } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { cartAction } from "@/store/cartSlice";
 import { useAppSelector } from "@/store/hook";
 import { CartItem } from "./cart-item";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { addOrder } from "@/lib/action";
-import { Alert, AlertDescription } from "./ui/alert";
-import { AlertTitle } from "@mui/material";
+import { addOrder } from "@/lib/action/action";
+import { Alert, AlertDescription ,AlertTitle} from "../ui/alert";
 import { cn } from "@/lib/utils";
-import { Badge } from "./ui/badge";
+import { Badge } from "../ui/badge";
 export default function Cart() {
   const session = useSession();
   const status = session.status;

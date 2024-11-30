@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Minus, Plus, X } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { Item } from '@/lib/definition'
+import { Item } from '@/lib/types/types'
 import { useDispatch } from 'react-redux'
 import { cartAction } from '@/store/cartSlice'
 

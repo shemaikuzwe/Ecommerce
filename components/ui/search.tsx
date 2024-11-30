@@ -2,7 +2,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "next/navigation";
-import { Input } from "./ui/input";
+import { Input } from "./input";
 export default function Search() {
   const searchParams = useSearchParams();
   const pathname = usePathname();

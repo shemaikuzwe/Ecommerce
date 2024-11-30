@@ -1,5 +1,5 @@
-import { OrderManagement } from "@/components/order-management";
-import { getAllOrders } from "@/lib/action";
+import { OrderManagement } from "@/components/admin/order-management";
+import { getAllOrders } from "@/lib/action/action";
 
 export default async function Page() {
   // const orders = await getAllOrders();

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import DashboardCards from "@/components/dashboard-cards";
+import DashboardCards from "@/components/admin/dashboard-cards";
 import DashboardCardsSkeleton from "@/components/skeltons/dashboard-card";
 
 export default async function Dashboard() {

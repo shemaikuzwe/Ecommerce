@@ -1,4 +1,4 @@
-import { customerCount, productsCount } from "@/lib/action";
+import { customerCount, productsCount } from "@/lib/action/action";
 import DashboardCard from "./dashboard-card";
 export default async function DashboardCards() {
     const noOfProducts = await productsCount();

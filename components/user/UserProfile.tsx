@@ -23,8 +23,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
-import { changePassword, updateProfile } from "@/lib/action";
-import { Alert, AlertTitle } from "./ui/alert";
+import { changePassword, updateProfile } from "@/lib/action/action";
+import { Alert, AlertTitle } from "../ui/alert";
 import { cn } from "@/lib/utils";
 
 interface UserProfileProps {

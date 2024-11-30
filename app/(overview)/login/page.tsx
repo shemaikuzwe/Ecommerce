@@ -1,6 +1,6 @@
-import Google from "@/components/google";
-import { authenticate } from "@/lib/action";
-import LoginForm from "@/components/login-form";
+import Google from "@/components/auth/google";
+import { authenticate } from "@/lib/action/action";
+import LoginForm from "@/components/auth/login-form";
 import { Metadata } from "next";
 
 export default function Page() {

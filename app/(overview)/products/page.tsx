@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import { ProductsSkeleton } from "@/components/skeltons";
+import { ProductsSkeleton } from "@/components/skeltons/skeltons";
 import Products from "./products";
 
 export default async function Page(

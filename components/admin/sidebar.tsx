@@ -13,7 +13,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import User from './user'
+import User from '../user/user'
 import Image from 'next/image'
 export function DashSidebar() {
   return (

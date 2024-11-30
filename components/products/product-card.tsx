@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { cartAction } from "@/store/cartSlice";
 import { useAppSelector } from "@/store/hook";
 import { cn } from "@/lib/utils";
-import { Item, Size } from "@/lib/definition";
+import { Item, Size } from "@/lib/types/types";
 
 interface Props {
   product: Product;

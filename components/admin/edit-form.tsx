@@ -3,8 +3,8 @@ import { Product } from "@prisma/client";
 import React, { useState } from "react";
 import Image from "next/image";
 import { useActionState, useRef } from "react";
-import InputGroup from "@/components/inputGroup";
-import { editProduct } from "@/lib/action";
+import InputGroup from "@/components/auth/inputGroup";
+import { editProduct } from "@/lib/action/action";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { options } from "@/lib/definition";
+import { options } from "@/lib/types/types";
 import { Label } from "../ui/label";
 import { Alert, AlertTitle } from "../ui/alert";
 import { cn } from "@/lib/utils";

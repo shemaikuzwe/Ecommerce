@@ -1,5 +1,5 @@
-import UserProfile from '@/components/UserProfile'
-import { getUserOrders } from '@/lib/action';
+import UserProfile from '@/components/user/UserProfile'
+import { getUserOrders } from '@/lib/action/action';
 import { Metadata } from 'next';
 
 export default async function ProfilePage() {

@@ -1,4 +1,4 @@
-import { getProduct } from "@/lib/action";
+import { getProduct } from "@/lib/action/action";
 import { notFound } from "next/navigation";
 import EditForm from "@/components/admin/edit-form";
 export default async function Page(props: { params: Promise<{ id: string }> }) {

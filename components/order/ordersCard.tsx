@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { Order } from "@/lib/definition";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Badge } from "./ui/badge";
+import { Order } from "@/lib/types/types";
+import { Card, CardContent, CardHeader } from "../ui/card";
+import { Badge } from "../ui/badge";
 import { CheckCircle, ChevronDown, ChevronUp, Clock } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
-import { Button } from "./ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import { Button } from "../ui/button";
 interface Props{
   order:Order
 }

@@ -3,7 +3,7 @@ import { Status,Order } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card } from "@/components/ui/card"
-import OrdersCard from "@/components/ordersCard"
+import OrdersCard from "@/components/order/ordersCard"
 import { Package } from 'lucide-react'
 
 export default function Orders({ order }: { order: Order[] }) {

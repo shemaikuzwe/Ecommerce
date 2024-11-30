@@ -4,22 +4,22 @@ import {
   LoginError,
   ProductState,
   updateProfileState,
-} from "@/lib/definition";
+} from "@/lib/types/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth, signIn } from "@/app/auth";
 import { CredentialsSignin } from "next-auth";
-import { OrderState } from "./definition";
+import { OrderState } from "../types/types";
 import {
   changePasswordShema,
   fileSchema,
   productSchema,
   UpdateUserProfileSchema,
-} from "./schema";
-import { db } from "./db";
-import createAdminClient from "./appwrite/appwrite.config";
-import { appWrite } from "./appwrite/config";
-import { createFileUrl, getFileId } from "./utils";
+} from "../types/schema";
+import { db } from "../db";
+import createAdminClient from "../appwrite/appwrite.config";
+import { appWrite } from "../appwrite/config";
+import { createFileUrl, getFileId } from "../utils";
 import { ID } from "node-appwrite";
 import { z } from "zod";
 

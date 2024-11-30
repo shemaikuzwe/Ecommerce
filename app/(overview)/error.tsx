@@ -1,9 +1,5 @@
-"use client";
-import {
-  ArrowPathIcon,
-  ExclamationTriangleIcon,
-} from "@heroicons/react/24/solid";
-import Button from "@/components/button";
+"use client"
+import {Button} from "@/components/ui/button";
 export default function Error({
   error,
   reset,
@@ -14,7 +10,7 @@ export default function Error({
   return (
     <div className="flex-col  mx-auto justify-center items-center  m-14 w-[50vh]">
       <div className="flex mx-auto justify-center mt-40">
-        <ExclamationTriangleIcon width={"120"} height={"120"} />
+        {/* <ExclamationTriangleIcon width={"120"} height={"120"} /> */}
       </div>
 
       <center>
@@ -24,13 +20,13 @@ export default function Error({
       </center>
       <center>
         <Button
-          icon={
-            <ArrowPathIcon width={20} height={20} className=" text-white" />
-          }
           onClick={() => reset()}
-          name="Retry"
           type="button"
-        />
+          asChild
+        >
+            {/* <ArrowPathIcon width={20} height={20} className=" text-white" /> */}
+           <span className={" font-semibold"}>Retry</span>
+        </Button>
       </center>
     </div>
   );

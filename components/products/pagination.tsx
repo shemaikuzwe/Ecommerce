@@ -1,7 +1,7 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 export default function Pagination({ pages }: { pages: number[] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const pathname = usePathname();

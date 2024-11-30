@@ -11,13 +11,13 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/components/providers/mode-toggle";
 import { Home } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
-import Cart from "./cart-sheet";
+import Cart from "../cart/cart-sheet";
 import { signOut, useSession } from "next-auth/react";
 import Search from "./search";
-import User from "./user";
+import User from "../user/user";
 import { useState } from "react";
 
 const Links = [
@@ -38,7 +38,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/public" className="flex-shrink-0">
               <Image src={"/logo.png"} height={90} width={90} alt="logo" />
             </Link>
           </div>

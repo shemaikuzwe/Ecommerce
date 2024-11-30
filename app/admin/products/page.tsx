@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getProducts } from "@/lib/action";
+import { getProducts } from "@/lib/action/action";
 import ProductsGrid from "@/components/admin/products-grid";
 
 export default async function Page() {
