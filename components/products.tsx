@@ -1,7 +1,7 @@
-"use server";
 import React from "react";
 import { getProducts } from "@/lib/action";
 import ProductCard from "./productCard";
+import { Package } from "lucide-react";
 
 const Products = async () => {
   const products = await getProducts();
@@ -12,7 +12,10 @@ const Products = async () => {
           <ProductCard product={product} key={product.id} />
         ))
       ) : (
-        <center className=" text-xl text-center">No products found</center>
+        <center className=" flex flex-col gap-2  text-xl text-center">
+          <Package />
+          No products found
+        </center>
       )}
     </div>
   );

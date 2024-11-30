@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { ProductsSkeleton } from "@/components/skeltons";
 import Products from "./products";
-import { Select } from "@mui/material";
 
 export default async function Page(
   props: {
@@ -13,14 +12,11 @@ export default async function Page(
   const query: string|undefined = searchParams?.query;
   const search: string|undefined = searchParams?.search;
   const page: number|undefined = searchParams?.page;
-  // const options=await getOptions(); 
-
-
 
   const options = ["All", "t-shirt", "pants", "shoes"];
 
   return (
-    <div className="p-14">
+    <div className="p-8">
       <center>
         <span className="text-center font-bold text-2xl">All Products</span>
       </center>

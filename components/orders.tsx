@@ -1,7 +1,5 @@
 'use client'
-
-import { Order } from "@/lib/definition"
-import { Status } from "@prisma/client"
+import { Status,Order } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card } from "@/components/ui/card"

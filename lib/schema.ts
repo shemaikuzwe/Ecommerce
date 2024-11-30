@@ -1,14 +1,15 @@
 import { z } from "zod";
-const fileSchema = z.instanceof(File, { message: "please upload image" });
+const fileSchema = z
+  .instanceof(File)
+  .refine((file) => file.size === 0 || file.name.startsWith("image/"), { message: "Upload image" });
 const productSchema = z.object({
   id: z.string(),
-  product: z.string().min(1, { message: "Enter product name" }),
-  description: z.string().min(1, { message: "Enter product description" }),
+  product: z.string().min(3, { message: "Enter product name" }),
+  description: z.string().min(5, { message: "Enter product description" }),
   type: z.string().min(1, { message: "Enter product type" }),
-  price: z.coerce.number().gt(0, "Enter product price"),
-  image: fileSchema.refine((file) => file.size > 0, "Upload image"),
+  price: z.coerce.number().gt(100, "Enter product price"),
+  image: fileSchema.optional(),
 });
-const editProductSchema = productSchema.omit({ id: true, image: true });
 
 const changePasswordShema = z
   .object({
@@ -27,4 +28,4 @@ const UpdateUserProfileSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
   fullName: z.string().min(5, { message: "Enter your full names" }),
 });
-export { productSchema, editProductSchema, changePasswordShema,UpdateUserProfileSchema };
+export { productSchema, changePasswordShema, UpdateUserProfileSchema };

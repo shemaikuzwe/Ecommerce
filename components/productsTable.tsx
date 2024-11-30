@@ -9,7 +9,6 @@ export default function ProductsTable({ products }: { products: Product[] }) {
       <table className="border w-[100vh] text-center">
         <thead className="bg-black text-white">
           <tr className="p-1">
-            <th className="p-1 border">ID</th>
             <th className="p-1 border items-center">Image</th>
             <th className="p-1 border">Product</th>
             <th className="p-1 border">Descrption</th>
@@ -25,7 +24,6 @@ export default function ProductsTable({ products }: { products: Product[] }) {
             : products.map((product: Product) => {
                 return (
                   <tr key={product.id} className="border">
-                    <td className="border">{product.id}</td>
                     <td className="border">
                       <Image
                         src={`/${product.image}`}

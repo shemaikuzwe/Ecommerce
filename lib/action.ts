@@ -1,19 +1,17 @@
 "use server";
-import { Prisma, PrismaClient } from "@prisma/client";
 import {
   ChangePasswordState,
   LoginError,
+  ProductState,
   updateProfileState,
 } from "@/lib/definition";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth, signIn } from "@/app/auth";
 import { CredentialsSignin } from "next-auth";
-import { unstable_noStore as no_store } from "next/cache";
 import { OrderState } from "./definition";
 import {
   changePasswordShema,
-  editProductSchema,
   productSchema,
   UpdateUserProfileSchema,
 } from "./schema";
@@ -21,7 +19,10 @@ import { db } from "./db";
 
 const AddProduct = productSchema.omit({ id: true });
 
-export async function addProduct(prevState: State, formData: FormData) {
+export async function addProduct(
+  prevState: ProductState | undefined,
+  formData: FormData
+): Promise<ProductState | undefined> {
   const validate = AddProduct.safeParse({
     product: formData.get("product"),
     price: formData.get("price"),
@@ -30,70 +31,63 @@ export async function addProduct(prevState: State, formData: FormData) {
     image: formData.get("image"),
   });
   if (!validate.success) {
+    console.log(validate.error.errors);
+
     return {
       errors: validate.error.flatten().fieldErrors,
       message: "Missing fields",
+      status: "error",
     };
   }
 
   const { product, price, description, type, image } = validate.data;
+
   // TODO: Use stroge bucket
-  await db.product.create({
-    data: {
-      name: product,
-      price: price,
-      description: description,
-      type: type,
-      image: "",
-    },
-  });
-  revalidatePath("/admin/products");
-  redirect("/admin/products");
+  try {
+    await db.product.create({
+      data: {
+        name: product,
+        price: price,
+        description: description,
+        type: type,
+        image: "",
+      },
+    });
+    revalidatePath("/admin/products");
+    redirect("/admin/products");
+  } catch (err) {
+    throw err;
+  }
 }
 
-export async function getProducts(query?: string) {
-  no_store();
-  let products = await db.product.findMany();
-  if (query == "All") {
-    products = await db.product.findMany({
-      take: 4,
-    });
-  } else {
-    products = await db.product.findMany({
-      take: 4,
-      where: {
-        type: query,
-      },
-      orderBy: {
-        id: "desc",
-      },
-    });
-  }
-
+export async function getProducts() {
+  const products = await db.product.findMany();
   return products;
 }
 export async function productsCount() {
-  no_store();
   const noOfProducts = await db.product.count();
   return noOfProducts;
 }
 export async function customerCount() {
-  no_store();
   const noOfCustomers = await db.user.count();
   return noOfCustomers;
 }
 export async function deleteProduct(id: string) {
-  await db.product.delete({
-    where: {
-      id: id,
-    },
-  });
-  revalidatePath("/admin/products");
-  redirect("/admin/products");
+  try {
+    await db.product.delete({
+      where: {
+        id: id,
+      },
+    });
+    revalidatePath("/admin/products");
+    redirect("/admin/products");
+  } catch (err) {
+    throw err;
+  }
 }
 
 export async function getProduct(id: string) {
-  const product = await db.product.findMany({
+  const product = await db.product.findFirst({
     where: {
       id: id,
     },
@@ -101,44 +95,68 @@ export async function getProduct(id: string) {
   if (product) return product;
 }
 
-export async function editProduct(formData: FormData, id: string) {
-  const validate = editProductSchema.safeParse({
+export async function editProduct(
+  prevState: ProductState | undefined,
+  formData: FormData
+): Promise<ProductState | undefined> {
+  const validate = productSchema.safeParse({
     product: formData.get("product"),
     price: formData.get("price"),
     description: formData.get("description"),
     type: formData.get("type"),
+    id: formData.get("id"),
+    image: formData.get("image"),
   });
   if (!validate.success) {
+    console.log(validate.error.errors);
+
     return {
       errors: validate.error.flatten().fieldErrors,
-      message: "empty fields",
+      message: "Please fill in all fields",
+      status: "error",
     };
   }
-  const { product, description, price, type } = validate.data;
-  await db.product.update({
-    where: {
-      id: id,
-    },
+  const { product, description, price, type, id, image } = validate.data;
+  try {
+    await db.product.update({
+      where: {
+        id: id,
+      },
 
-    data: {
-      name: product,
-      description: description,
-      price: price,
-      type: type,
-    },
-  });
-  revalidatePath("/admin/products");
-  redirect("/admin/products");
+      data: {
+        name: product,
+        description: description,
+        price: price,
+        type: type,
+      },
+    });
+
+    revalidatePath("/admin/products");
+    redirect("/admin/products");
+    // return {
+    //   status: "success",
+    //   message: "Product updated successfully",
+    // };
+  } catch (err) {
+    throw err;
+  }
 }
 
+export async function getAllOrders(){
+  try{
+  const orders=await db.product.findMany()
+   return orders
+  }catch(err){
+    throw err
+    
+  }
+}
 export async function paginate() {
-  no_store();
   const no_of_pages = await db.product.count();
   return no_of_pages;
 }
 
 export async function getSearchProduct(search: string) {
-  no_store();
   const product = await db.product.findMany({
     where: {
       OR: [
@@ -162,9 +180,7 @@ export async function getSearchProduct(search: string) {
   });
   return product;
 }
-export async function getAllProducts(skip: number = 0) {
-  no_store();
-
+export async function getAllProducts() {
   let products = await db.product.findMany();
 
   return products;
@@ -189,8 +205,8 @@ export async function getUser(email: string, password: string) {
 
 type State = {
   errors?: {
-    email: string[];
-    password: string[];
+    email?: string[];
+    password?: string[];
   };
   message?: string | null;
 };
@@ -209,7 +225,6 @@ export async function authenticate(
   }
 }
 export async function getAllUsers() {
-  no_store();
   const users = await db.user.findMany();
   return users;
 }

@@ -1,25 +1,14 @@
 import { Metadata } from "next";
-import { customerCount, productsCount } from "@/lib/action";
+import { Suspense } from "react";
+import DashboardCards from "@/components/dashboard-cards";
+import DashboardCardsSkeleton from "@/components/skeltons/dashboard-card";
 
 export default async function Dashboard() {
-  const noOfProducts = await productsCount();
-  const noOfCustomers = await customerCount();
   return (
-    <div className="p-2">
-      <div className="flex gap-2">
-        <div className="block p-3 border rounded-md w-56 h-32">
-          <span className={"text-xl"}>Products:</span>
-          <span>{noOfProducts}</span>
-        </div>
-        <div className="block p-3 border rounded-md w-56 h-32">
-          <span className={"text-xl"}>Customers:</span>
-          <span>{noOfCustomers}</span>
-        </div>
-        <div className="block p-3 border rounded-md w-56 h-32">
-          <span className={"text-xl"}>Products:</span>
-          <span>{noOfProducts}</span>
-        </div>
-      </div>
+    <div className=" h-screen w-full flex-col gap-2 mx-4">
+      <Suspense fallback={<DashboardCardsSkeleton/>}>
+        <DashboardCards/>
+      </Suspense>
     </div>
   );
 }

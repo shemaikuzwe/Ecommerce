@@ -1,11 +1,7 @@
 "use client";
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-  
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 export default function Pagination({ pages }: { pages: number[] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const pathname = usePathname();
@@ -36,37 +32,31 @@ export default function Pagination({ pages }: { pages: number[] }) {
         "inline-flex -space-x-px rounded-md shadow-sm gap-2 text-white mx-auto"
       }
     >
-      <button
+      <Button
         onClick={handlePrevious}
         disabled={currentPage <= 1}
-        className={
-          "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md disabled:cursor-not-allowed disabled:bg-indigo-400"
-        }
+        className=" disabled:opacity-70"
       >
         Previous
-      </button>
+      </Button>
       {pages.map((page, index) => (
-        <button
+        <Button
           key={index}
           disabled={currentPage == index + 1}
           onClick={() => setCurrentPage(page)}
-          className={
-            "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md disabled:cursor-not-allowed disabled:bg-indigo-400"
-          }
+          className="disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {page}
-        </button>
+        </Button>
       ))}
 
-      <button
+      <Button
         disabled={currentPage == pages.length}
         onClick={handleNext}
-        className={
-          "relative inline-flex items-center bg-indigo-600 px-4 py-1.5 text-sm font-medium rounded-md disabled:cursor-not-allowed disabled:bg-indigo-400"
-        }
+        className=" disabled:opacity-70 disabled:cursor-not-allowed"
       >
         Next
-      </button>
+      </Button>
     </div>
   );
 }

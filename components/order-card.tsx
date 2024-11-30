@@ -1,36 +1,58 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import { Order } from "@/lib/definition";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Badge } from "./ui/badge";
-import { CheckCircle, ChevronDown, ChevronUp, Clock } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
-import { Button } from "./ui/button";
-interface Props{
-  order:Order
+import { useState } from "react"
+import { ChevronDown, ChevronUp, Clock, CheckCircle } from "lucide-react"
+import { format } from "date-fns"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+
+interface Product {
+  name: string
+  quantity: number
+  price: number
 }
-const OrdersCard = ({order}:Props) => {
-  const { id, userId, products, total_price, date, status } = order;
-  const [showProds, setShowProds] = useState(false);
+
+interface Order {
+  id: string
+  userId: string
+  products: Product[]
+  total_price: number
+  date: Date
+  status: boolean
+}
+
+interface OrderCardProps {
+  order: Order
+}
+
+export default function OrderCard({ order }: OrderCardProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const { products, total_price, date, status } = order
 
   return (
     <Card className="w-full">
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
         <time className="text-sm text-muted-foreground">
-          {date.toLocaleString()}
+          {format(date, "EEEE, MMMM d, yyyy")}
         </time>
-        <Badge variant={status=="COMPLETED" ? "default" : "secondary"} className="h-6">
-          {status ==="COMPLETED" ? (
+        <Badge variant={status ? "default" : "secondary"} className="h-6">
+          {status ? (
             <CheckCircle className="mr-1 h-3 w-3" />
           ) : (
             <Clock className="mr-1 h-3 w-3" />
           )}
-          {status}
+          {status ? "Done" : "Pending"}
         </Badge>
       </CardHeader>
       <CardContent>
-        <Collapsible open={showProds} onOpenChange={setShowProds}>
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <p className="text-sm text-muted-foreground">
@@ -42,7 +64,7 @@ const OrdersCard = ({order}:Props) => {
             </div>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm" className="w-9 p-0">
-                {showProds ? (
+                {isOpen ? (
                   <ChevronUp className="h-4 w-4" />
                 ) : (
                   <ChevronDown className="h-4 w-4" />
@@ -78,7 +100,6 @@ const OrdersCard = ({order}:Props) => {
         </Collapsible>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default OrdersCard;
