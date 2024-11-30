@@ -63,7 +63,7 @@ export function ProductCard({ product}: Props) {
            onClick={()=>setIsExpanded(!isExpanded)}
         >
           <Image
-            src={`/${product.image}`}
+            src={`${product.image}`}
             alt={product.name}
             fill
             className="object-cover rounded-lg"

@@ -49,11 +49,11 @@ export default function EditForm({ product }: Props) {
       <form action={action} className=" flex gap-2">
         <div>
           <Image
-            src={image ? image : `/${product.image}`}
+            src={image ? image : `${product.image}`}
             alt={product.name}
             width={400}
             height={400}
-            className=" cursor-pointer"
+            className="cursor-pointer"
             onClick={handleImageClick}
           />
         </div>

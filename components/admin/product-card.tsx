@@ -29,7 +29,7 @@ export function ProductCard({ product }: { product: Product }) {
         <CardHeader className="p-0">
           <div className="aspect-square relative overflow-hidden">
             <Image
-              src={`/${product.image}`}
+              src={`${product.image}`}
               alt={product.name}
               fill
               className="object-cover transition-transform hover:scale-105"

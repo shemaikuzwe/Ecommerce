@@ -12,10 +12,16 @@ import { CredentialsSignin } from "next-auth";
 import { OrderState } from "./definition";
 import {
   changePasswordShema,
+  fileSchema,
   productSchema,
   UpdateUserProfileSchema,
 } from "./schema";
 import { db } from "./db";
+import createAdminClient from "./appwrite/appwrite.config";
+import { appWrite } from "./appwrite/config";
+import { createFileUrl, getFileId } from "./utils";
+import { ID } from "node-appwrite";
+import { z } from "zod";
 
 const AddProduct = productSchema.omit({ id: true });
 
@@ -31,8 +37,6 @@ export async function addProduct(
     image: formData.get("image"),
   });
   if (!validate.success) {
-    console.log(validate.error.errors);
-
     return {
       errors: validate.error.flatten().fieldErrors,
       message: "Missing fields",
@@ -41,8 +45,7 @@ export async function addProduct(
   }
 
   const { product, price, description, type, image } = validate.data;
-
-  // TODO: Use stroge bucket
+  const imagePath = await uploadProduct(image);
   try {
     await db.product.create({
       data: {
@@ -50,7 +53,7 @@ export async function addProduct(
         price: price,
         description: description,
         type: type,
-        image: "",
+        image: imagePath,
       },
     });
     revalidatePath("/admin/products");
@@ -74,6 +77,8 @@ export async function customerCount() {
 }
 export async function deleteProduct(id: string) {
   try {
+    const prod = await getProduct(id);
+    await deleteProd(prod?.image as string);
     await db.product.delete({
       where: {
         id: id,
@@ -99,14 +104,15 @@ export async function editProduct(
   prevState: ProductState | undefined,
   formData: FormData
 ): Promise<ProductState | undefined> {
-  const validate = productSchema.safeParse({
-    product: formData.get("product"),
-    price: formData.get("price"),
-    description: formData.get("description"),
-    type: formData.get("type"),
-    id: formData.get("id"),
-    image: formData.get("image"),
-  });
+  const validate = productSchema
+    .omit({
+      image: true,
+    })
+    .extend({
+      id: z.string(),
+      image: fileSchema.optional(),
+    })
+    .safeParse(Object.fromEntries(formData.entries()));
   if (!validate.success) {
     console.log(validate.error.errors);
 
@@ -117,6 +123,16 @@ export async function editProduct(
     };
   }
   const { product, description, price, type, id, image } = validate.data;
+  const prod = await getProduct(id);
+
+  let imagePath = prod?.image;
+  if (image && image.size) {
+    console.log("uploading image");
+    
+    imagePath = await uploadProduct(image);
+  }
+  await deleteProd(prod?.image!);
+
   try {
     await db.product.update({
       where: {
@@ -128,27 +144,50 @@ export async function editProduct(
         description: description,
         price: price,
         type: type,
+        image: imagePath,
       },
     });
 
     revalidatePath("/admin/products");
     redirect("/admin/products");
-    // return {
-    //   status: "success",
-    //   message: "Product updated successfully",
-    // };
   } catch (err) {
     throw err;
   }
 }
+async function uploadProduct(image: File) {
+  try {
+    const { storage } = await createAdminClient();
+    const product = await storage.createFile(
+      appWrite.BUCKET_ID,
+      ID.unique(),
+      image
+    );
+    return createFileUrl(product.$id);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+async function deleteProd(imagePath: string) {
+  try {
+    const fileId = getFileId(imagePath);
+    console.log(fileId);
 
-export async function getAllOrders(){
-  try{
-  const orders=await db.product.findMany()
-   return orders
-  }catch(err){
-    throw err
-    
+    const { storage } = await createAdminClient();
+    await storage.deleteFile(appWrite.BUCKET_ID, fileId);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.log(err.message);
+    }
+  }
+}
+
+export async function getAllOrders() {
+  try {
+    const orders = await db.product.findMany();
+    return orders;
+  } catch (err) {
+    throw err;
   }
 }
 export async function paginate() {
@@ -202,14 +241,6 @@ export async function getUser(email: string, password: string) {
   if (!user) return null;
   return user;
 }
-
-type State = {
-  errors?: {
-    email?: string[];
-    password?: string[];
-  };
-  message?: string | null;
-};
 
 export async function authenticate(
   prevState: LoginError | undefined,

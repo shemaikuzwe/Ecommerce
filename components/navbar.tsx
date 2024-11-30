@@ -18,6 +18,7 @@ import Cart from "./cart-sheet";
 import { signOut, useSession } from "next-auth/react";
 import Search from "./search";
 import User from "./user";
+import { useState } from "react";
 
 const Links = [
   { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
@@ -29,17 +30,16 @@ const Links = [
 ];
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const { status, data } = useSession();
-  const user = data?.user;
+  const { status } = useSession();
   return (
     <nav className="bg-background border-b h-20 py-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0">
-              <Image src={"/logo.png"} height={100} width={100} alt="logo" />
+              <Image src={"/logo.png"} height={90} width={90} alt="logo" />
             </Link>
           </div>
 

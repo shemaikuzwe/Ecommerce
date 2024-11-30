@@ -14,49 +14,46 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import User from './user'
-
+import Image from 'next/image'
 export function DashSidebar() {
   return (
-    <Sidebar className="bg-primary border-none">
+    <Sidebar className="bg-primary border-none w-72">
       <SidebarHeader className="p-4 border-none">
         <div className="flex items-center gap-2">
-          <div className="bg-white/10 p-2 rounded-lg">
-            <ShoppingCart className="w-5 h-5" />
-          </div>
-          <span className="font-semibold text-lg">Ecommerce</span>
+          <Image src={"/logo.png"} alt='logo' height={90} width={90}/>
         </div>
       </SidebarHeader>
-      <SidebarContent className="px-2 pt-10">
+      <SidebarContent className="px-2 pt-10  text-white">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="hover:bg-white/10 data-[active=true]:bg-white/10">
+            <SidebarMenuButton asChild>
               <Link href="/admin">
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Dashboard</span>
+                <LayoutDashboard className="w-6 h-6" />
+                <span className=' text-lg font-semibold'>Dashboard</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="hover:bg-white/10 data-[active=true]:bg-white/10">
+            <SidebarMenuButton asChild >
               <Link href="/admin/products">
-                <Package className="w-4 h-4" />
-                <span>Products</span>
+                <Package className="w-6 h-6" />
+                <span  className=' text-lg font-semibold'>Products</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="hover:bg-white/10 data-[active=true]:bg-white/10">
+            <SidebarMenuButton asChild >
               <Link href="/admin/orders">
-                <ShoppingCart className="w-4 h-4" />
-                <span>Orders</span>
+                <ShoppingCart className="w-6 h-6" />
+                <span  className=' text-lg font-semibold'>Orders</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="hover:bg-white/10 data-[active=true]:bg-white/10">
+            <SidebarMenuButton asChild >
               <Link href="/admin/users">
-                <Users className="w-4 h-4" />
-                <span>Users</span>
+                <Users className="w-6 h-6" />
+                <span  className=' text-lg font-semibold'>Users</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -65,7 +62,7 @@ export function DashSidebar() {
       <SidebarFooter className="p-4 mt-auto border-none">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="hover:bg-white/10">
+            <SidebarMenuButton asChild >
                 <User/>
             </SidebarMenuButton>
           </SidebarMenuItem>
