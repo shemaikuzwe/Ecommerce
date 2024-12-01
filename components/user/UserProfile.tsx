@@ -85,7 +85,8 @@ export default function UserProfile({ orders }: UserProfileProps) {
                       <span
                         aria-live="polite"
                         className="mt-2 text-destructive"
-                      >
+                        key={error}
+                     >
                         {error}
                       </span>
                     ))}
@@ -107,6 +108,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
                       <span
                         aria-live="polite"
                         className="mt-2 text-destructive"
+                        key={error}
                       >
                         {error}
                       </span>
@@ -178,7 +180,8 @@ export default function UserProfile({ orders }: UserProfileProps) {
                             <span
                               aria-live="polite"
                               className="mt-2 text-destructive"
-                            >
+                               key={error}
+                             >
                               {error}
                             </span>
                           ))}
@@ -196,7 +199,8 @@ export default function UserProfile({ orders }: UserProfileProps) {
                             <span
                               aria-live="polite"
                               className="mt-2 text-destructive"
-                            >
+                             key={error}
+                           >
                               {error}
                             </span>
                           ))}
@@ -217,6 +221,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
                             <span
                               aria-live="polite"
                               className="mt-2 text-destructive"
+                              key={error}
                             >
                               {error}
                             </span>

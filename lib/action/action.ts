@@ -294,27 +294,7 @@ export async function getOrders(id: string | undefined) {
   return orders;
 }
 
-export async function createPassword(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  const password = formData.get("password") as string;
-  const cpassword = formData.get("cpassword") as string;
-  const id = formData.get("id") as string;
-  if (cpassword === password) {
-    await db.user.update({
-      where: {
-        id: id,
-      },
-      data: {
-        password: password,
-      },
-    });
-    revalidatePath("/");
-    redirect("/");
-  }
-  return "Password mis match";
-}
+
 export async function getUserOrders() {
   try {
     const session = await auth();

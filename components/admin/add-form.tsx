@@ -79,7 +79,7 @@ export default function AddForm() {
           />
           {state?.errors?.description &&
             state.errors.description.map((error) => (
-              <span className=" text-destructive">{error}</span>
+              <span className=" text-destructive" key={error}>{error}</span>
             ))}
           <InputGroup
             type={"number"}
