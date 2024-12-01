@@ -1,5 +1,4 @@
 "use client";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "next/navigation";
 import { Input } from "./input";
@@ -21,7 +20,7 @@ export default function Search() {
       type={"text"}
       placeholder={"Search anything"}
       onChange={(e) => handleChange(e.target.value)}
-      className="w-80"
+      className="sm:w-80 w-52"
     />
   );
 }

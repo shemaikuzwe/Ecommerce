@@ -127,10 +127,10 @@ export async function editProduct(
 
   let imagePath = prod?.image;
   if (image && image.size) {
-    console.log("uploading image");
-    
     imagePath = await uploadProduct(image);
   }
+  console.log("getting here");
+
   await deleteProd(prod?.image!);
 
   try {

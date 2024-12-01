@@ -74,7 +74,7 @@ export function ProductCard({ product}: Props) {
         </div>
       </div>
       <CardFooter className="flex flex-col items-start">
-        <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
+        <h3 className="font-semibold text-lg mb-2 capitalize">{product.name}</h3>
         {isExpanded && (
           <div className="w-full space-y-4">
             <div className="flex flex-wrap gap-2">

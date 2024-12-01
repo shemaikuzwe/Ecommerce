@@ -35,10 +35,10 @@ export function Navbar() {
   const { status } = useSession();
   return (
     <nav className="bg-background border-b h-20 py-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link href="/public" className="flex-shrink-0">
+            <Link href="/" className="flex-shrink-0">
               <Image src={"/logo.png"} height={90} width={90} alt="logo" />
             </Link>
           </div>
@@ -63,7 +63,7 @@ export function Navbar() {
             </NavigationMenu>
             <Cart />
             {status === "authenticated" ? (
-             <User/>
+              <User />
             ) : (
               <Button asChild variant="ghost">
                 <div>
@@ -72,10 +72,9 @@ export function Navbar() {
                 </div>
               </Button>
             )}
-            <ModeToggle />
           </div>
           <div className="md:hidden flex items-center">
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" className="ml-2">
@@ -95,45 +94,18 @@ export function Navbar() {
                       {link.name}
                     </Link>
                   ))}
-                  <Link
-                    href="/cart"
-                    className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <ShoppingBag className="h-6 w-6" />
-                  </Link>
+                  <Cart />
                   {status === "authenticated" ? (
                     <>
-                      <Link
-                        href="/profile"
-                        className="px-3 py-2 rounded-md text-sm font-medium"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        Profile
-                      </Link>
-                      <Link
-                        href="/orders"
-                        className="px-3 py-2 rounded-md text-sm font-medium"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        Orders
-                      </Link>
-                      <Link
-                        href="/api/auth/signout"
-                        className="px-3 py-2 rounded-md text-sm font-medium"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        Sign out
-                      </Link>
+                      <User />
                     </>
                   ) : (
-                    <Link
-                      href="/api/auth/signin"
-                      className="px-3 py-2 rounded-md text-sm font-medium"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Sign in
-                    </Link>
+                    <Button asChild variant="ghost">
+                      <div>
+                        <LogIn />
+                        <Link href="/login">Login</Link>
+                      </div>
+                    </Button>
                   )}
                 </div>
               </SheetContent>

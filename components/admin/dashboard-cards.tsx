@@ -3,7 +3,7 @@ import DashboardCard from "./dashboard-card";
 export default async function DashboardCards() {
     const noOfProducts = await productsCount();
     const noOfCustomers = await customerCount();
-  return <div className="flex w-full gap-2">
+  return <div className="flex w-full gap-2 flex-wrap">
        
      <DashboardCard
        label="Products"

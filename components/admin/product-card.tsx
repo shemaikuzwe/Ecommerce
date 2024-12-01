@@ -41,7 +41,7 @@ export function ProductCard({ product }: { product: Product }) {
           <div className="space-y-2">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-semibold leading-none tracking-tight">
+                <h3 className="font-semibold leading-none tracking-tight capitalize">
                   {product.name}
                 </h3>
                 <p className="text-sm text-muted-foreground">

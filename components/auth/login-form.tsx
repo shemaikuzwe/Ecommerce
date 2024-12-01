@@ -3,7 +3,6 @@ import { useFormStatus } from "react-dom";
 import InputGroup from "./inputGroup";
 import { authenticate } from "@/lib/action/action";
 import { useActionState } from "react";
-import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 import { Button } from "../ui/button";
 export default function LoginForm() {
   const [state, dispatch, isPending] = useActionState(authenticate, undefined);
@@ -31,7 +30,7 @@ export default function LoginForm() {
             className="flex mt-5 gap-2 px-5 
      disabled:cursor-not-allowed"
           >
-            <ArrowsRightLeftIcon width={20} height={20} /> Login
+             Login
           </Button>
         </center>
 

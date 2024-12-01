@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
 import Products from "./products";
+import Categories from "@/components/products/categories";
 
 export default async function Page(props: {
   searchParams?: Promise<{ query?: string; search?: string; page?: number }>;
@@ -10,19 +10,17 @@ export default async function Page(props: {
   const search: string | undefined = searchParams?.search;
   const page: number | undefined = searchParams?.page;
 
-  const options = ["All", "t-shirt", "pants", "shoes"];
-
   return (
     <div className="p-8">
       <center>
         <span className="text-center font-bold text-2xl">All Products</span>
       </center>
-      <div className={"flex justify-items-end gap-4"}>
-        {/*TODO:  using Shcadn select */}
-        {/* <Select options={options} /> */}
-      </div>
-      <div className={"flex flex-wrap gap-2 mt-10"}>
-        <Products search={search} query={query} page={page} />
+      <div className=" flex">
+        <Categories />
+
+        <div className={"flex flex-wrap gap-2 mt-10"}>
+          <Products search={search} query={query} page={page} />
+        </div>
       </div>
     </div>
   );

@@ -47,7 +47,7 @@ export default function Cart() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="">
+        <Button variant="outline" className="w-20">
           <ShoppingCart className="mr-2 h-4 w-4" />
             {cart.length ?<Badge>{cart.length}</Badge>:null}
         </Button>

@@ -41,11 +41,11 @@ export default function UserProfile({ orders }: UserProfileProps) {
   const session = useSession();
   const user = session?.data?.user;
   const totalOrders = use(orders);
-  useEffect(()=>{ 
-   if(state?.status =="success"){
-    setIsEditing(false)
-   }
-  },[state?.status])
+  useEffect(() => {
+    if (state?.status == "success") {
+      setIsEditing(false);
+    }
+  }, [state?.status]);
   return (
     <div className="container mx-auto px-4 py-8">
       <Card className="max-w-2xl mx-auto">
@@ -121,15 +121,15 @@ export default function UserProfile({ orders }: UserProfileProps) {
                 </div>
               </div>
               {state?.message && (
-                  <Alert
-                    className={cn({
-                      "text-green-400": state.status === "success",
-                      "text-destructive": state.status === "error",
-                    })}
-                  >
-                    <AlertTitle>{state.message}</AlertTitle>
-                  </Alert>
-                )}
+                <Alert
+                  className={cn({
+                    "text-green-400": state.status === "success",
+                    "text-destructive": state.status === "error",
+                  })}
+                >
+                  <AlertTitle>{state.message}</AlertTitle>
+                </Alert>
+              )}
               <div className="flex justify-between pt-4">
                 {isEditing ? (
                   <>
@@ -146,11 +146,11 @@ export default function UserProfile({ orders }: UserProfileProps) {
                     Edit Profile
                   </Button>
                 )}
-               
+
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="outline">
-                      <Lock className="mr-2 h-4 w-4" />
+                      <Lock />
                       Change Password
                     </Button>
                   </DialogTrigger>
