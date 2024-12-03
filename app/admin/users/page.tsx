@@ -1,39 +1,51 @@
+import { AvatarFallback, Avatar, AvatarImage } from "@/components/ui/avatar";
+import {
+  TableCell,
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableCaption,
+  TableRow,
+} from "@/components/ui/table";
 
-import { getAllUsers } from "@/app/_lib/action";
-import Image from "next/image";
+import {getAllUsers} from "@/lib/action/server";
 export default async function Page() {
   const users = await getAllUsers();
-   console.log(users);
-   
 
   return (
-    <div className=" p-4">
-      <h3 className=" text-xl font-medium">All customers</h3>
-      <table className=" table">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Names</th>
-            <th>Email</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          {users && users.length ? (
-            users.map((user) => (
-              <tr key={user.id}>
-                <td><Image src={user.image} alt={user.name} width={50} height={50}/></td>
-                <td></td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-            
-              </tr>
-            ))
-          ) : (
-            <h2>No users found</h2>
-          )}
-        </tbody>
-      </table>
-    </div>
+    <Table>
+      <TableCaption>A list of all users</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Image</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Date Joined</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        {users && users.length ? (
+          users.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>
+                <Avatar>
+                  <AvatarImage src={user.image!} />
+                  <AvatarFallback>
+                    {user.name?.slice(0, 2).toLocaleUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <h2>No users found</h2>
+        )}
+      </TableBody>
+    </Table>
   );
 }

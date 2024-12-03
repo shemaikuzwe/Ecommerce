@@ -1,11 +1,14 @@
-import SideNav from "@/app/_components/sideNav";
+import { DashSidebar } from "@/components/admin/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 
 export default function layout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex p-2">
-      <div>{<SideNav />}</div>
-      <div>{children}</div>
-    </div>
+    <SidebarProvider>
+      <div className="flex p-2 w-full min-h-screen ">
+        <DashSidebar />
+        <main className="p-6 flex-1  bg-muted/50">{children}</main>
+      </div>
+    </SidebarProvider>
   );
 }

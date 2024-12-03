@@ -1,22 +1,11 @@
-"use server";
-import ProductsTable from "@/app/_components/productsTable";
-import Link from "next/link";
-import { getProducts } from "@/app/_lib/action";
+import ProductsGrid from "@/components/admin/products-grid";
+import {getProducts} from "@/lib/action/server";
 
 export default async function Page() {
   const products = await getProducts();
   return (
     <div className="p-4">
-      <ProductsTable products={products} />
-
-      <center>
-        <Link
-          href="/admin/products/new"
-          className="mt-5 block bg-indigo-500 w-[20vh] py-2 text-white rounded-md"
-        >
-          New
-        </Link>
-      </center>
+      <ProductsGrid products={products} />
     </div>
   );
 }

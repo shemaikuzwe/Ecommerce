@@ -32,7 +32,10 @@ yarn-error.log*
 .env
 # vercel
 .vercel
-
+.gitpod.yml
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#gitpod
+.gitpod.yml
