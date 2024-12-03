@@ -31,7 +31,7 @@ interface UserProfileProps {
   orders: Promise<number>;
 }
 
-export default function UserProfile({ orders }: UserProfileProps) {
+export default function Profile({ orders }: UserProfileProps) {
   const [state, action1, pending] = useActionState(updateProfile, undefined);
   const [status, action2, isPending] = useActionState(
     changePassword,
@@ -48,7 +48,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
   }, [state?.status]);
   return (
     <div className="container mx-auto px-4 py-8">
-      <Card className="max-w-2xl mx-auto">
+      <Card className="max-w-2xl mx-auto rounded-md">
         <CardHeader>
           <div className="flex items-center space-x-4">
             <Avatar className="h-20 w-20">

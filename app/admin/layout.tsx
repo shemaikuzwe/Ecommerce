@@ -7,7 +7,7 @@ export default function layout({ children }: { children: ReactNode }) {
     <SidebarProvider>
       <div className="flex p-2 w-full min-h-screen ">
         <DashSidebar />
-        <main className="p-6 flex-1">{children}</main>
+        <main className="p-6 flex-1  bg-muted/50">{children}</main>
       </div>
     </SidebarProvider>
   );

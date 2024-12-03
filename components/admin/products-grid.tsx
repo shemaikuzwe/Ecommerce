@@ -16,7 +16,7 @@ export default function ProductsGrid({ products }: { products: Product[] }) {
           ))
         )}
       </div>
-      <Button className="w-full sm:w-auto" size="lg" asChild>
+      <Button variant={"outline"} className="w-full sm:w-auto" size="lg" asChild>
         <Link href={"/admin/products/new"}>Add new Product</Link>
       </Button>
     </div>

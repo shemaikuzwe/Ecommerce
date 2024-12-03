@@ -1,7 +1,6 @@
-import { ProductCard } from "@/components/products/product-card";
-import { getAllProducts } from "@/lib/action/action";
 import Pagination from "@/components/products/pagination";
 import ProductsGrids from "@/components/products/products-grid";
+import {getAllProducts} from "@/lib/action/server";
 export default async function Products({
   search,
   page,

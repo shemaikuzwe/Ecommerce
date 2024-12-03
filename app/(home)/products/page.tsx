@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import Products from "./products";
 import Categories from "@/components/products/categories";
+export const metadata: Metadata = {
+    title: "Products",
+    description:"Products Page"
+};
 
 export default async function Page(props: {
   searchParams?: Promise<{ query?: string; search?: string; page?: number }>;
@@ -25,6 +29,4 @@ export default async function Page(props: {
     </div>
   );
 }
-export const metadata: Metadata = {
-  title: "Products",
-};
+

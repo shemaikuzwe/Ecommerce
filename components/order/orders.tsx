@@ -1,10 +1,11 @@
 'use client'
-import { Status,Order } from "@prisma/client"
+import { Status } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card } from "@/components/ui/card"
 import OrdersCard from "@/components/order/ordersCard"
 import { Package } from 'lucide-react'
+import {Order} from "@/lib/types/types"
 
 export default function Orders({ order }: { order: Order[] }) {
   const [items, setItems] = useState<Status>(Status.PENDING)
@@ -24,13 +25,13 @@ export default function Orders({ order }: { order: Order[] }) {
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-4xl">
-      <Card className="p-6">
+      <Card className="p-6 rounded-md">
         <Tabs
           defaultValue={Status.PENDING}
           className="w-full"
           onValueChange={(value) => handleStatusChange(value as Status)}
         >
-          <TabsList className="grid w-full grid-cols-3 lg:w-[400px] mx-auto mb-6">
+          <TabsList className="grid w-full grid-cols-3 max-w-xl mx-auto mb-6">
             {[Status.COMPLETED, Status.PENDING, Status.FAILED].map((status) => (
               <TabsTrigger key={status} value={status} className="capitalize">
                 {status.toLowerCase()}

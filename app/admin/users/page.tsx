@@ -8,7 +8,8 @@ import {
   TableCaption,
   TableRow,
 } from "@/components/ui/table";
-import { getAllUsers } from "@/lib/action/action";
+
+import {getAllUsers} from "@/lib/action/server";
 export default async function Page() {
   const users = await getAllUsers();
 

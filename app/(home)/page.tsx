@@ -1,16 +1,12 @@
 import Products from "./products";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { auth } from "../auth";
 
-export default async function Page(props: {
-  searchParams?: Promise<{ search: string }>;
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ search: string }>;
 }) {
-  const searchParams = await props.searchParams;
-
-  const search: string | undefined = searchParams?.search;
-
-   
   return (
     <div className="p-14">
       <center>
@@ -18,10 +14,10 @@ export default async function Page(props: {
           Featured Products
         </span>
       </center>
-      {<Products search={search} />}
+      {<Products searchParams={searchParams} />}
 
       <center>
-        <Button  asChild>
+        <Button variant={"default"} asChild>
           <Link href={"/products"}>View All</Link>
         </Button>
       </center>

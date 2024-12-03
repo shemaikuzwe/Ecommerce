@@ -11,14 +11,13 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ModeToggle } from "@/components/providers/mode-toggle";
 import { Home } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
 import Cart from "../cart/cart-sheet";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Search from "./search";
 import User from "../user/user";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 const Links = [
   { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
@@ -34,7 +33,7 @@ export function Navbar() {
 
   const { status } = useSession();
   return (
-    <nav className="bg-background border-b h-20 py-2">
+    <nav className="bg-card border-b h-20 py-2">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -42,9 +41,9 @@ export function Navbar() {
               <Image src={"/logo.png"} height={90} width={90} alt="logo" />
             </Link>
           </div>
-
-          <Search />
-
+          <Suspense fallback={null}>
+            <Search />
+          </Suspense>
           <div className="hidden md:flex items-center space-x-4">
             <NavigationMenu>
               <NavigationMenuList>

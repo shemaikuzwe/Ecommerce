@@ -11,9 +11,8 @@ export default function Error({
   return (
     <div className="flex-col  mx-auto justify-center items-center  m-14 w-[50vh]">
       <div className="flex mx-auto justify-center mt-40">
-        {/* <ExclamationTriangleIcon width={"120"} height={"120"} /> */}
+        <TriangleAlert/>
       </div>
-
       <center>
         <span className=" text-center  text-xl font-medium ">
           Something went wrong

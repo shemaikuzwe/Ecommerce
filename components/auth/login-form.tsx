@@ -1,14 +1,14 @@
 "use client";
-import { useFormStatus } from "react-dom";
 import InputGroup from "./inputGroup";
 import { authenticate } from "@/lib/action/action";
 import { useActionState } from "react";
 import { Button } from "../ui/button";
+import {Card} from "@/components/ui/card";
 export default function LoginForm() {
   const [state, dispatch, isPending] = useActionState(authenticate, undefined);
   return (
-    <div className={"p-6 border rounded-md w-full"}>
-      <form action={dispatch}>
+    <Card className={"p-6 border rounded-md w-full"}>
+      <form action={dispatch} className={"space-y-3"}>
         <h2 className={"text-xl text-center mb-4 font-medium"}>
           Enter Your credentials
         </h2>
@@ -28,14 +28,14 @@ export default function LoginForm() {
           <Button
             disabled={isPending}
             className="flex mt-5 gap-2 px-5 
-     disabled:cursor-not-allowed"
+              disabled:cursor-not-allowed"
           >
-             Login
+            Login
           </Button>
         </center>
 
         <center className={"mt-4"}>--OR--</center>
       </form>
-    </div>
+    </Card>
   );
 }

@@ -1,10 +1,10 @@
-import UserProfile from '@/components/user/UserProfile'
-import { getUserOrders } from '@/lib/action/action';
+import Profile from '@/components/user/profile'
 import { Metadata } from 'next';
+import {getUserOrders} from "@/lib/action/server";
 
 export default async function ProfilePage() {
   const orders = getUserOrders()
-  return <UserProfile orders={orders} />
+  return <Profile orders={orders} />
 }
 export const metadata: Metadata = {
   title: "Profile",

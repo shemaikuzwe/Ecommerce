@@ -15,7 +15,7 @@ const OrdersCard = ({order}:Props) => {
   const [showProds, setShowProds] = useState(false);
 
   return (
-    <Card className="w-full">
+    <Card className="w-full rounded-md">
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
         <time className="text-sm text-muted-foreground">
           {date.toLocaleString()}

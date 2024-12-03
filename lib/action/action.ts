@@ -22,20 +22,15 @@ import { appWrite } from "../appwrite/config";
 import { createFileUrl, getFileId } from "../utils";
 import { ID } from "node-appwrite";
 import { z } from "zod";
+import { getProduct } from "@/lib/action/server";
 
 const AddProduct = productSchema.omit({ id: true });
 
 export async function addProduct(
   prevState: ProductState | undefined,
-  formData: FormData
+  formData: FormData,
 ): Promise<ProductState | undefined> {
-  const validate = AddProduct.safeParse({
-    product: formData.get("product"),
-    price: formData.get("price"),
-    description: formData.get("description"),
-    type: formData.get("type"),
-    image: formData.get("image"),
-  });
+  const validate = AddProduct.safeParse(Object.fromEntries(formData.entries()));
   if (!validate.success) {
     return {
       errors: validate.error.flatten().fieldErrors,
@@ -63,18 +58,6 @@ export async function addProduct(
   }
 }
 
-export async function getProducts() {
-  const products = await db.product.findMany();
-  return products;
-}
-export async function productsCount() {
-  const noOfProducts = await db.product.count();
-  return noOfProducts;
-}
-export async function customerCount() {
-  const noOfCustomers = await db.user.count();
-  return noOfCustomers;
-}
 export async function deleteProduct(id: string) {
   try {
     const prod = await getProduct(id);
@@ -91,18 +74,9 @@ export async function deleteProduct(id: string) {
   }
 }
 
-export async function getProduct(id: string) {
-  const product = await db.product.findFirst({
-    where: {
-      id: id,
-    },
-  });
-  if (product) return product;
-}
-
 export async function editProduct(
   prevState: ProductState | undefined,
-  formData: FormData
+  formData: FormData,
 ): Promise<ProductState | undefined> {
   const validate = productSchema
     .omit({
@@ -160,7 +134,7 @@ async function uploadProduct(image: File) {
     const product = await storage.createFile(
       appWrite.BUCKET_ID,
       ID.unique(),
-      image
+      image,
     );
     return createFileUrl(product.$id);
   } catch (err) {
@@ -182,69 +156,9 @@ async function deleteProd(imagePath: string) {
   }
 }
 
-export async function getAllOrders() {
-  try {
-    const orders = await db.product.findMany();
-    return orders;
-  } catch (err) {
-    throw err;
-  }
-}
-export async function paginate() {
-  const no_of_pages = await db.product.count();
-  return no_of_pages;
-}
-
-export async function getSearchProduct(search: string) {
-  const product = await db.product.findMany({
-    where: {
-      OR: [
-        {
-          type: {
-            contains: search,
-          },
-        },
-        {
-          name: {
-            contains: search,
-          },
-        },
-        {
-          description: {
-            contains: search,
-          },
-        },
-      ],
-    },
-  });
-  return product;
-}
-export async function getAllProducts() {
-  let products = await db.product.findMany();
-
-  return products;
-}
-
-export async function getUser(email: string, password: string) {
-  const user = await db.user.findFirst({
-    where: {
-      AND: [
-        {
-          email: email,
-        },
-        {
-          password: password,
-        },
-      ],
-    },
-  });
-  if (!user) return null;
-  return user;
-}
-
 export async function authenticate(
   prevState: LoginError | undefined,
-  formData: FormData
+  formData: FormData,
 ): Promise<LoginError | undefined> {
   try {
     await signIn("credentials", formData);
@@ -255,14 +169,10 @@ export async function authenticate(
     throw error;
   }
 }
-export async function getAllUsers() {
-  const users = await db.user.findMany();
-  return users;
-}
 
 export async function addOrder(
   prevState: OrderState | undefined,
-  formData: FormData
+  formData: FormData,
 ): Promise<OrderState | undefined> {
   try {
     const cart = formData.get("cart") as string;
@@ -282,46 +192,16 @@ export async function addOrder(
     return { status: "error", message: "Something went wrong try again" };
   }
 }
-export async function getOrders(id: string | undefined) {
-  const orders = await db.order.findMany({
-    where: {
-      userId: id,
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
-  return orders;
-}
-
-
-export async function getUserOrders() {
-  try {
-    const session = await auth();
-    const userId = session?.user?.id as string;
-    const userOrders = await db.order.count({
-      where: {
-        userId,
-      },
-    });
-
-    return userOrders;
-  } catch (err) {
-    throw err;
-  }
-}
 
 export async function changePassword(
   prevState: ChangePasswordState | undefined,
-  formData: FormData
+  formData: FormData,
 ): Promise<ChangePasswordState | undefined> {
   const session = await auth();
   const userId = session?.user?.id as string;
-  const validate = changePasswordShema.safeParse({
-    currentPassword: formData.get("currentPassword"),
-    newPassword: formData.get("newPassword"),
-    confirmPassword: formData.get("confirmPassword"),
-  });
+  const validate = changePasswordShema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
   if (!validate.success) {
     return {
       status: "error",
@@ -378,15 +258,13 @@ const find_password = async (id: string, pass: string) => {
       ],
     },
   });
-  if (psw) {
-    return true;
-  }
-  return false;
+  return !!psw;
+
 };
 
 export async function updateProfile(
   prevState: updateProfileState | undefined,
-  formData: FormData
+  formData: FormData,
 ): Promise<updateProfileState | undefined> {
   const session = await auth();
   const userId = session?.user?.id as string;

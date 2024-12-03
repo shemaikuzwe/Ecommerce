@@ -1,6 +1,6 @@
-import { getProduct } from "@/lib/action/action";
 import { notFound } from "next/navigation";
 import EditForm from "@/components/admin/edit-form";
+import {getProduct} from "@/lib/action/server";
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const id = params.id;

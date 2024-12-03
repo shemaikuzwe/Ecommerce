@@ -1,6 +1,14 @@
 import NextAuth, { DefaultSession } from "next-auth";
 import { Role } from "@prisma/client";
 import "next-auth/jwt";
+import "@auth/core/adapters"
+
+declare  module "@auth/core/adapters"{
+  interface  AdapterUser{
+    role: Role;
+  }
+}
+
 declare module "next-auth" {
   interface User {
     role: Role;

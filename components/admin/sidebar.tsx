@@ -1,6 +1,6 @@
 "use client"
 
-import { LogOut, LayoutDashboard, ShoppingCart, Package, Users } from 'lucide-react'
+import { LayoutDashboard, ShoppingCart, Package, Users } from 'lucide-react'
 import Link from "next/link"
 
 import {
@@ -13,23 +13,23 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import User from '../user/user'
+import User from '../user/admin-avatar'
 import Image from 'next/image'
 export function DashSidebar() {
   return (
-    <Sidebar className="bg-primary border-none w-72">
-      <SidebarHeader className="p-4 border-none">
+    <Sidebar variant={"sidebar"} className="bg-card border-none ">
+      <SidebarHeader className="p-2 border-b-border">
         <div className="flex items-center gap-2">
           <Image src={"/logo.png"} alt='logo' height={90} width={90}/>
         </div>
       </SidebarHeader>
-      <SidebarContent className="px-2 pt-10  text-white">
+      <SidebarContent className="px-2 pt-10  ">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/admin">
                 <LayoutDashboard className="w-6 h-6" />
-                <span className=' text-lg font-semibold'>Dashboard</span>
+                <span className=' text-base'>Dashboard</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -37,7 +37,7 @@ export function DashSidebar() {
             <SidebarMenuButton asChild >
               <Link href="/admin/products">
                 <Package className="w-6 h-6" />
-                <span  className=' text-lg font-semibold'>Products</span>
+                <span  className=' text-base'>Products</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -45,7 +45,7 @@ export function DashSidebar() {
             <SidebarMenuButton asChild >
               <Link href="/admin/orders">
                 <ShoppingCart className="w-6 h-6" />
-                <span  className=' text-lg font-semibold'>Orders</span>
+                <span  className=' text-base'>Orders</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -53,13 +53,13 @@ export function DashSidebar() {
             <SidebarMenuButton asChild >
               <Link href="/admin/users">
                 <Users className="w-6 h-6" />
-                <span  className=' text-lg font-semibold'>Users</span>
+                <span  className=' text-base'>Users</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="p-4 mt-auto border-none">
+      <SidebarFooter className="py-2 w-full border-t-border  mt-auto border-none">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild >

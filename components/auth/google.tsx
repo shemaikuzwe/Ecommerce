@@ -1,13 +1,14 @@
 "use client"
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import {Card} from "@/components/ui/card";
 export default function Google() {
   return (
-    <div className="flex px-6 py-4 border border-gray-400 mt-5 rounded-md hover:bg-gray-200">
+    <Card className="flex p-4 mt-1 rounded-md ">
       <span>
-        <Image src="/google.webp" alt="google" width={60} height={60} />
+        <Image src="/google.png" alt="google" width={40} height={40} />
       </span>
-      <button onClick={()=> signIn("google")} type="submit">continue with google</button>
-    </div>
+      <button onClick={()=> signIn("google")} type="submit">Continue with google</button>
+    </Card>
   );
 }

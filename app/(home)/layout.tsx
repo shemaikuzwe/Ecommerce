@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div>
         <Navbar />
       </div>
-      <div>{children}</div>
+      <main className={"bg-muted/50"}>{children}</main>
     </div>
   );
 }

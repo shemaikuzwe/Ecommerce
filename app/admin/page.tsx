@@ -5,7 +5,7 @@ import DashboardCardsSkeleton from "@/components/skeltons/dashboard-card";
 
 export default async function Dashboard() {
   return (
-    <div className=" h-screen w-full flex-col gap-2 mx-4">
+    <div className=" h-fu;; w-full flex-col mx-4">
       <Suspense fallback={<DashboardCardsSkeleton/>}>
         <DashboardCards/>
       </Suspense>

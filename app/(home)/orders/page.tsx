@@ -1,10 +1,14 @@
-import Orders from "@/components/order/orders";
-import { getOrders } from "@/lib/action/action";
-import { auth } from "@/app/auth";
-
+import { Suspense } from "react";
+import OrdersContent from "@/app/(home)/orders/orders";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Orders",
+  description: "Orders page",
+};
 export default async function Page() {
-  const session = await auth();
-  const userId:string|undefined = session?.user?.id;
-  const orders = await getOrders(userId);
-  return <Orders order={orders} />;
+  return (
+    <Suspense fallback={null}>
+      <OrdersContent />
+    </Suspense>
+  );
 }

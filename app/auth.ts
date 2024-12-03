@@ -1,9 +1,11 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import {PrismaAdapter} from "@auth/prisma-adapter";
+import {PrismaClient} from "@prisma/client";
 import credentials from "next-auth/providers/credentials";
-import { getUser } from "@/lib/action/action";
+
+import {getUser} from "@/lib/action/server";
+
 const prisma = new PrismaClient();
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -14,11 +16,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       authorize: async (credentials) => {
-        const user = await getUser(
-          credentials.email as string,
-          credentials.password as string
+        return await getUser(
+            credentials.email as string,
+            credentials.password as string
         );
-        return user;
       },
     }),
     Google({
@@ -27,8 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/login",
-    error: "/login/error",
+    signIn: "/login"
   },
   session: {
     strategy: "jwt",
