@@ -103,7 +103,7 @@ export async function editProduct(
   if (image && image.size) {
     imagePath = await uploadProduct(image);
   }
-  console.log("getting here");
+ 
 
   await deleteProd(prod?.image!);
 

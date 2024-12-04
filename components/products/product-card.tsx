@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Product } from "@prisma/client";
+import { Product, Size } from "@prisma/client";
 import { useDispatch } from "react-redux";
 import { cartAction } from "@/store/cartSlice";
 import { useAppSelector } from "@/store/hook";
 import { cn } from "@/lib/utils";
-import { Item, Size } from "@/lib/types/types";
+import { Item } from "@/lib/types/types";
+
 
 interface Props {
   product: Product;

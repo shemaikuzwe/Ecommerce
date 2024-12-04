@@ -36,19 +36,11 @@ export default function OrderCard({ order }: OrderCardProps) {
   const { products, total_price, date, status } = order
 
   return (
-    <Card className="w-full">
-      <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
+    <Card className="">
+      <CardHeader className="flex-row items-center justify-between space-y-0 ">
         <time className="text-sm text-muted-foreground">
           {format(date, "EEEE, MMMM d, yyyy")}
         </time>
-        <Badge variant={status ? "default" : "secondary"} className="h-6">
-          {status  =="COMPLETED" ? (
-            <CheckCircle className="mr-1 h-3 w-3" />
-          ) : (
-            <Clock className="mr-1 h-3 w-3" />
-          )}
-          {status}
-        </Badge>
       </CardHeader>
       <CardContent>
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>

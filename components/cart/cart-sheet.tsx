@@ -24,7 +24,7 @@ export default function Cart() {
   const status = session.status;
   const dispatch = useDispatch();
   const cart = useAppSelector((state) => state.cart.itemsList);
-  console.log(cart.length);
+  console.log(cart);
   
   const userId=session?.data?.user?.id as string;
   const [totalPrice, setTotalPrice] = useState(0);

@@ -1,4 +1,4 @@
-import { Status } from "@prisma/client";
+import { Size, Status } from "@prisma/client";
 
 export type ProductState = {
   errors?: {
@@ -58,7 +58,3 @@ export type Item = {
 export type Cart = {
   itemsList: Array<Item>;
 };
-
-export const options = ["t-shirt", "pants", "shoes"];
-
-export type Size = "XS" | "S" | "M" | "L" | "XL";

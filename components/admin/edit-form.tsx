@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { options } from "@/lib/types/types";
+import { categories } from "@/lib/types/data";
 import { Label } from "../ui/label";
 import { Alert, AlertTitle } from "../ui/alert";
 import { cn } from "@/lib/utils";
@@ -67,7 +67,9 @@ export default function EditForm({ product }: Props) {
           />
           {state?.errors?.product &&
             state.errors.product.map((error) => (
-              <span className=" text-destructive" key={error}>{error}</span>
+              <span className=" text-destructive" key={error}>
+                {error}
+              </span>
             ))}
           <InputGroup
             type={"text"}
@@ -76,7 +78,9 @@ export default function EditForm({ product }: Props) {
           />
           {state?.errors?.description &&
             state.errors.description.map((error) => (
-              <span className=" text-destructive" key={error}>{error}</span>
+              <span className=" text-destructive" key={error}>
+                {error}
+              </span>
             ))}
           <InputGroup
             type={"number"}
@@ -85,7 +89,9 @@ export default function EditForm({ product }: Props) {
           />
           {state?.errors?.price &&
             state.errors.price.map((error) => (
-              <span className=" text-destructive" key={error}>{error}</span>
+              <span className=" text-destructive" key={error}>
+                {error}
+              </span>
             ))}
           <div>
             <Label>Category</Label>
@@ -96,15 +102,19 @@ export default function EditForm({ product }: Props) {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Categories</SelectLabel>
-                  {options.map((item) => (
-                    <SelectItem value={item} key={item}>{item}</SelectItem>
+                  {categories.map((item) => (
+                    <SelectItem value={item} key={item} className=" capitalize">
+                      {item.toLocaleLowerCase()}
+                    </SelectItem>
                   ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
             {state?.errors?.type &&
               state.errors.type.map((error) => (
-                <span className=" text-destructive" key={error}>{error}</span>
+                <span className=" text-destructive" key={error}>
+                  {error}
+                </span>
               ))}
           </div>
 

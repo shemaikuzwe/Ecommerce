@@ -30,7 +30,14 @@ export async function getAllProducts() {
 }
 
 export async function getAllUsers() {
-  return await db.user.findMany();
+  return await db.user.findMany({
+    include: { orders: true },
+    orderBy: {
+      orders: {
+        _count: "desc",
+      },
+    },
+  });
 }
 
 export async function getOrderById(id: string | undefined) {

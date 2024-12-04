@@ -21,6 +21,7 @@ export default async function Page() {
           <TableHead>Image</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
+          <TableHead>Orders</TableHead>
           <TableHead>Date Joined</TableHead>
         </TableRow>
       </TableHeader>
@@ -37,8 +38,10 @@ export default async function Page() {
                   </AvatarFallback>
                 </Avatar>
               </TableCell>
+            
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
+               <TableCell>{user.orders.length}</TableCell>
               <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
             </TableRow>
           ))

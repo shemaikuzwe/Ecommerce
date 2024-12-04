@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
 import { Order } from "@/lib/types/types";
 import { Status, User } from "@prisma/client";
+import OrderCard from "./order-card";
 
 interface Props {
   ordersPromise: Promise<Array<Order & { user: User }>>;
@@ -78,22 +79,31 @@ export function OrderManagement({ ordersPromise }: Props) {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Order ID</TableHead>
                       <TableHead>Customer</TableHead>
                       <TableHead>Date</TableHead>
                       <TableHead>Total</TableHead>
+                      <TableHead>Product</TableHead>
                       <TableHead>Status</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredOrders.map((order) => (
                       <TableRow key={order.id}>
-                        <TableCell className="font-medium">
-                          {order.id}
-                        </TableCell>
                         <TableCell>{order.user?.name}</TableCell>
                         <TableCell>{order.date.toLocaleDateString()}</TableCell>
-                        <TableCell>${order.total_price.toFixed(2)}</TableCell>
+                        <TableCell>
+                          {order.total_price.toLocaleString()} Rwf
+                        </TableCell>
+                        <TableCell>
+                          <OrderCard
+                            order={{
+                              products: order.products,
+                              total_price: order.total_price,
+                              date: order.date,
+                              status: order.status,
+                            }}
+                          />
+                        </TableCell>
                         <TableCell>{getStatusBadge(order.status)}</TableCell>
                       </TableRow>
                     ))}

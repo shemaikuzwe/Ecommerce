@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { categories } from "@/lib/types/data";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 export default function Categories() {
   const searchParams = useSearchParams();
@@ -46,7 +46,7 @@ export default function Categories() {
                 }
               />
               <Label htmlFor={category} className="capitalize">
-                {category}
+                {category.toLowerCase()}
               </Label>
             </div>
           ))}
