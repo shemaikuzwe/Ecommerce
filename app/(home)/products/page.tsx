@@ -15,7 +15,7 @@ export default async function Page(props: {
   const page: number | undefined = searchParams?.page;
 
   return (
-    <div className="p-8">
+    <div className="p-4">
       <center>
         <span className="text-center font-bold text-2xl">All Products</span>
       </center>

@@ -2,7 +2,7 @@ import { auth } from "@/app/auth";
 import { getOrderById } from "@/lib/action/server";
 import { Order } from "@/lib/types/types";
 import Orders from "@/components/order/orders";
-import { Metadata } from "next";
+
 
 
 export default async function OrdersContent() {
