@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import Link from "next/link";
-import { LogIn, Menu, ShoppingBag } from "lucide-react";
+import { LogIn, Menu } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,13 +49,13 @@ export function Navbar() {
               <NavigationMenuList>
                 {Links.map((link) => (
                   <NavigationMenuItem key={link.name}>
-                    <NavigationMenuLink
+                    <Link 
                       href={link.href}
                       className="px-3 flex gap-1 py-2 rounded-md text-sm font-medium"
                     >
                       {link.icon}
                       {link.name}
-                    </NavigationMenuLink>
+                   </Link>
                   </NavigationMenuItem>
                 ))}
               </NavigationMenuList>

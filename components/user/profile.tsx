@@ -77,7 +77,7 @@ export default function Profile({ orders }: UserProfileProps) {
                   <Input
                     id="fullName"
                     name="fullName"
-                    value={user?.name!}
+                    defaultValue={user?.name!}
                     readOnly={!isEditing}
                   />
                   {state?.errors?.fullName &&
@@ -100,7 +100,7 @@ export default function Profile({ orders }: UserProfileProps) {
                     id="email"
                     name="email"
                     type="email"
-                    value={user?.email!}
+                    defaultValue={user?.email!}
                     readOnly={!isEditing}
                   />
                   {state?.errors?.email &&

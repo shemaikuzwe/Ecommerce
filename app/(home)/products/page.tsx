@@ -7,15 +7,15 @@ export const metadata: Metadata = {
 };
 
 export default async function Page(props: {
-  searchParams?: Promise<{ query?: string; search?: string; page?: number }>;
+  searchParams?: Promise<{ category?: string[] |string; search?: string; page?: number }>;
 }) {
   const searchParams = await props.searchParams;
-  const query: string | undefined = searchParams?.query;
-  const search: string | undefined = searchParams?.search;
-  const page: number | undefined = searchParams?.page;
+  const category= searchParams?.category;
+  const search = searchParams?.search;
+  const page = searchParams?.page;
 
   return (
-    <div className="p-8">
+    <div className="p-4">
       <center>
         <span className="text-center font-bold text-2xl">All Products</span>
       </center>
@@ -23,7 +23,7 @@ export default async function Page(props: {
         <Categories />
 
         <div className={"flex flex-wrap gap-2 mt-10"}>
-          <Products search={search} query={query} page={page} />
+          <Products search={search} category={category} page={page} />
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ interface Props{
   order:Order
 }
 const OrdersCard = ({order}:Props) => {
-  const { id, userId, products, total_price, date, status } = order;
+  const { products, total_price, date, status } = order;
   const [showProds, setShowProds] = useState(false);
 
   return (

@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
 import { ProductCard } from "./product-card";
-import { ProductCardSkeleton } from "../skeltons/product-card-skeleton";
 import { Product } from "@prisma/client";
 
 interface Props {

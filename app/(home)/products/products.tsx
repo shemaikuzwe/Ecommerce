@@ -1,23 +1,20 @@
 import Pagination from "@/components/products/pagination";
 import ProductsGrids from "@/components/products/products-grid";
-import {getAllProducts} from "@/lib/action/server";
+import { getAllProducts } from "@/lib/action/server";
 export default async function Products({
   search,
   page,
-  query,
+  category,
 }: {
   search: string | undefined;
   page: number | undefined;
-  query: string | undefined;
+  category: string[] |string| undefined;
 }) {
   let products = await getAllProducts();
-  if (query) {
-    if (query == "All") {
-      products = products;
-    } else {
-      products = products.filter((product) => product.type == query);
-    }
+  if (category && category.length) {
+    products = products.filter((product) => category.includes(product.type));
   }
+
   if (search) {
     products = products.filter(
       (product) =>
@@ -44,7 +41,7 @@ export default async function Products({
     <div className=" flex flex-col justify-center items-center">
       <div className={"flex flex-wrap  gap-2 "}>
         {prod && prod.length > 0 ? (
-          <ProductsGrids products={prod}/>
+          <ProductsGrids products={prod} />
         ) : (
           <center className=" text-xl text-center mt-24">
             No products found
