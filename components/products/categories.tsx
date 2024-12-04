@@ -1,25 +1,40 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { categories } from "@/lib/types/data";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function Categories() {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
+    const initialCategories = searchParams.get("category");
+    return initialCategories ? initialCategories.split(",") : [];
+  });
   const handleCategoryChange = (category: string, checked: boolean) => {
-    if (checked) {
-      setSelectedCategories((prev) => [...prev, category]);
+    const updatedCategories = checked
+      ? [...selectedCategories, category]
+      : selectedCategories.filter((cat) => cat !== category);
+
+    setSelectedCategories(updatedCategories);
+
+    // Update the URL
+    const params = new URLSearchParams(searchParams);
+    if (updatedCategories.length > 0) {
+      params.set("category", updatedCategories.join(","));
     } else {
-      setSelectedCategories((prev) => prev.filter((cat) => cat !== category));
+      params.delete("category");
     }
+    replace(`${pathname}?${params.toString()}`);
   };
-  
-   
+
   return (
-    <div className="lg:block w-36">
-      <div className=" py-6">
-        <h2 className="text-lg font-medium ">Categories</h2>
+    <div className="lg:block w-40">
+      <div className="py-6">
+        <h2 className="text-lg font-medium">Categories</h2>
         <div className="mt-4 space-y-4">
           {categories.map((category) => (
             <div key={category} className="flex items-center gap-2">
@@ -30,7 +45,7 @@ export default function Categories() {
                   handleCategoryChange(category, checked as boolean)
                 }
               />
-              <Label htmlFor={category} className=" capitalize">
+              <Label htmlFor={category} className="capitalize">
                 {category}
               </Label>
             </div>
