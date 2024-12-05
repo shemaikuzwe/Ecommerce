@@ -1,20 +1,9 @@
 import { ProductCard } from "@/components/products/product-card";
 import { getProducts } from "@/lib/action/server";
-export default async function Products({
-  searchParams,
-}: {
-  searchParams: Promise<{ search: string }>;
-}) {
-  const { search } = await searchParams;
+export default async function Products() {
+ 
   let products = await getProducts();
-  if (search) {
-    products = products.filter(
-      (product) =>
-        product.type.startsWith(search) ||
-        product.description.toLocaleLowerCase().includes(search) ||
-        product.name.toLocaleLowerCase().includes(search),
-    );
-  }
+
 
   return (
     <div className={"flex flex-wrap gap-2 mt-10"}>

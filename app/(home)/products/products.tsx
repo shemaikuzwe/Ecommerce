@@ -2,11 +2,9 @@ import Pagination from "@/components/products/pagination";
 import ProductsGrids from "@/components/products/products-grid";
 import { getAllProducts } from "@/lib/action/server";
 export default async function Products({
-  search,
   page,
   category,
 }: {
-  search: string | undefined;
   page: number | undefined;
   category: string[] |string| undefined;
 }) {
@@ -15,14 +13,6 @@ export default async function Products({
     products = products.filter((product) => category.includes(product.type));
   }
 
-  if (search) {
-    products = products.filter(
-      (product) =>
-        product.type.toLocaleLowerCase().includes(search) ||
-        product.description.toLocaleLowerCase().includes(search) ||
-        product.name.toLocaleLowerCase().includes(search)
-    );
-  }
   const no_of_products = products.length;
   const no_of_pages = Math.ceil(no_of_products / 8);
   const pages = [];
