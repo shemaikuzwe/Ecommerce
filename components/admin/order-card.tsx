@@ -1,39 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ChevronDown, ChevronUp, Clock, CheckCircle } from "lucide-react"
-import { format } from "date-fns"
+import { useState } from "react";
+import { ChevronDown, ChevronUp, Clock, CheckCircle } from "lucide-react";
+import { format } from "date-fns";
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import { Status } from "@prisma/client"
+} from "@/components/ui/collapsible";
 
-interface Product {
-  name: string
-  quantity: number
-  price: number
-}
-
-interface Order {
-  products: Product[]
-  total_price: number
-  date: Date
-  status: Status
-}
+import { Order } from "@/lib/types/types";
 
 interface OrderCardProps {
-  order: Order
+  order: Order;
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const { products, total_price, date, status } = order
+  const [isOpen, setIsOpen] = useState(false);
+  const { products, total_price, date } = order;
 
   return (
     <Card className="">
@@ -74,11 +62,9 @@ export default function OrderCard({ order }: OrderCardProps) {
                   >
                     <div className="space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {product.name}
+                      {product.quantity} {product.name}
                       </p>
-                      <p className="text-sm text-muted-foreground">
-                        Quantity: {product.quantity}
-                      </p>
+                      <Badge>{product.size}</Badge>
                     </div>
                     <p className="text-sm font-medium">
                       {product.price.toLocaleString()} RWF
@@ -91,6 +77,5 @@ export default function OrderCard({ order }: OrderCardProps) {
         </Collapsible>
       </CardContent>
     </Card>
-  )
+  );
 }
-

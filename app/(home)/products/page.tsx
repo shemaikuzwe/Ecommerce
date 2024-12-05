@@ -11,7 +11,6 @@ export default async function Page(props: {
 }) {
   const searchParams = await props.searchParams;
   const category= searchParams?.category;
-  const search = searchParams?.search;
   const page = searchParams?.page;
 
   return (
@@ -23,7 +22,7 @@ export default async function Page(props: {
         <Categories />
 
         <div className={"flex flex-wrap gap-2 mt-10"}>
-          <Products search={search} category={category} page={page} />
+          <Products  category={category} page={page} />
         </div>
       </div>
     </div>

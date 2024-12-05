@@ -2,13 +2,31 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import DashboardCards from "@/components/admin/dashboard-cards";
 import DashboardCardsSkeleton from "@/components/skeltons/dashboard-card";
+import { getChartData } from "@/lib/action/server";
+import PendingOrders from "@/components/admin/pending-orders";
+import ChartSkeleton from "@/components/skeltons/chart-skelton";
+import PendingDepositsSkeleton from "@/components/skeltons/pending-order-skelton";
+import Chart from "@/components/admin/chart";
 
 export default async function Dashboard() {
+  const data = getChartData();
+
   return (
-    <div className=" h-fu;; w-full flex-col mx-4">
-      <Suspense fallback={<DashboardCardsSkeleton/>}>
-        <DashboardCards/>
-      </Suspense>
+    <div className="flex-col md:flex">
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <Suspense fallback={<DashboardCardsSkeleton />}>
+          <DashboardCards />
+        </Suspense>
+        <div className="flex gap-4">
+          <Suspense fallback={<ChartSkeleton />}>
+            <Chart dataPromise={data} />
+          </Suspense>
+
+          <Suspense fallback={<PendingDepositsSkeleton />}>
+            <PendingOrders />
+          </Suspense>
+        </div>
+      </div>
     </div>
   );
 }

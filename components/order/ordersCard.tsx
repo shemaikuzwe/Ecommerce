@@ -61,11 +61,9 @@ const OrdersCard = ({order}:Props) => {
                   >
                     <div className="space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {product.name}
+                      {product.quantity} {product.name}
                       </p>
-                      <p className="text-sm text-muted-foreground">
-                        Quantity: {product.quantity}
-                      </p>
+                       <Badge>{product.size}</Badge>
                     </div>
                     <p className="text-sm font-medium">
                       {product.price.toLocaleString()} RWF

@@ -14,7 +14,7 @@ export default async function Page({
           Featured Products
         </span>
       </center>
-      {<Products searchParams={searchParams} />}
+      {<Products/>}
 
       <center>
         <Button variant={"default"} asChild>

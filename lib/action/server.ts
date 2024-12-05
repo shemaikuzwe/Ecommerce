@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "@/lib/db";
-import { Order } from "@/lib/types/types";
+import { ChartData, Order } from "@/lib/types/types";
 import { User } from "@prisma/client";
 import { auth } from "@/app/auth";
 
@@ -80,4 +80,45 @@ export async function getUser(email: string, password: string) {
   });
   if (!user) return null;
   return user;
+}
+
+export async function getPendingOrders() {
+  return await db.order.findMany({
+    where: {
+      status: "PENDING",
+    },
+    include: {
+      user: true,
+    },
+  });
+}
+
+export async function getChartData() {
+  try {
+    const dashboardData = (await db.order.findMany()) as Order[];
+    const productOrdersMap = new Map<string, Set<string>>();
+    dashboardData.forEach((order) => {
+      const productsInThisOrder = new Set<string>();
+
+      order?.products?.forEach((product) => {
+        if (!productsInThisOrder.has(product.name)) {
+          const existingSet = productOrdersMap.get(product.name) || new Set();
+          existingSet.add(order.id);
+          productOrdersMap.set(product.name, existingSet);
+          productsInThisOrder.add(product.name);
+        }
+      });
+    });
+    const chartData: ChartData[] = Array.from(productOrdersMap).map(
+      ([product, orderSet]) => ({
+        product,
+        orders: orderSet.size,
+      })
+    );
+
+    return chartData;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 }

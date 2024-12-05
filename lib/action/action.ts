@@ -28,7 +28,7 @@ const AddProduct = productSchema.omit({ id: true });
 
 export async function addProduct(
   prevState: ProductState | undefined,
-  formData: FormData,
+  formData: FormData
 ): Promise<ProductState | undefined> {
   const validate = AddProduct.safeParse(Object.fromEntries(formData.entries()));
   if (!validate.success) {
@@ -76,7 +76,7 @@ export async function deleteProduct(id: string) {
 
 export async function editProduct(
   prevState: ProductState | undefined,
-  formData: FormData,
+  formData: FormData
 ): Promise<ProductState | undefined> {
   const validate = productSchema
     .omit({
@@ -103,7 +103,6 @@ export async function editProduct(
   if (image && image.size) {
     imagePath = await uploadProduct(image);
   }
- 
 
   await deleteProd(prod?.image!);
 
@@ -134,7 +133,7 @@ async function uploadProduct(image: File) {
     const product = await storage.createFile(
       appWrite.BUCKET_ID,
       ID.unique(),
-      image,
+      image
     );
     return createFileUrl(product.$id);
   } catch (err) {
@@ -158,7 +157,7 @@ async function deleteProd(imagePath: string) {
 
 export async function authenticate(
   prevState: LoginError | undefined,
-  formData: FormData,
+  formData: FormData
 ): Promise<LoginError | undefined> {
   try {
     await signIn("credentials", formData);
@@ -172,7 +171,7 @@ export async function authenticate(
 
 export async function addOrder(
   prevState: OrderState | undefined,
-  formData: FormData,
+  formData: FormData
 ): Promise<OrderState | undefined> {
   try {
     const cart = formData.get("cart") as string;
@@ -195,12 +194,12 @@ export async function addOrder(
 
 export async function changePassword(
   prevState: ChangePasswordState | undefined,
-  formData: FormData,
+  formData: FormData
 ): Promise<ChangePasswordState | undefined> {
   const session = await auth();
   const userId = session?.user?.id as string;
   const validate = changePasswordShema.safeParse(
-    Object.fromEntries(formData.entries()),
+    Object.fromEntries(formData.entries())
   );
   if (!validate.success) {
     return {
@@ -259,12 +258,11 @@ const find_password = async (id: string, pass: string) => {
     },
   });
   return !!psw;
-
 };
 
 export async function updateProfile(
   prevState: updateProfileState | undefined,
-  formData: FormData,
+  formData: FormData
 ): Promise<updateProfileState | undefined> {
   const session = await auth();
   const userId = session?.user?.id as string;
@@ -300,5 +298,18 @@ export async function updateProfile(
       status: "error",
       message: "Something went wrong",
     };
+  }
+}
+
+export async function getSearchProducts(search: string) {
+  try {
+    const products = await db.product.findMany({
+      where: {
+        OR: [{ name: { contains: search } }],
+      },
+    });
+    return products;
+  } catch (err) {
+    throw err;
   }
 }

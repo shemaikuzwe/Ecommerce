@@ -58,3 +58,8 @@ export type Item = {
 export type Cart = {
   itemsList: Array<Item>;
 };
+
+export type ChartData = {
+  product: string;
+  orders: number;
+};

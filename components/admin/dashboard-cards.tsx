@@ -3,7 +3,7 @@ import {getAllUsers, getProducts} from "@/lib/action/server";
 export default async function DashboardCards() {
     const noOfProducts = await getProducts();
     const noOfCustomers = await getAllUsers();
-  return <div className="flex w-full gap-2 flex-wrap h-28">
+  return <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
        
      <DashboardCard
        label="Products"

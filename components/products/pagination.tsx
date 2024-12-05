@@ -27,8 +27,9 @@ export default function Pagination({ pages }: { pages: number[] }) {
   }, [currentPage]);
 
   return (
+ 
     <div
-      className={
+     className={
         "inline-flex -space-x-px rounded-md shadow-sm gap-2 text-white mx-auto"
       }
     >
@@ -58,5 +59,6 @@ export default function Pagination({ pages }: { pages: number[] }) {
         Next
       </Button>
     </div>
+
   );
 }

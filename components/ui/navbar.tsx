@@ -18,6 +18,7 @@ import { useSession } from "next-auth/react";
 import Search from "./search";
 import User from "../user/user";
 import { Suspense, useState } from "react";
+import SearchForm from "./search";
 
 const Links = [
   { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
@@ -42,7 +43,7 @@ export function Navbar() {
             </Link>
           </div>
           <Suspense fallback={null}>
-            <Search />
+            <SearchForm/>
           </Suspense>
           <div className="hidden md:flex items-center space-x-4">
             <NavigationMenu>
@@ -73,7 +74,6 @@ export function Navbar() {
             )}
           </div>
           <div className="md:hidden flex items-center">
-            {/* <ModeToggle /> */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" className="ml-2">
