@@ -313,3 +313,26 @@ export async function getSearchProducts(search: string) {
     throw err;
   }
 }
+
+export async function getFeaturedProducts() {
+  try {
+    const products = await db.product.findMany({
+      take: 4,
+    });
+    return products 
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getLatestProducts() {
+  try {
+    const products = await db.product.findMany({
+      take: 4
+    }
+   );
+    return products 
+  } catch (err) {
+    throw err;
+  }
+}

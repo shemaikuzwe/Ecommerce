@@ -1,5 +1,7 @@
-import Products from "./products";
-import { Button } from "@/components/ui/button";
+import Footer from "@/components/home/footer";
+import HomeCard from "@/components/home/home-card";
+import ImageSlider from "@/components/ui/img-slider";
+import { getProducts } from "@/lib/action/server";
 import Link from "next/link";
 
 export default async function Page({
@@ -7,20 +9,13 @@ export default async function Page({
 }: {
   searchParams: Promise<{ search: string }>;
 }) {
-  return (
-    <div className="p-14">
-      <center>
-        <span className="text-center font-bold text-2xl">
-          Featured Products
-        </span>
-      </center>
-      {<Products/>}
-
-      <center>
-        <Button variant={"default"} asChild>
-          <Link href={"/products"}>View All</Link>
-        </Button>
-      </center>
+  const products=getProducts()
+    return (
+    <div className="p-14 flex flex-col gap-5">
+      <ImageSlider productsPromise={products}/>
+      <HomeCard name="Featured"/>
+      <HomeCard name="Latest"/>
+      <Footer/>
     </div>
   );
 }
