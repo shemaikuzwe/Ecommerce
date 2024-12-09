@@ -1,10 +1,7 @@
 import { ProductCard } from "@/components/products/product-card";
 import { getProducts } from "@/lib/action/server";
 export default async function Products() {
- 
-  let products = await getProducts();
-
-
+  const  products = await getProducts();
   return (
     <div className={"flex flex-wrap gap-2 mt-10"}>
       {products && products.length > 0 ? (

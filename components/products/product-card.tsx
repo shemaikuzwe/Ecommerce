@@ -20,6 +20,7 @@ interface Props {
 }
 
 export function ProductCard({ product }: Props) {
+
   const [selectedSize, setSelectedSize] = useState<Size>("M");
   const cart = useAppSelector((state) => state.cart.itemsList);
   const [quantity, setQuantity] = useState(1);
@@ -59,6 +60,7 @@ export function ProductCard({ product }: Props) {
   return (
     <motion.div
       layout
+      //@ts-ignore
       className="w-72 max-w-sm p-0 "
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -66,6 +68,7 @@ export function ProductCard({ product }: Props) {
     >
       <div>
         <motion.div
+         //@ts-ignore
           className="relative aspect-square cursor-pointer"
           onClick={() => setIsExpanded(!isExpanded)}
           whileHover={{ scale: 1.05 }}
@@ -87,13 +90,16 @@ export function ProductCard({ product }: Props) {
         <AnimatePresence>
           {isExpanded && (
             <motion.div
+             //@ts-ignore
               className="w-full space-y-4"
+        
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
               <motion.div
+                  //@ts-ignore
                 className="flex flex-wrap gap-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -111,6 +117,7 @@ export function ProductCard({ product }: Props) {
                 ))}
               </motion.div>
               <motion.div
+               //@ts-ignore
                 className="flex items-center gap-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

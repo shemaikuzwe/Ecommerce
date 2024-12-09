@@ -1,0 +1,40 @@
+import React from "react";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { getFeaturedProducts, getLatestProducts } from "@/lib/action/action";
+import { ProductCard } from "../products/product-card";
+
+interface Props {
+  name: "Featured" | "Latest";
+}
+
+export default async function HomeCard({ name }: Props) {
+  const products =
+    name == "Featured"
+      ? await getFeaturedProducts()
+      : await getLatestProducts();
+  return (
+    <div className="mt-10">
+      <center>
+        <span className="text-center font-bold text-2xl">{name} Products</span>
+      </center>
+      <div className={"flex flex-wrap gap-2 mt-10"}>
+        {products && products.length > 0 ? (
+          products.map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))
+        ) : (
+          <center className=" text-xl text-center mt-24">
+            No products found
+          </center>
+        )}
+      </div>
+
+      <center>
+        <Button variant={"default"} asChild>
+          <Link href={"/products"}>View All</Link>
+        </Button>
+      </center>
+    </div>
+  );
+}
