@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export function ProductCardSkeleton() {
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden bg-white mx-5 border">
       <CardHeader className="p-0">
         <Skeleton className="aspect-square w-full" />
       </CardHeader>
@@ -19,10 +19,6 @@ export function ProductCardSkeleton() {
           <Skeleton className="h-4 w-[100px]" />
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 gap-2">
-        <Skeleton className="h-8 w-8 rounded-md" />
-        <Skeleton className="h-8 w-8 rounded-md" />
-      </CardFooter>
     </Card>
   )
 }
