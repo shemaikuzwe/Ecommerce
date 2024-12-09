@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function() {
+export default function page() {
   return (
-    <div  className=' flex ga-2 mt-5 bg-secondary h-10'>
+    <div  className='flex items-end gap-2 bg-secondary h-20 p-3 rounded-md'>
       &copy; Urban deals shop {new Date().getFullYear()} -All rights Reserved
     </div>
   )

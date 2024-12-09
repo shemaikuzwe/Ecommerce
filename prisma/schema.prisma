@@ -42,8 +42,8 @@ model Product {
   type        Category @default(OTHER)
   size        Size     @default(M)
   image       String
-  createdAt   DateTime? @default(now()) 
-  updatedAt   DateTime? @default(now()) @updatedAt
+  createdAt   DateTime @default(now()) 
+  updatedAt   DateTime @default(now()) @updatedAt
 }
 
 model Order {
