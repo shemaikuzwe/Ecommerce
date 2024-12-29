@@ -317,9 +317,9 @@ export async function getSearchProducts(search: string) {
 export async function getFeaturedProducts() {
   try {
     const products = await db.product.findMany({
-      take: 4,
+      where: { isFeatured: true },
     });
-    return products 
+    return products;
   } catch (err) {
     throw err;
   }
@@ -328,11 +328,27 @@ export async function getFeaturedProducts() {
 export async function getLatestProducts() {
   try {
     const products = await db.product.findMany({
-      take: 4
-    }
-   );
-    return products 
+      take: 4,
+    });
+    return products;
   } catch (err) {
     throw err;
+  }
+}
+
+export async function updateFeatured(formData: FormData) {
+  const schema = z.object({
+    featured: z.string(),
+    id: z.string(),
+  });
+  const validate = schema.safeParse(Object.fromEntries(formData.entries()));
+  if (validate.success) {
+    const { featured, id } = validate.data;
+    console.log(featured);
+    await db.product.update({
+      data: { isFeatured: featured == "on" ? true : false },
+      where: { id },
+    });
+    revalidatePath("/admin/products");
   }
 }

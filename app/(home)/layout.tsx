@@ -3,7 +3,7 @@ import { Navbar } from "@/components/ui/navbar";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div>
         <Navbar />
       </div>

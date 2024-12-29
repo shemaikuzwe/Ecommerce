@@ -6,9 +6,10 @@ import { ProductCard } from "../products/product-card";
 
 interface Props {
   name: "Featured" | "Latest";
+  viewAll?: boolean;
 }
 
-export default async function HomeCard({ name }: Props) {
+export default async function HomeCard({ name, viewAll = true }: Props) {
   const products =
     name == "Featured"
       ? await getFeaturedProducts()
@@ -30,11 +31,13 @@ export default async function HomeCard({ name }: Props) {
         )}
       </div>
 
-      <center>
-        <Button variant={"default"} asChild>
-          <Link href={"/products"}>View All</Link>
-        </Button>
-      </center>
+      {viewAll && (
+        <center>
+          <Button variant={"default"} asChild>
+            <Link href={"/products"}>View All</Link>
+          </Button>
+        </center>
+      )}
     </div>
   );
 }
