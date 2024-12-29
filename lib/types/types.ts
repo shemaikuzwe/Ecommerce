@@ -21,8 +21,8 @@ export type Product = {
   image: string;
 };
 export type Order = {
-  id: string;
-  userId: string;
+  id?: string;
+  userId?: string;
   products: Item[];
   total_price: number;
   status: Status;

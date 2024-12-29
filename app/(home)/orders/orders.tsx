@@ -8,6 +8,7 @@ import Orders from "@/components/order/orders";
 export default async function OrdersContent() {
   const session = await auth();
   const userId: string | undefined = session?.user?.id;
-  const orders = (await getOrderById(userId)) as Order[];
+  const orders = await getOrderById(userId);
+  //@ts-ignore
   return <Orders order={orders} />;
 }

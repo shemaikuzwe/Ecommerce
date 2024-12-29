@@ -1,4 +1,5 @@
 "use client";
+
 import { ReactNode } from "react";
 import { Provider } from "react-redux";
 import { useRef, useEffect } from "react";
@@ -6,14 +7,14 @@ import { AppStore, makeStore } from "./store";
 import { useAppDispatch } from "./hook";
 import useStorage from "./hook";
 import { cartAction } from "./cartSlice";
-export default function Providers({ children }: { children: ReactNode }) {
-  const storeRef = useRef<AppStore>();
+export default  function Providers({ children }: { children: ReactNode }) {
+  const storeRef = useRef<AppStore>(null);
   if (!storeRef.current) {
     storeRef.current = makeStore();
   }
   return (
     <Provider store={storeRef.current}>
-      <StorageProvider>{children}</StorageProvider>{" "}
+      <StorageProvider>{children}</StorageProvider>
     </Provider>
   );
 }

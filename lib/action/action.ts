@@ -5,7 +5,7 @@ import {
   ProductState,
   updateProfileState,
 } from "@/lib/types/types";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth, signIn } from "@/app/auth";
 import { CredentialsSignin } from "next-auth";
@@ -41,37 +41,29 @@ export async function addProduct(
 
   const { product, price, description, type, image } = validate.data;
   const imagePath = await uploadProduct(image);
-  try {
-    await db.product.create({
-      data: {
-        name: product,
-        price: price,
-        description: description,
-        type: type,
-        image: imagePath,
-      },
-    });
-    revalidatePath("/admin/products");
-    redirect("/admin/products");
-  } catch (err) {
-    throw err;
-  }
+  await db.product.create({
+    data: {
+      name: product,
+      price: price,
+      description: description,
+      type: type,
+      image: imagePath,
+    },
+  });
+  revalidateTag("products");
+  redirect("/admin/products");
 }
 
 export async function deleteProduct(id: string) {
-  try {
-    const prod = await getProduct(id);
-    await deleteProd(prod?.image as string);
-    await db.product.delete({
-      where: {
-        id: id,
-      },
-    });
-    revalidatePath("/admin/products");
-    redirect("/admin/products");
-  } catch (err) {
-    throw err;
-  }
+  const prod = await getProduct(id);
+  await deleteProd(prod?.image as string);
+  await db.product.delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidateTag("products");
+  redirect("/admin/products");
 }
 
 export async function editProduct(
@@ -103,29 +95,23 @@ export async function editProduct(
   if (image && image.size) {
     imagePath = await uploadProduct(image);
   }
-
   await deleteProd(prod?.image!);
+  await db.product.update({
+    where: {
+      id: id,
+    },
 
-  try {
-    await db.product.update({
-      where: {
-        id: id,
-      },
+    data: {
+      name: product,
+      description: description,
+      price: price,
+      type: type,
+      image: imagePath,
+    },
+  });
 
-      data: {
-        name: product,
-        description: description,
-        price: price,
-        type: type,
-        image: imagePath,
-      },
-    });
-
-    revalidatePath("/admin/products");
-    redirect("/admin/products");
-  } catch (err) {
-    throw err;
-  }
+  revalidateTag("products");
+  redirect("/admin/products");
 }
 async function uploadProduct(image: File) {
   try {
@@ -185,7 +171,7 @@ export async function addOrder(
         total_price: parseInt(totalPrice),
       },
     });
-
+    revalidateTag("orders");
     return { status: "success", message: "Order created successfully" };
   } catch (e) {
     return { status: "error", message: "Something went wrong try again" };
@@ -302,30 +288,25 @@ export async function updateProfile(
 }
 
 export async function getSearchProducts(search: string) {
-  try {
     const products = await db.product.findMany({
       where: {
         OR: [{ name: { contains: search } }],
       },
     });
     return products;
-  } catch (err) {
-    throw err;
-  }
+  
 }
 
 export async function getFeaturedProducts() {
-  try {
+
     const products = await db.product.findMany({
       where: { isFeatured: true },
     });
     return products;
-  } catch (err) {
-    throw err;
-  }
 }
 
 export async function getLatestProducts() {
+
   try {
     const products = await db.product.findMany({
       take: 4,
@@ -349,6 +330,6 @@ export async function updateFeatured(formData: FormData) {
       data: { isFeatured: featured == "on" ? true : false },
       where: { id },
     });
-    revalidatePath("/admin/products");
+    revalidateTag("products")
   }
 }

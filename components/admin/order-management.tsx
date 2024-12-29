@@ -12,12 +12,13 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
-import { Order } from "@/lib/types/types";
+import { Item, Order } from "@/lib/types/types";
 import { Status, User } from "@prisma/client";
 import OrderCard from "./order-card";
+import { OrderUser } from "@/lib/action/server";
 
 interface Props {
-  ordersPromise: Promise<Array<Order & { user: User }>>;
+  ordersPromise: Promise<OrderUser>;
 }
 
 export function OrderManagement({ ordersPromise }: Props) {
@@ -97,10 +98,11 @@ export function OrderManagement({ ordersPromise }: Props) {
                         <TableCell>
                           <OrderCard
                             order={{
-                              products: order.products,
+                              products: order.products as Item[],
                               total_price: order.total_price,
                               date: order.date,
                               status: order.status,
+                              
                             }}
                           />
                         </TableCell>

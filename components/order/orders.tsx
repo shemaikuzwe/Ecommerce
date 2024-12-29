@@ -1,13 +1,13 @@
 'use client'
-import { Status } from "@prisma/client"
+import { Order, Status } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card } from "@/components/ui/card"
 import OrdersCard from "@/components/order/ordersCard"
 import { Package } from 'lucide-react'
-import {Order} from "@/lib/types/types"
+import { OrderUser } from "@/lib/action/server"
 
-export default function Orders({ order }: { order: Order[] }) {
+export default function Orders({ order }: { order: OrderUser }) {
   const [items, setItems] = useState<Status>(Status.PENDING)
   const [orders, setOrders] = useState(order)
 
@@ -52,6 +52,7 @@ export default function Orders({ order }: { order: Order[] }) {
               ) : (
                 <div className="grid gap-4">
                   {orders.map((order: Order) => (
+                    //@ts-ignore
                     <OrdersCard key={order.id} order={order} />
                   ))}
                 </div>
