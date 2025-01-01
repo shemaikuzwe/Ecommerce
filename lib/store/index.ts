@@ -3,18 +3,18 @@ import { Actions, Cart } from "@/lib/types/types";
 import {persist} from "zustand/middleware";
 
 export const useCart = create<Cart & Actions>()(persist((set) => ({
-    itemsList: [],
+    cart: [],
     addToCart: (item) =>
         set((state) => ({
-            itemsList: [...state.itemsList, item],
+            cart: [...state.cart, item],
         })),
     removeFromCart: (id) =>
         set((state) => ({
-            itemsList: state.itemsList.filter((item) => item.id !== id),
+            cart: state.cart.filter((item) => item.id !== id),
         })),
     incrementQuantity: (id) =>
         set((state) => ({
-            itemsList: state.itemsList.map((item) =>
+            cart: state.cart.map((item) =>
                 item.id === id
                     ? {
                         ...item,
@@ -25,7 +25,7 @@ export const useCart = create<Cart & Actions>()(persist((set) => ({
         })),
     decrementQuantity: (id) =>
         set((state) => ({
-            itemsList: state.itemsList.map((item) =>
+            cart: state.cart.map((item) =>
                 item.id === id
                     ? {
                         ...item,
@@ -36,6 +36,6 @@ export const useCart = create<Cart & Actions>()(persist((set) => ({
         })),
     removeAll: () =>
         set({
-            itemsList: [],
+            cart: [],
         }),
 }),{name:"cart"}));

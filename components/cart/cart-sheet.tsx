@@ -7,11 +7,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { BadgeCheck, Delete, FileText, ShoppingCart } from "lucide-react";
+import { Delete, FileText, ShoppingCart } from "lucide-react";
 import { Button } from "../ui/button";
-import { useDispatch } from "react-redux";
-import { cartAction } from "@/store/cartSlice";
-import { useAppSelector } from "@/store/hook";
 import { CartItem } from "./cart-item";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -23,7 +20,7 @@ import {useCart} from "@/lib/store";
 export default function Cart() {
   const session = useSession();
   const status = session.status;
-  const {itemsList:cart,removeAll}=useCart()
+  const {cart,removeAll}=useCart()
   
   const userId=session?.data?.user?.id as string;
   const [totalPrice, setTotalPrice] = useState(0);

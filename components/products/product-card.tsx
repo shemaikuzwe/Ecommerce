@@ -20,11 +20,10 @@ interface Props {
 export function ProductCard({ product }: Props) {
 
   const [selectedSize, setSelectedSize] = useState<Size>("M");
-  const {itemsList:cart}=useCart()
   const [quantity, setQuantity] = useState(1);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const {addToCart,removeFromCart}=useCart()
+  const {addToCart,removeFromCart,cart}=useCart()
 
   const handleAddToCart = () => {
     const payload: Item = {

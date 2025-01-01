@@ -56,7 +56,7 @@ export type Item = {
   size: Size;
 };
 export type Cart = {
-  itemsList: Array<Item>;
+  cart: Array<Item>;
 };
 export  type  Actions={
   addToCart:(item:Item)=> void
