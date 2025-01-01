@@ -1,7 +1,7 @@
-"use cache"
 import { notFound } from "next/navigation";
 import EditForm from "@/components/admin/edit-form";
-import {getProduct} from "@/lib/action/server";
+import { getProduct } from "@/lib/action/server";
+import { Suspense } from "react";
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const id = params.id;
@@ -10,5 +10,9 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   if (!product) {
     notFound();
   }
-  return <EditForm product={product} />;
+  return (
+    <Suspense fallback={<h2>Loading</h2>}>
+      <EditForm product={product} />
+    </Suspense>
+  );
 }
