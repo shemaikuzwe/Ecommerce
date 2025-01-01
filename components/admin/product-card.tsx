@@ -17,10 +17,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import DeleteDialog from "./delete-dialog";
 import { Checkbox } from "../ui/checkbox";
-import { cn } from "@/lib/utils";
 import { updateFeatured } from "@/lib/action/action";
 import { useFormStatus } from "react-dom";
 
@@ -28,6 +27,15 @@ export function ProductCard({ product }: { product: Product }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(product.isFeatured);
+  const [state, action] = useActionState(updateFeatured, undefined);
+  useEffect(() => {
+    console.log("success");
+    if (state) {
+      product.isFeatured = state.status;
+      console.log(product.isFeatured);
+      
+    }
+  }, [state]);
   return (
     <>
       <Card>
@@ -99,10 +107,10 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
           <form
             className=" flex flex-col justify-center items-center gap-1"
-            action={updateFeatured}
+            action={action}
           >
             <Checkbox
-              checked={isChecked}
+              defaultChecked={isChecked}
               onCheckedChange={() => setIsChecked(!isChecked)}
               name="featured"
             />

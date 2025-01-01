@@ -24,7 +24,7 @@ interface Props {
 export function OrderManagement({ ordersPromise }: Props) {
   const orders = use(ordersPromise);
 
-  const [activeTab, setActiveTab] = useState<Status>("COMPLETED");
+  const [activeTab, setActiveTab] = useState<Status>("PENDING");
 
   const filteredOrders = orders.filter((order) => order.status === activeTab);
 

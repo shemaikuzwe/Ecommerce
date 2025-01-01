@@ -5,6 +5,8 @@ import { User } from "@prisma/client";
 import { auth } from "@/app/auth";
 import { unstable_cacheTag as cacheTag } from "next/cache";
 export async function getProducts() {
+  "use cache";
+  cacheTag("products");
   return db.product.findMany();
 }
 
@@ -17,6 +19,7 @@ export async function getProduct(id: string) {
 }
 
 export async function getOrders() {
+  "use cache";
   const orders = await db.order.findMany({
     include: {
       user: true,
@@ -26,10 +29,12 @@ export async function getOrders() {
 }
 export type OrderUser = Awaited<ReturnType<typeof getOrders>>;
 export async function getAllProducts() {
+  "use cache";
   return db.product.findMany();
 }
 
 export async function getAllUsers() {
+  "use cache";
 
   return await db.user.findMany({
     include: { orders: true },
@@ -42,6 +47,7 @@ export async function getAllUsers() {
 }
 
 export async function getOrderById(id: string | undefined) {
+  "use cache";
   return await db.order.findMany({
     where: {
       userId: id,
@@ -53,17 +59,13 @@ export async function getOrderById(id: string | undefined) {
 }
 
 export async function getUserOrders() {
-  try {
-    const session = await auth();
-    const userId = session?.user?.id as string;
-    return await db.order.count({
-      where: {
-        userId,
-      },
-    });
-  } catch (err) {
-    throw err;
-  }
+  const session = await auth();
+  const userId = session?.user?.id as string;
+  return await db.order.count({
+    where: {
+      userId,
+    },
+  });
 }
 
 export async function getUser(email: string, password: string) {
@@ -84,6 +86,8 @@ export async function getUser(email: string, password: string) {
 }
 
 export async function getPendingOrders() {
+  "use cache";
+  cacheTag("orders");
   return await db.order.findMany({
     where: {
       status: "PENDING",
@@ -95,6 +99,7 @@ export async function getPendingOrders() {
 }
 
 export async function getChartData() {
+  "use cache";
   try {
     const dashboardData = await db.order.findMany();
     const productOrdersMap = new Map<string, Set<string>>();

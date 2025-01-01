@@ -1,3 +1,4 @@
+"use cache"
 import { notFound } from "next/navigation";
 import EditForm from "@/components/admin/edit-form";
 import {getProduct} from "@/lib/action/server";
