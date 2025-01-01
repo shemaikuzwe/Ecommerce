@@ -1,33 +1,24 @@
-import { useState } from 'react'
 import { Minus, Plus, X } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Item } from '@/lib/types/types'
-import { useDispatch } from 'react-redux'
-import { cartAction } from '@/store/cartSlice'
+import {useCart} from "@/lib/store";
 
-// interface CartItemProps {
-//   name: string
-//   price: number
-//   size: string
-//   initialQuantity: number
-//   onQuantityChange: (newQuantity: number) => void
-//   onRemove: () => void
-// }
+
 interface Props{
     item:Item
 }
 export function CartItem({ item}: Props) {
-  const dispatch = useDispatch();
+  const {incrementQuantity,decrementQuantity,removeFromCart}=useCart()
 
   const handleIncrement = () => {
-    dispatch(cartAction.incrementQuantity(item.id));
+    incrementQuantity(item.id)
   }
 
   const handleDecrement = () => {
-    dispatch(cartAction.decrementQuantity(item.id));
+    decrementQuantity(item.id)
   }
   const handleRemove=()=>{
-    dispatch(cartAction.removeFromCart(item.id))
+    removeFromCart(item.id)
   }
 
   return (

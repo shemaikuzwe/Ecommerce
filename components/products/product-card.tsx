@@ -8,12 +8,10 @@ import { CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Product, Size } from "@prisma/client";
-import { useDispatch } from "react-redux";
-import { cartAction } from "@/store/cartSlice";
-import { useAppSelector } from "@/store/hook";
 import { cn } from "@/lib/utils";
 import { Item } from "@/lib/types/types";
 import { motion, AnimatePresence } from "framer-motion";
+import {useCart} from "@/lib/store";
 
 interface Props {
   product: Product;
@@ -22,11 +20,11 @@ interface Props {
 export function ProductCard({ product }: Props) {
 
   const [selectedSize, setSelectedSize] = useState<Size>("M");
-  const cart = useAppSelector((state) => state.cart.itemsList);
+  const {itemsList:cart}=useCart()
   const [quantity, setQuantity] = useState(1);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const dispatch = useDispatch();
+  const {addToCart,removeFromCart}=useCart()
 
   const handleAddToCart = () => {
     const payload: Item = {
@@ -36,7 +34,7 @@ export function ProductCard({ product }: Props) {
       size: selectedSize,
       quantity,
     };
-    dispatch(cartAction.addToCart(payload));
+    addToCart(payload);
   };
 
   const handleIncrement = () => {
@@ -48,7 +46,7 @@ export function ProductCard({ product }: Props) {
   };
 
   const handleRemoveFromCart = () => {
-    dispatch(cartAction.removeFromCart(product.id));
+    removeFromCart(product.id);
   };
 
   const isAdded = () => {
