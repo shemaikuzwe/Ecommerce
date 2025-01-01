@@ -1,6 +1,6 @@
 import Pagination from "@/components/products/pagination";
 import ProductsGrids from "@/components/products/products-grid";
-import { getAllProducts } from "@/lib/action/server";
+import { getProducts } from "@/lib/action/server";
 export default async function Products({
   page,
   category,
@@ -8,7 +8,7 @@ export default async function Products({
   page: number | undefined;
   category: string[] |string| undefined;
 }) {
-  let products = await getAllProducts();
+  let products = await getProducts();
   if (category && category.length) {
     products = products.filter((product) => category.includes(product.type));
   }

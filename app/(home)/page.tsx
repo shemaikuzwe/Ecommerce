@@ -1,8 +1,9 @@
+
+"use cache"
 import Footer from "@/components/home/footer";
 import HomeCard from "@/components/home/home-card";
 import ImageSlider from "@/components/ui/img-slider";
 import { getProducts } from "@/lib/action/server";
-import Link from "next/link";
 
 export default async function Page() {
   const products = getProducts();
@@ -10,7 +11,7 @@ export default async function Page() {
     <>
       <main className="px-14 flex flex-col gap-5">
         <ImageSlider productsPromise={products} />
-        <HomeCard name="Featured"viewAll={false} />
+        <HomeCard name="Featured" viewAll={false} />
         <HomeCard name="Latest" />
       </main>
       <Footer />

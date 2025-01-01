@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "lint": "next lint",
     "postinstall": "prisma generate",
     "start": "next start",
     "db:studio": "prisma studio",
@@ -27,7 +28,6 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.4",
-    "@reduxjs/toolkit": "^2.4.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -41,14 +41,14 @@
     "node-appwrite": "^14.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-redux": "^9.1.2",
+    "react-redux": "^9.2.0",
     "recharts": "^2.14.1",
-    "redux": "^5.0.1",
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.4",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",

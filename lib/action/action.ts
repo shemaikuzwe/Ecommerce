@@ -288,48 +288,48 @@ export async function updateProfile(
 }
 
 export async function getSearchProducts(search: string) {
-    const products = await db.product.findMany({
-      where: {
-        OR: [{ name: { contains: search } }],
-      },
-    });
-    return products;
-  
+  const products = await db.product.findMany({
+    where: {
+      OR: [{ name: { contains: search } }],
+    },
+  });
+  return products;
 }
 
 export async function getFeaturedProducts() {
+  "use cache";
 
-    const products = await db.product.findMany({
-      where: { isFeatured: true },
-    });
-    return products;
+  const products = await db.product.findMany({
+    where: { isFeatured: true },
+  });
+  return products;
 }
 
 export async function getLatestProducts() {
-
-  try {
-    const products = await db.product.findMany({
-      take: 4,
-    });
-    return products;
-  } catch (err) {
-    throw err;
-  }
+  "use cache";
+  const products = await db.product.findMany({
+    take: 4,
+  });
+  return products;
 }
 
-export async function updateFeatured(formData: FormData) {
+export async function updateFeatured(
+  prevState: { status: boolean } | undefined,
+  formData: FormData
+): Promise<{ status: boolean } | undefined> {
   const schema = z.object({
-    featured: z.string(),
+    featured: z.string().optional(),
     id: z.string(),
   });
   const validate = schema.safeParse(Object.fromEntries(formData.entries()));
   if (validate.success) {
     const { featured, id } = validate.data;
-    console.log(featured);
+    const isFeatured = featured !== undefined;
     await db.product.update({
-      data: { isFeatured: featured == "on" ? true : false },
+      data: { isFeatured },
       where: { id },
     });
-    revalidateTag("products")
+    revalidateTag("products");
+    return { status: isFeatured };
   }
 }

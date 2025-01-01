@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, use, useActionState, useEffect } from "react";
+import { useState, useActionState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { User, Mail, Package, Lock } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -27,11 +26,11 @@ import { changePassword, updateProfile } from "@/lib/action/action";
 import { Alert, AlertTitle } from "../ui/alert";
 import { cn } from "@/lib/utils";
 
-interface UserProfileProps {
-  orders: Promise<number>;
-}
+// interface UserProfileProps {
+//   orders: Promise<number>;
+// }
 
-export default function Profile({ orders }: UserProfileProps) {
+export default function Profile() {
   const [state, action1, pending] = useActionState(updateProfile, undefined);
   const [status, action2, isPending] = useActionState(
     changePassword,
@@ -40,7 +39,6 @@ export default function Profile({ orders }: UserProfileProps) {
   const [isEditing, setIsEditing] = useState(false);
   const session = useSession();
   const user = session?.data?.user;
-  const totalOrders = use(orders);
   useEffect(() => {
     if (state?.status == "success") {
       setIsEditing(false);
@@ -113,13 +111,6 @@ export default function Profile({ orders }: UserProfileProps) {
                         {error}
                       </span>
                     ))}
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Package className="text-muted-foreground" />
-                <div className="flex-grow">
-                  <Label>Total Orders</Label>
-                  <p className="text-lg font-medium">{totalOrders}</p>
                 </div>
               </div>
               {state?.message && (

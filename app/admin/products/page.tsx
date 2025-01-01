@@ -1,5 +1,5 @@
 import ProductsGrid from "@/components/admin/products-grid";
-import {getProducts} from "@/lib/action/server";
+import { getProducts } from "@/lib/action/server";
 
 export default async function Page() {
   const products = await getProducts();

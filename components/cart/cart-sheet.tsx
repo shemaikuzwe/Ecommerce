@@ -7,11 +7,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { BadgeCheck, Delete, FileText, ShoppingCart } from "lucide-react";
+import { Delete, FileText, ShoppingCart } from "lucide-react";
 import { Button } from "../ui/button";
-import { useDispatch } from "react-redux";
-import { cartAction } from "@/store/cartSlice";
-import { useAppSelector } from "@/store/hook";
 import { CartItem } from "./cart-item";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -19,12 +16,11 @@ import { addOrder } from "@/lib/action/action";
 import { Alert, AlertDescription ,AlertTitle} from "../ui/alert";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+import {useCart} from "@/lib/store";
 export default function Cart() {
   const session = useSession();
   const status = session.status;
-  const dispatch = useDispatch();
-  const cart = useAppSelector((state) => state.cart.itemsList);
-  console.log(cart);
+  const {cart,removeAll}=useCart()
   
   const userId=session?.data?.user?.id as string;
   const [totalPrice, setTotalPrice] = useState(0);
@@ -42,7 +38,7 @@ export default function Cart() {
     if (state?.status == "success") handleRemoveAll();
   }, [state?.status]);
   const handleRemoveAll = () => {
-    dispatch(cartAction.removeAll());
+    removeAll()
   };
   return (
     <Sheet>

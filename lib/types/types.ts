@@ -56,8 +56,15 @@ export type Item = {
   size: Size;
 };
 export type Cart = {
-  itemsList: Array<Item>;
+  cart: Array<Item>;
 };
+export  type  Actions={
+  addToCart:(item:Item)=> void
+  removeFromCart:(id:string) =>void;
+  incrementQuantity:(id:string)=>void
+  decrementQuantity:(id:string) =>void;
+  removeAll:()=>void;
+}
 
 export type ChartData = {
   product: string;

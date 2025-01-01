@@ -1,5 +1,4 @@
 import ProductsGrid from "@/components/products/products-grid";
-import { getSearchProducts } from "@/lib/action/action";
 import { getProducts } from "@/lib/action/server";
 import { redirect } from "next/navigation";
 import React from "react";
