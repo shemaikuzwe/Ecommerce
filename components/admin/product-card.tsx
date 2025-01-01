@@ -32,8 +32,6 @@ export function ProductCard({ product }: { product: Product }) {
     console.log("success");
     if (state) {
       product.isFeatured = state.status;
-      console.log(product.isFeatured);
-      
     }
   }, [state]);
   return (

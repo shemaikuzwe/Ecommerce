@@ -23,6 +23,7 @@ import { createFileUrl, getFileId } from "../utils";
 import { ID } from "node-appwrite";
 import { z } from "zod";
 import { getProduct } from "@/lib/action/server";
+import { unstable_cacheTag as cacheTag } from "next/cache";
 
 const AddProduct = productSchema.omit({ id: true });
 
@@ -138,20 +139,6 @@ async function deleteProd(imagePath: string) {
     if (err instanceof Error) {
       console.log(err.message);
     }
-  }
-}
-
-export async function authenticate(
-  prevState: LoginError | undefined,
-  formData: FormData
-): Promise<LoginError | undefined> {
-  try {
-    await signIn("credentials", formData);
-  } catch (error) {
-    if (error instanceof CredentialsSignin) {
-      return { message: "Invalid credentials" };
-    }
-    throw error;
   }
 }
 
@@ -307,8 +294,10 @@ export async function getFeaturedProducts() {
 
 export async function getLatestProducts() {
   "use cache";
+  cacheTag("products");
   const products = await db.product.findMany({
     take: 4,
+    orderBy: { id: "desc" },
   });
   return products;
 }
@@ -330,6 +319,7 @@ export async function updateFeatured(
       where: { id },
     });
     revalidateTag("products");
+    redirect("/admin/products");
     return { status: isFeatured };
   }
 }
