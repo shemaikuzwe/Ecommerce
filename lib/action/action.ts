@@ -24,6 +24,7 @@ import { ID } from "node-appwrite";
 import { z } from "zod";
 import { getProduct } from "@/lib/action/server";
 import { unstable_cacheTag as cacheTag } from "next/cache";
+import Stripe from "stripe";
 
 const AddProduct = productSchema.omit({ id: true });
 
@@ -146,23 +147,35 @@ export async function addOrder(
   prevState: OrderState | undefined,
   formData: FormData
 ): Promise<OrderState | undefined> {
-  try {
-    const cart = formData.get("cart") as string;
-    const totalPrice = formData.get("totalPrice") as string;
-    const userId = formData.get("userId") as string;
+  const cart = formData.get("cart") as string;
+  const totalPrice = formData.get("totalPrice") as string;
+  const userId = (await auth())?.user.id as string;
+  if (!userId) throw new Error("User not found");
+  const amount = parseInt(totalPrice);
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-    await db.order.create({
-      data: {
-        userId: userId,
-        products: JSON.parse(cart),
-        total_price: parseInt(totalPrice),
+  const stripeSession = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price_data: {
+          currency: "rwf",
+          unit_amount: amount,
+          product_data: {
+            name: "Order"
+          },
+        },
+        quantity: 1,
       },
-    });
-    revalidateTag("orders");
-    return { status: "success", message: "Order created successfully" };
-  } catch (e) {
-    return { status: "error", message: "Something went wrong try again" };
-  }
+    ],
+    metadata: {
+      buyerId: userId,
+      products: cart,
+    },
+    mode: "payment",
+    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/orders?success=order created successfully`,
+    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+  });
+  redirect(stripeSession.url!);
 }
 
 export async function changePassword(

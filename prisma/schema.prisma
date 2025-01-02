@@ -50,7 +50,7 @@ model Product {
 model Order {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   userId      String   @db.ObjectId
-  products    Json[]
+  products    Json[]  
   total_price Int
   status      Status   @default(PENDING)
   date        DateTime @default(now())

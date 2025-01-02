@@ -1,7 +1,8 @@
 import "server-only";
 import { db } from "@/lib/db";
-import { ChartData, Order } from "@/lib/types/types";
-import { unstable_cacheTag as cacheTag } from "next/cache";
+import { ChartData, TOrder } from "@/lib/types/types";
+import { unstable_cacheTag as cacheTag, revalidateTag } from "next/cache";
+
 export async function getProducts() {
   "use cache";
   cacheTag("products");
@@ -9,7 +10,6 @@ export async function getProducts() {
 }
 
 export async function getProduct(id: string) {
-
   return db.product.findFirst({
     where: {
       id: id,
@@ -121,8 +121,19 @@ export async function getChartData() {
     );
 
     return chartData;
-  } catch (err) {
-    console.log(err);
-    throw err;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
+}
+
+export async function addOrder(order: TOrder) {
+  await db.order.create({
+    data: {
+      userId: order.userId,
+      total_price: order.amount,
+      products: JSON.parse(order.products),
+    },
+  });
+  revalidateTag("orders");
 }

@@ -44,6 +44,7 @@
     "react-redux": "^9.2.0",
     "recharts": "^2.14.1",
     "server-only": "^0.0.1",
+    "stripe": "^17.5.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.4",
