@@ -15,7 +15,6 @@ import { Home } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
 import Cart from "../cart/cart-sheet";
 import { useSession } from "next-auth/react";
-import Search from "./search";
 import User from "../user/user";
 import { Suspense, useState } from "react";
 import SearchForm from "./search";
@@ -43,20 +42,20 @@ export function Navbar() {
             </Link>
           </div>
           <Suspense fallback={null}>
-            <SearchForm/>
+            <SearchForm />
           </Suspense>
           <div className="hidden md:flex items-center space-x-4">
             <NavigationMenu>
               <NavigationMenuList>
                 {Links.map((link) => (
                   <NavigationMenuItem key={link.name}>
-                    <Link 
+                    <Link
                       href={link.href}
                       className="px-3 flex gap-1 py-2 rounded-md text-sm font-medium"
                     >
                       {link.icon}
                       {link.name}
-                   </Link>
+                    </Link>
                   </NavigationMenuItem>
                 ))}
               </NavigationMenuList>
@@ -82,14 +81,15 @@ export function Navbar() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
-                <div className="flex flex-col space-y-4 mt-4">
+                <div className="flex flex-col justify-start items-start gap-2 mt-4">
                   {Links.map((link) => (
                     <Link
                       key={link.name}
                       href={link.href}
-                      className="px-3 py-2 rounded-md text-sm font-medium"
+                      className="px-3 flex gap-1 py-2 rounded-md text-sm font-medium"
                       onClick={() => setIsOpen(false)}
                     >
+                      {link.icon}
                       {link.name}
                     </Link>
                   ))}

@@ -23,7 +23,7 @@ export default function ImageSlider({
   const products = use(productsPromise);
   return (
     <Suspense fallback={null}>
-      <div className="relative w-[72vh] mx-auto rounded-md border-2">
+      <div className="relative sm:w-[72vh] w-full mx-auto rounded-md border-2">
         <Carousel
           setApi={setApi}
           plugins={[
@@ -32,7 +32,7 @@ export default function ImageSlider({
             }),
           ]}
         >
-          <CarouselContent className="p-0 h-64 sm:h-80 md:h-96 lg:h-[30rem] border-0 ">
+          <CarouselContent className="p-0 h-64 sm:h-80 md:h-96 lg:h-[30rem]  border-0 ">
             {products.map((product, index) => (
               <CarouselItem
                 key={index}
@@ -50,7 +50,7 @@ export default function ImageSlider({
                       <div className="absolute left-4 top-2">
                         <Badge
                           variant={"secondary"}
-                          className="bg-background/80 backdrop-blur-sm"
+                          className="bg-background/80 backdrop-blur-sm max-md:text-md"
                         >
                           {product.name}
                         </Badge>
@@ -58,7 +58,7 @@ export default function ImageSlider({
                       <div className="absolute right-2 top-2">
                         <Badge
                           variant="secondary"
-                          className="bg-background/80 backdrop-blur-sm"
+                          className="bg-background/80 backdrop-blur-sm max-md:text-md"
                         >
                           {product.price.toLocaleString()} Rwf
                         </Badge>
@@ -66,7 +66,7 @@ export default function ImageSlider({
                       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
                         <Badge
                           variant="secondary"
-                          className="bg-background/80 backdrop-blur-sm max-w-fit"
+                          className="bg-background/80 backdrop-blur-sm max-w-fit max-md:text-md"
                         >
                           {product.description}
                         </Badge>

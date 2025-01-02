@@ -1,4 +1,4 @@
-import { LayoutDashboard, ShoppingCart, Package, Users } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Package, Users, Columns2 } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -21,6 +21,7 @@ export function DashSidebar() {
           <Image src={"/logo.png"} alt="logo" height={90} width={90} />
         </div>
       </SidebarHeader>
+      
       <SidebarContent className="px-2 pt-10  ">
         <SidebarMenu>
           <SidebarMenuItem>

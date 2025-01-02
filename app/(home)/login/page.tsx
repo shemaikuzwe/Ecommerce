@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 };
 export default function LoginForm() {
   return (
-    <div className="flex min-h-screen justify-center bg-slate-50 p-4">
-      <Card className="w-full max-w-md h-72 sm:mt-20 ">
+    <div className="flex min-h-screen justify-center  bg-slate-50 p-4">
+      <Card className="w-full max-w-md h-72 sm:mt-20 mt-14 ">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
             Welcome back
