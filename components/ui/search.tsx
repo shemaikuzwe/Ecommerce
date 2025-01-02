@@ -17,7 +17,7 @@ export default function SearchForm() {
     replace(`${pathname}?${params.toString()}`);
   };
   return (
-    <Form action={"/search"} className="flex justify-center items-center w-80">
+    <Form action={"/search"} className="flex justify-center items-center sm:w-80 w-52">
       <Input
         name="search"
         placeholder="Search anything...."

@@ -1,10 +1,15 @@
-import { Button } from "@/components/ui/button"
- import { ProductCard } from "./product-card"
-import { Product } from "@prisma/client"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { ProductCard } from "./product-card";
+import { Product } from "@prisma/client";
+import Link from "next/link";
+import { use } from "react";
 
-
-export default function ProductsGrid({ products }: { products: Product[] }) {
+export default async function ProductsGrid({
+  productsPromise,
+}: {
+  productsPromise: Promise<Product[]>;
+}) {
+  const products = await productsPromise;
   return (
     <div className="space-y-4 flex flex-col justify-center items-center">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -20,6 +25,5 @@ export default function ProductsGrid({ products }: { products: Product[] }) {
         <Link href={"/admin/products/new"}>Add new Product</Link>
       </Button>
     </div>
-  )
+  );
 }
-

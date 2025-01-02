@@ -37,10 +37,10 @@ export default function User() {
         <DropdownMenuLabel>{user?.name!}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="/profile">Profile</Link>
+          <Link href="/admin/profile">Profile</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link href="/orders">Orders</Link>
+          <Link href="/admin/orders">Orders</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className={"w-full"}>

@@ -1,34 +1,33 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import {PrismaAdapter} from "@auth/prisma-adapter";
-import {PrismaClient} from "@prisma/client";
-import credentials from "next-auth/providers/credentials";
-
-import {getUser} from "@/lib/action/server";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
+import Github from "next-auth/providers/github";
+import { cache } from "react";
 
 const prisma = new PrismaClient();
-export const { handlers, signIn, signOut, auth } = NextAuth({
+const {
+  handlers,
+  signIn,
+  signOut,
+  auth: isAuth,
+} = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
-    credentials({
-      credentials: {
-        email: {},
-        password: {},
-      },
-      authorize: async (credentials) => {
-        return await getUser(
-            credentials.email as string,
-            credentials.password as string
-        );
-      },
-    }),
     Google({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+      allowDangerousEmailAccountLinking: true,
+    }),
+    Github({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   pages: {
-    signIn: "/login"
+    signIn: "/login",
+    error: "/login/error",
   },
   session: {
     strategy: "jwt",
@@ -43,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       session.user.id = token.id as string;
-      session.user.role=token.role
+      session.user.role = token.role;
       return session;
     },
     async authorized({ auth, request: { nextUrl } }) {
@@ -62,9 +61,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return Response.redirect(new URL("/login", nextUrl));
         return true;
       } else if (isOnHome && isAdmin) {
-      return Response.redirect(new URL("/admin", nextUrl));
+        return Response.redirect(new URL("/admin", nextUrl));
       }
       return true;
     },
   },
 });
+const auth = cache(isAuth);
+export { handlers, signIn, signOut, auth };

@@ -13,16 +13,14 @@ import { CartItem } from "./cart-item";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { addOrder } from "@/lib/action/action";
-import { Alert, AlertDescription ,AlertTitle} from "../ui/alert";
-import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
-import {useCart} from "@/lib/store";
+import { useCart } from "@/lib/store";
 export default function Cart() {
   const session = useSession();
   const status = session.status;
-  const {cart,removeAll}=useCart()
-  
-  const userId=session?.data?.user?.id as string;
+  const { cart, removeAll } = useCart();
+
+  const userId = session?.data?.user?.id as string;
   const [totalPrice, setTotalPrice] = useState(0);
   const [state, action, isPending] = useActionState(addOrder, undefined);
   useEffect(() => {
@@ -38,14 +36,14 @@ export default function Cart() {
     if (state?.status == "success") handleRemoveAll();
   }, [state?.status]);
   const handleRemoveAll = () => {
-    removeAll()
+    removeAll();
   };
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" className="w-20">
           <ShoppingCart className="mr-2 h-4 w-4" />
-            {cart.length ?<Badge>{cart.length}</Badge>:null}
+          {cart.length ? <Badge>{cart.length}</Badge> : null}
         </Button>
       </SheetTrigger>
       <SheetContent>
@@ -54,27 +52,6 @@ export default function Cart() {
           <SheetDescription>Review your items before checkout</SheetDescription>
         </SheetHeader>
         <div className="mt-4 space-y-4">
-          {state?.status && (
-            <Alert
-              className={cn({
-                "text-green-400": state.status == "success",
-                "text-destructive": state.status == "error",
-              })}
-            >
-              <AlertTitle>
-                {state.status == "success"
-                  ? "Your order has been placed successfully."
-                  : "Error Something went wrong TryAgain"}
-              </AlertTitle>
-              {state.status == "success" && (
-                <AlertDescription>
-                  <Button asChild variant={"link"} className=" text-foreground">
-                    <Link href={"/orders"}>View Orders</Link>
-                  </Button>
-                </AlertDescription>
-              )}
-            </Alert>
-          )}
           <div className="flex justify-end items-end">
             {cart.length != 0 && (
               <Delete
@@ -99,7 +76,6 @@ export default function Cart() {
           >
             <input type="hidden" name="totalPrice" value={totalPrice} />
             <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-            <input type="hidden" name="userId" value={userId} />
             <span className="font-bold text-black">
               Total Price :{totalPrice.toLocaleString()} Rwf
             </span>

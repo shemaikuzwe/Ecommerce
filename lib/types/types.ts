@@ -28,6 +28,11 @@ export type Order = {
   status: Status;
   date: Date;
 };
+export type TOrder = {
+  userId: string;
+  amount: number;
+  products: string;
+};
 export type OrderState = {
   status: "success" | "error";
   message: string;
