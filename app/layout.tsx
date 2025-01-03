@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {  Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -21,9 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
-          <ThemeProvider>
-            <SessionProvider>{children}</SessionProvider>
-          </ThemeProvider>
+        <ThemeProvider
+          attribute={"class"}
+          disableTransitionOnChange
+          defaultTheme="system"
+          enableSystem
+        >
+          <SessionProvider>{children}</SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

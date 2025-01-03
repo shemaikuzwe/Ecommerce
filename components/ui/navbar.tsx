@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -18,6 +17,7 @@ import { useSession } from "next-auth/react";
 import User from "../user/user";
 import { Suspense, useState } from "react";
 import SearchForm from "./search";
+import ThemeToggle from "../providers/theme-toggle";
 
 const Links = [
   { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
@@ -61,6 +61,7 @@ export function Navbar() {
               </NavigationMenuList>
             </NavigationMenu>
             <Cart />
+            <ThemeToggle/>
             {status === "authenticated" ? (
               <User />
             ) : (
@@ -94,6 +95,7 @@ export function Navbar() {
                     </Link>
                   ))}
                   <Cart />
+                  <ThemeToggle/>
                   {status === "authenticated" ? (
                     <>
                       <User />

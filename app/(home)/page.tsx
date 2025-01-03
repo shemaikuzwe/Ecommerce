@@ -1,5 +1,4 @@
-
-"use cache"
+"use cache";
 import Footer from "@/components/home/footer";
 import HomeCard from "@/components/home/home-card";
 import ImageSlider from "@/components/ui/img-slider";

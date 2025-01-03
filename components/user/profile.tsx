@@ -8,23 +8,17 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
-import { changePassword, updateProfile } from "@/lib/action/action";
+import {  updateProfile } from "@/lib/action/action";
 import { Alert, AlertTitle } from "../ui/alert";
 import { cn } from "@/lib/utils";
+import ThemeSelector from "../providers/theme-selector";
 
 // interface UserProfileProps {
 //   orders: Promise<number>;
@@ -32,10 +26,10 @@ import { cn } from "@/lib/utils";
 
 export default function Profile() {
   const [state, action1, pending] = useActionState(updateProfile, undefined);
-  const [status, action2, isPending] = useActionState(
-    changePassword,
-    undefined
-  );
+  // const [status, action2, isPending] = useActionState(
+  //   changePassword,
+  //   undefined
+  // );
   const [isEditing, setIsEditing] = useState(false);
   const session = useSession();
   const user = session?.data?.user;
@@ -60,6 +54,7 @@ export default function Profile() {
               <CardDescription>{user?.email!}</CardDescription>
             </div>
           </div>
+          
         </CardHeader>
         <CardContent>
           <motion.div
@@ -139,8 +134,8 @@ export default function Profile() {
                     Edit Profile
                   </Button>
                 )}
-
-                <Dialog>
+                
+                {/* <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="outline">
                       <Lock />
@@ -233,11 +228,14 @@ export default function Profile() {
                       )}
                     </form>
                   </DialogContent>
-                </Dialog>
+                </Dialog> */}
               </div>
             </form>
           </motion.div>
         </CardContent>
+        <CardFooter>
+        <ThemeSelector/>
+          </CardFooter>
       </Card>
     </div>
   );

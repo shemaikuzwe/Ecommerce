@@ -23,7 +23,7 @@ export default function ImageSlider({
   const products = use(productsPromise);
   return (
     <Suspense fallback={null}>
-      <div className="relative sm:w-[72vh] w-full mx-auto rounded-md border-2">
+      <div className="relative sm:w-[72vh] w-full mx-auto rounded-md p-0">
         <Carousel
           setApi={setApi}
           plugins={[

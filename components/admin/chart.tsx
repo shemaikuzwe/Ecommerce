@@ -27,7 +27,7 @@ export default function Chart({
   } satisfies ChartConfig;
   const data = use(dataPromise);
   return (
-    <Card className="rounded-sm w-full md:max-w-md lg:max-w-lg">
+    <Card className="rounded-sm w-full h-96 md:max-w-md lg:max-w-lg">
       <CardHeader className={"p-2 bg-muted"}>
         <CardTitle className="text-md text-center">Products Overview</CardTitle>
       </CardHeader>

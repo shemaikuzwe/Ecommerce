@@ -66,7 +66,7 @@ export function ProductCard({ product }: Props) {
       <div>
         <motion.div
          //@ts-ignore
-          className="relative aspect-square cursor-pointer"
+          className="relative aspect-square cursor-pointer border-2 rounded-lg"
           onClick={() => setIsExpanded(!isExpanded)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
