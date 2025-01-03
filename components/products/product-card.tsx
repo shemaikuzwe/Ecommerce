@@ -61,7 +61,7 @@ export function ProductCard({ product }: Props) {
       className="w-72 max-w-sm p-0 "
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.1 }}
     >
       <div>
         <motion.div

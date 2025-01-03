@@ -18,6 +18,9 @@ export async function POST(req: NextRequest) {
   if (event?.type == "checkout.session.completed") {
     console.log("Checkout session completed");
     const { amount_total, metadata } = event.data.object;
+    // const city=shipping_details?.address?.city;
+    // const name=shipping_details?.name;
+    // const code=shipping_details?.address?.postal_code
     if (!metadata) {
       console.log("No metadata found");
       return NextResponse.json({ received: false }, { status: 200 });

@@ -1,9 +1,14 @@
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ProductCardSkeleton() {
   return (
-    <Card className="overflow-hidden bg-white mx-5 border">
+    <Card className="overflow-hidden text-muted mx-5 border">
       <CardHeader className="p-0">
         <Skeleton className="aspect-square w-full" />
       </CardHeader>
@@ -11,8 +16,8 @@ export function ProductCardSkeleton() {
         <div className="space-y-2">
           <div className="flex items-start justify-between">
             <div className="space-y-1">
-              <Skeleton className="h-4 w-[150px]" />
-              <Skeleton className="h-3 w-[200px]" />
+              <Skeleton className="h-4 w-[120px]" />
+              <Skeleton className="h-3 w-[150px]" />
             </div>
             <Skeleton className="h-5 w-14" />
           </div>
@@ -20,6 +25,5 @@ export function ProductCardSkeleton() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

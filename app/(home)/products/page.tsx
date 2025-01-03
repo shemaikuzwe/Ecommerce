@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Products from "./products";
 import Categories from "@/components/products/categories";
+import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "Products",
   description: "Products Page",

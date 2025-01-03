@@ -11,7 +11,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     notFound();
   }
   return (
-    <Suspense fallback={<h2>Loading</h2>}>
+    <Suspense fallback={null}>
       <EditForm product={product} />
     </Suspense>
   );

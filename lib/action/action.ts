@@ -161,7 +161,7 @@ export async function addOrder(
           currency: "rwf",
           unit_amount: amount,
           product_data: {
-            name: "Order"
+            name: "Order",
           },
         },
         quantity: 1,
@@ -171,6 +171,10 @@ export async function addOrder(
       buyerId: userId,
       products: cart,
     },
+    payment_method_types: ["card", "paypal"],
+    // shipping_address_collection: {
+    //    allowed_countries:["RW"]
+    // },
     mode: "payment",
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/orders?success=order created successfully`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
